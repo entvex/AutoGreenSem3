@@ -1,4 +1,5 @@
 # In .gitignore
+#For latex
 *.aux
 *.glo
 *.idx
@@ -22,3 +23,33 @@
 *.mtc1
 *.out
 *.synctex.gz
+
+# Compiled Object files
+*.slo
+*.lo
+*.o
+*.obj
+
+# For c++
+# Precompiled Headers
+*.gch
+*.pch
+
+# Compiled Dynamic libraries
+*.so
+*.dylib
+*.dll
+
+# Fortran module files
+*.mod
+
+# Compiled Static libraries
+*.lai
+*.la
+*.a
+*.lib
+
+# Executables
+*.exe
+*.out
+*.app
