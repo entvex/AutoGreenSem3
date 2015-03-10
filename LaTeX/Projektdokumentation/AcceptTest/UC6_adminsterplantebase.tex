@@ -1,0 +1,14 @@
+\begin{longtable}{| l | >{\raggedright}X | >{\raggedright}X | >{\raggedright}X | >{\raggedright\arraybackslash}p{2.3cm} |} \hline
+	\multicolumn{2}{|l|}{\textbf{Use case under test}} & \multicolumn{3}{l|}{UC6: "Administrer plantedatabase"} \\ \hline
+	\multicolumn{2}{|l|}{\textbf{Scenarie}} & \multicolumn{3}{l|}{Hovedscenarie} \\ \hline
+	\multicolumn{2}{|l|}{\textbf{Forudsætning}} & \multicolumn{3}{p{10.2cm}|}{Systemet er operationelt og hovedmenuen vises. \hfill} \\ \hline
+	%\multicolumn{5}{|l|}{}\\ \hline
+	\textbf{Step} & \textbf{Handling} & \textbf{Forventet Resultat} & \textbf{Resultat} & \textbf{Godkendt / Kommentar} \\ \hline
+    6.1 &Bruger trykker "Administrer Plantedatabase". &Visuel test: Bruger observer menuen "Administrer plantedatabase". &&\\\hline
+    6.2 &Bruger trykker på "Tilføj Data". &Visuel test: Bruger observerer undermenuen "Rediger Data". &&\\\hline
+    6.3 &Bruger vælger ønskede parametre for planten, temperatur: 22 grader, fugtighed: 8, og trykker "Gem". &Visuel test: Undermenuen "Administrer Plantedatabase" er vist. Planten er tilføjet med de indtastede parametre. &&\\\hline
+    6.4 &Bruger trykker "Fjern Plante". &Visuel test: En liste over planter, der kan fjernes fra databasen vises. &&\\\hline
+    6.5 &Bruger vælger den plante der blev tilføjet under pkt. 6.3 og trykker "Ok". &Visuel test: Undemenuen "Administrer Plantedatabase" vises. Planten er ikke længere i plantedatabasen.&&\\\hline
+    6.6 &Bruger trykker "Tilbage". &Visuel test: Hovedmenuen vises.&&\\\hline
+	\caption{Accepttest for UC6: Administrer plantedatabase}\label{tbl:acceptUC6}
+\end{longtable}

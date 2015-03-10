@@ -1,0 +1,21 @@
+\begin{longtable}{| l | >{\raggedright}X | >{\raggedright}X | >{\raggedright}X | >{\raggedright\arraybackslash}p{2.3cm} |} \hline
+	\multicolumn{2}{|l|}{\textbf{Use case under test}} & \multicolumn{3}{l|}{UC4: "Administrer drivhus"} \\ \hline
+	\multicolumn{2}{|l|}{\textbf{Scenarie}} & \multicolumn{3}{l|}{Hovedscenarie} \\ \hline
+	\multicolumn{2}{|l|}{\textbf{Forudsætning}} & \multicolumn{3}{p{10.2cm}|}{Systemet er operationelt og hovedmenuen vises.\hfill} \\ \hline
+	%\multicolumn{5}{|l|}{}\\ \hline
+	\textbf{Step} & \textbf{Handling} & \textbf{Forventet Resultat} & \textbf{Resultat} & \textbf{Godkendt / Kommentar} \\ \hline
+	4.1  &Bruger trykker ”Administrer drivhus”. &Visuel test: 
+Bruger observerer en undermenuen "Administrer Drivhus" på brugerfladen. &   &  \\ \hline
+	4.2 &Bruger trykker ”Tilføj plante”. &Visuel test:
+Bruger observerer en liste over planterne i plantedatabasen på brugerfladen.  &  &  \\ \hline
+	4.3 &Bruger vælger den øverste plante på listen og trykker "Ok". &Visuel test: Systemet viser undermenuen "Administrer Drivhus". Den valgte plante er tilføjet i det virtuelle drivhus. &&\\\hline
+	4.4 &Bruger trykker "Rediger Plante". &Visuel test: En liste over planter i det virtuelle drivhus vises. &&\\\hline
+	4.5 &Bruger vælger den plante der blev tilføjet under pkt. 4.3. & Visuel test: Undermenuen "Rediger Plante" vises. && \\\hline
+	4.6 &Bruger indtaster parametre for planten, temperatur: 25 grader, fugtighed: 10, og trykker "Ok". & Visuel test: Undermenuen Administrer Drivhus vises. Den redigerede plante vises med de nye parametre, temperatur: 25 grader, fugtighed: 10. && \\\hline
+	4.7 &Bruger trykker ”Fjern plante”. &Visuel test: 
+Bruger observerer en liste over nuværende planter i det virtuelle drivhus. &  &  \\ \hline
+	4.8 &Bruger vælger den plante, der blev tilføjet under pkt. 4.3 og trykker "Ok". & Visuel test: Undermenuen "Administrer Drivhus" vises. Den fjernede plante er ikke længere i det virtuelle drivhus. && \\\hline
+	4.9 &Bruger trykker "Tilbage". &Visuel test: Hovedmenuen vises. &&\\\hline
+
+\caption{Accepttest for UC4: Administrer drivhus}\label{tbl:acceptUC4}
+\end{longtable}

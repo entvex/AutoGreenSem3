@@ -1,0 +1,18 @@
+\begin{longtable}{| l | X | X | p{2.5cm} | p{2 cm} |} \hline
+Krav & Test & Forventet Resultat & Resultat & Godkendt/ kommentar \\ \hline
+    1. & Start drivhuset med monitoring, noter hvornår værdier bliver tilføjet til systemloggen. Varighed 20min. & Systemloggen generer 20 datapoints med 1min mellemrum. & ~ & ~ \\ \hline
+    2. & Det fysiske drivhus placeres i et ca 20 grader celcius milijø. I et virtuelle drivhus sættes en gennemsnitstemeperatur på 25. & Efter 10min aflæses temperaturen i midten af drivhuset til 25 +/- 1 grad celcius. & ~ & ~ \\ \hline
+    3. & Det fysiske drivhus placeres i et ca 15 grader celcius milijø. I et virtuelle drivhus sættes en gennemsnitstemeperatur på 25 og ventilator samt varmelegme er aktiveret. & Inden for 30min aflæses temperaturen i midten af drivhuset til 25 grader celcius. & ~ & ~ \\ \hline
+    4. & En potte med tør muld indsættes i det fysiske drivhus. En fugtighedssensor places i mulden og vand hældes langsomt i. & Systemloggen skriver 11 data værdier med stigende fugtighed og den 11. data værdi er eqivalent med den 10. værdi. & ~ & ~ \\ \hline
+    5. & En potte med tør muld indsættes i det fysiske drivhus. En fugtighedssensor places i mulden og rapporting er aktiveret. Det virtuelle drivhus indstilles med en plante hvis fugtighedsværdi overstiger fugtighedsværdien i mulden. & Før 1min er forløbet, har brugeren modtaget en mail angående muldens lave fugtighedsværdi. & ~ & ~ \\ \hline
+    6. & 6 fugtighedsmålere tilsluttes systemet, hvor efter systemet startes. & Systemloggen udskriver måleværdier for 6 forskellige sensorere efter 1min. & ~ & ~ \\ \hline
+    7. & Devkittet tilsluttes med en ssh usbforbindelse og der skrives uname -a & Terminalen udskriver en kernel oversigt, der bekræfter det er et linux operativsystem. & ~ & ~ \\ \hline
+    8. & Et PSOC4 kit tilsluttes systemet mellem devkittet og sensorerene. Systemet beder derefter om temperatur værdier. & Systemloggen modtager temperatur værdier fra PSOC4'en. & ~ & ~ \\ \hline
+    9. & 100 planter indsættes i plantedatabasen. & Databasen kontrollers for alle 100 planter eksistens. & ~ & ~ \\ \hline
+    10. & Dataopløsingen sættes op for at simulere et årsforbrug af data. & Infografen kan aflæses med et årsforbrug af data. & ~ & ~ \\ \hline
+    11. & ifconfig indtastes i terminalen på devkittet og derefter sendes en email. & Terminalen viser at eth0 er den eneste eksterne forbindelse og e-mail er modtaget hos brugeren. & ~ & ~ \\ \hline
+    12. & Drivhuset varmes/køles til ca 20 grader celcius. Et ekstern termometer med en usikkerhed på 1 grad celcius placeres ved siden af temperatur sensoren. & De to målte temperaturere har højest 2 graders forskel. & ~ & ~ \\ \hline
+    13. & 4 email addresser indsættes efter hinanden i systemet. & De tre første email addresser bliver tilføjet, men den 4. indsætning giver en feljmeddelse. & ~ & ~ \\ \hline
+\caption{Ikke funktionelle krav}
+\label{tbl:ikkefunk}
+\end{longtable}
