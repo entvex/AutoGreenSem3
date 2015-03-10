@@ -22,15 +22,16 @@
 *.mtc
 *.mtc1
 *.out
+*.pdf
 *.synctex.gz
 
+# For c++
 # Compiled Object files
 *.slo
 *.lo
 *.o
 *.obj
 
-# For c++
 # Precompiled Headers
 *.gch
 *.pch
