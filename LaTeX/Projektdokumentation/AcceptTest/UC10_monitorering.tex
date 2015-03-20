@@ -1,11 +1,10 @@
 \begin{longtable}{| l | >{\raggedright}X | >{\raggedright}X | >{\raggedright}X | >{\raggedright\arraybackslash}p{2.3cm} |} \hline
-	\multicolumn{2}{|l|}{\textbf{Use case under test}} & \multicolumn{3}{l|}{UC10: "Monitorering"} \\ \hline
+	\multicolumn{2}{|l|}{\textbf{Use case under test}} & \multicolumn{3}{l|}{UC10: Monitorering} \\ \hline
 	\multicolumn{2}{|l|}{\textbf{Scenarie}} & \multicolumn{3}{l|}{Hovedscenarie} \\ \hline
-	\multicolumn{2}{|l|}{\textbf{Forudsætning}} & \multicolumn{3}{p{10.2cm}|}{UC 1 er gennemført og systemet er operationelt. \hfill} \\ \hline
+	\multicolumn{2}{|l|}{\textbf{Forudsætning}} & \multicolumn{3}{p{10.2cm}|}{UC1 Start er gennemført og systemet er operationelt. \hfill} \\ \hline
 	%\multicolumn{5}{|l|}{}\\ \hline
 	\textbf{Step} & \textbf{Handling} & \textbf{Forventet Resultat} & \textbf{Resultat} & \textbf{Godkendt / Kommentar} \\ \hline
-       10.1 & Bruger aktiverer monitorering og venter mindst 1 min. & Visuel test: Bruger kan se, at data i "live status" i "Hovedmenu" ændrer sig hvert minut.                      & ~ & ~ \\ \hline
-       10.2 & Bruger sprayer kuldespray på temperatursensoren og venter mindst 1 minut.      & Visuel test: Feltet "temperatur" i "Hovedmenu" skifter farve fra grøn til rød.                                                   & ~ & ~ \\ \hline
-       10.3 & Bruger deaktiverer monitorering og tilgår dataloggen. & Visuel test: Dataloggen er blevet opdateret med nye data og korrekt tidsstempling. & ~ & ~ \\ \hline
+       10.1 & Bruger noterer aktuel værdi for temperatur i Hovedmenuen. Brugeren sprayer kuldespray på temperatursensoren og venter mindst 1 minut.      & Visuel test: Feltet "Temperatur" i Hovedmenuen ændres.                                                   & ~ & ~ \\ \hline
+       10.2 & Bruger deaktiverer monitorering og tilgår systemloggen. & Visuel test: Systemloggen er blevet opdateret med nye data og korrekt tidsstempling. & ~ & ~ \\ \hline
 	\caption{Accepttest for UC10: Monitorering}\label{tbl:acceptUC10}
 \end{longtable}

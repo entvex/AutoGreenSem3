@@ -1,10 +1,10 @@
 \begin{longtable}{| l | >{\raggedright}X | >{\raggedright}X | >{\raggedright}X | >{\raggedright\arraybackslash}p{2.3cm} |} \hline
-	\multicolumn{2}{|l|}{\textbf{Use case under test}} & \multicolumn{3}{l|}{UC11: "Regulering"} \\ \hline
+	\multicolumn{2}{|l|}{\textbf{Use case under test}} & \multicolumn{3}{l|}{UC11: Regulering} \\ \hline
 	\multicolumn{2}{|l|}{\textbf{Scenarie}} & \multicolumn{3}{l|}{Hovedscenarie} \\ \hline
-	\multicolumn{2}{|l|}{\textbf{Forudsætning}} & \multicolumn{3}{p{10.2cm}|}{Både UC 10 – monitorering og UC 11 - regulering er startet. Jordfugtighedssensor 1 er konfigureret til en plante, som har niveau 10 som ønsket jordfugtighedsparameter. Varmelegeme og blæsere er aktiveret.\hfill} \\ \hline
+	\multicolumn{2}{|l|}{\textbf{Forudsætning}} & \multicolumn{3}{p{10.2cm}|}{Både UC10 Monitorering og UC11 Regulering er startet. Jordfugtighedssensor 1 er konfigureret til en plante, som har niveau 10 som ønsket jordfugtighedsparameter. Varmelegeme og blæsere er aktiveret.\hfill} \\ \hline
 	%\multicolumn{5}{|l|}{}\\ \hline
 	\textbf{Step} & \textbf{Handling} & \textbf{Forventet Resultat} & \textbf{Resultat} & \textbf{Godkendt / Kommentar} \\ \hline
-        11.1 & Bruger tager jordfugtighedssensor 1 op af jorden; spændingen på bool for vanding ved jordfugtighedssensor 1 måles med voltmeter. & Visuel test: bool for vanding ved plante 1 går til true. & ~ & ~ \\ \hline
+        11.1 & Bruger tager jordfugtighedssensor 1 op af jorden; spændingen på aktuator for vanding ved jordfugtighedssensor 1 måles med voltmeter. & Aktuator for vanding ved plante 1 går fra false til true. & ~ & ~ \\ \hline
 		11.2 & Bruger sprayer kuldespray på temperatursensoren. & Visuel test: Varmelegemet aktiveres.     & ~ & ~ \\ \hline
         11.3 & Det fysiske drivhus varmes op vha. en varmeblæser. & Visuel test: Blæsere aktiveres og vinduet åbnes. & ~ & ~ \\ \hline
 	\caption{Accepttest for UC11: Regulering}\label{tbl:acceptUC11}

@@ -1,18 +1,15 @@
 \begin{longtable}{| l | X | X | p{2.5cm} | p{2 cm} |} \hline
 Krav & Test & Forventet Resultat & Resultat & Godkendt/ kommentar \\ \hline
-    1. & Start drivhuset med monitoring, noter hvornår værdier bliver tilføjet til systemloggen. Varighed 20min. & Systemloggen generer 20 datapoints med 1min mellemrum. & ~ & ~ \\ \hline
-    2. & Det fysiske drivhus placeres i et ca 20 grader celcius milijø. I et virtuelle drivhus sættes en gennemsnitstemeperatur på 25. & Efter 10min aflæses temperaturen i midten af drivhuset til 25 +/- 1 grad celcius. & ~ & ~ \\ \hline
-    3. & Det fysiske drivhus placeres i et ca 15 grader celcius milijø. I et virtuelle drivhus sættes en gennemsnitstemeperatur på 25 og ventilator samt varmelegme er aktiveret. & Inden for 30min aflæses temperaturen i midten af drivhuset til 25 grader celcius. & ~ & ~ \\ \hline
-    4. & En potte med tør muld indsættes i det fysiske drivhus. En fugtighedssensor places i mulden og vand hældes langsomt i. & Systemloggen skriver 11 data værdier med stigende fugtighed og den 11. data værdi er eqivalent med den 10. værdi. & ~ & ~ \\ \hline
-    5. & En potte med tør muld indsættes i det fysiske drivhus. En fugtighedssensor places i mulden og rapporting er aktiveret. Det virtuelle drivhus indstilles med en plante hvis fugtighedsværdi overstiger fugtighedsværdien i mulden. & Før 1min er forløbet, har brugeren modtaget en mail angående muldens lave fugtighedsværdi. & ~ & ~ \\ \hline
-    6. & 6 fugtighedsmålere tilsluttes systemet, hvor efter systemet startes. & Systemloggen udskriver måleværdier for 6 forskellige sensorere efter 1min. & ~ & ~ \\ \hline
-    7. & Devkittet tilsluttes med en ssh usbforbindelse og der skrives uname -a & Terminalen udskriver en kernel oversigt, der bekræfter det er et linux operativsystem. & ~ & ~ \\ \hline
-    8. & Et PSOC4 kit tilsluttes systemet mellem devkittet og sensorerene. Systemet beder derefter om temperatur værdier. & Systemloggen modtager temperatur værdier fra PSOC4'en. & ~ & ~ \\ \hline
-    9. & 100 planter indsættes i plantedatabasen. & Databasen kontrollers for alle 100 planter eksistens. & ~ & ~ \\ \hline
-    10. & Dataopløsingen sættes op for at simulere et årsforbrug af data. & Infografen kan aflæses med et årsforbrug af data. & ~ & ~ \\ \hline
-    11. & ifconfig indtastes i terminalen på devkittet og derefter sendes en email. & Terminalen viser at eth0 er den eneste eksterne forbindelse og e-mail er modtaget hos brugeren. & ~ & ~ \\ \hline
-    12. & Drivhuset varmes/køles til ca 20 grader celcius. Et ekstern termometer med en usikkerhed på 1 grad celcius placeres ved siden af temperatur sensoren. & De to målte temperaturere har højest 2 graders forskel. & ~ & ~ \\ \hline
-    13. & 4 email addresser indsættes efter hinanden i systemet. & De tre første email addresser bliver tilføjet, men den 4. indsætning giver en feljmeddelse. & ~ & ~ \\ \hline
+    1. & Start drivhuset med monitoring, noter hvornår værdier bliver tilføjet til systemloggen. Varighed 10 min. & Data loggen genererer 10 datapunkter med 1 min. mellemrum. & ~ & ~ \\ \hline
+    2. & Det fysiske drivhus placeres i et rum ved 20 +/- 1 grader celcius, og opvarmes vha. en varmeblæser til minimum 30 grader celcius. I det virtuelle drivhus sættes en ønsket gennemsnitstemperatur på 25 grader celcius og ventilator er aktiveret. & Inden der er gået 30 min. aflæses temperaturen i drivhuset til 25 +/- 1 grader celcius. & ~ & ~ \\ \hline
+	3. & En potte med tør muld indsættes i det fysiske drivhus. En fugtighedssensor places i mulden og vand hældes langsomt i. & Systemloggen skriver 11 dataværdier med stigende fugtighed og den 11. data værdi er ækvivalent med den 10. værdi. & ~ & ~ \\ \hline
+	4. & 6 fugtighedsmålere tilsluttes systemet, hvorefter systemet startes. & Systemloggen indeholder måleværdier for 6 forskellige sensorer efter 1 min. & ~ & ~ \\ \hline
+    5. & 100 planter indsættes i plantedatabasen. & Databasen kontrolleres for alle 100 planters eksistens. & ~ & ~ \\ \hline
+    6. & Intervallet for datalogging sættes ned for at simulere et års data. & Historik kan ses med et års data. & ~ & ~ \\ \hline
+       7. & Det fysiske drivhus placeres i et rum ved 20 +/- 1 grader celcius. Systemet sættes til at regulere temperaturen i det fysiske drivhus til 25 grader celcius. Et eksternt termometer med en usikkerhed på højst 0.1 grader celcius placeres ved siden af temperatursensoren. & Det eksterne termometer måler 25 +/- 2 grader celcius inden for 30 min. & ~ & ~ \\ \hline
+    8. & Der indtastets tre gyldige E-mail adresser via brugerfladens "E-mailmenu". Daglig E-mail notifikation aktiveres. Testpersonen kontrollerer de tre indtastede E-mailkontos indbakker næste gang klokken har passeret 12.00 & Testpersonen har modtaget en E-mail fra systemet på hver af de tre indtastede E-mailadresser.& ~ & ~ \\ \hline
+	9. & Det fysiske drivhus placeres i et rum ved 20 +/- 1 grader celcius. I det virtuelle drivhus sættes en ønsket gennemsnitstemperatur på 25 grader celcius. & Inden der er gået 30 min. aflæses temperaturen i drivhuset vha. Hovedmenuen til 25 +/- 1 grad celcius. & ~ & ~ \\ \hline
+    10. & En potte med tør muld indsættes i det fysiske drivhus. En fugtighedssensor placeres i mulden og rapporting og Advarsels E-mail er aktiveret. En sensor med ønsket værdi for fugtighed på 10 placeres i mulden. & Før 10 min er forløbet, har brugeren modtaget en Advarsels E-mail. & ~ & ~ \\ \hline
 \caption{Ikke funktionelle krav}
 \label{tbl:ikkefunk}
 \end{longtable}

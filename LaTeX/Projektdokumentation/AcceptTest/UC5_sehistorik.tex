@@ -1,17 +1,23 @@
 \begin{longtable}{| l | >{\raggedright}X | >{\raggedright}X | >{\raggedright}X | >{\raggedright\arraybackslash}p{2.3cm} |} \hline
-	\multicolumn{2}{|l|}{\textbf{Use case under test}} & \multicolumn{3}{l|}{UC5: "Se historik"} \\ \hline
+	\multicolumn{2}{|l|}{\textbf{Use case under test}} & \multicolumn{3}{l|}{UC5: Se historik} \\ \hline
 	\multicolumn{2}{|l|}{\textbf{Scenarie}} & \multicolumn{3}{l|}{Hovedscenarie} \\ \hline
 	\multicolumn{2}{|l|}{\textbf{Forudsætning}} & \multicolumn{3}{p{10.2cm}|}{Systemet er operationelt og hovedmenuen vises. \hfill} \\ \hline
 	%\multicolumn{5}{|l|}{}\\ \hline
 	\textbf{Step} & \textbf{Handling} & \textbf{Forventet Resultat} & \textbf{Resultat} & \textbf{Godkendt / Kommentar} \\ \hline
-    5.1  & Bruger trykker "Se historik".                                                      & Visuel test: Bruger observer historik menuen.                             & ~        & ~                  \\ \hline
-    5.2  & Bruger trykker "Vis for en uge".                                                   & Visuel test: Bruger observer historik menuen.                             & ~        & ~                  \\ \hline
-    5.3  & Bruger trykker "Vis for en måned".                                                   & Visuel test: Bruger observer en graf over en måned.                       & ~        & ~                  \\ \hline
-    5.4  & Bruger trykker "Vis for et år".                                                    & Visuel test: Bruger observer en graf over et år.                          & ~        & ~                  \\ \hline
-    5.5 & Bruger deaktiverer visning af temperaturdata.                                                     & Visuel test: Bruger kan ikke observere temperaturen på grafen.            & ~        & ~                  \\ \hline
-    5.6 & Bruger deaktiverer visning luftfugtighedsdata.                                                   & Visuel test: Bruger kan ikke observere luftfugtigheden på grafen.         & ~        & ~                  \\ \hline
-    5.7 & Bruger deaktiverer visning af lysdata.                                                            & Visuel test: Bruger observerer ikke lys på grafen.                         & ~        & ~                  \\ \hline
-    5.8 & Bruger vælger visning af jordfugtighed for plante nr 1. Dette gentages for alle seks planter. & Visuel test: Bruger observerer jordfugtigheden for plante nr. 1 på grafen. & ~        & ~                  \\ \hline
-    5.9 & Bruger trykker på "Tilbage" & Visuel test: Hovedmenuen vises. & ~        & ~                  \\ \hline
+    5.1  & Bruger trykker "Se Historik".                                                      & Visuel test: Systemet viser "Historikmenu".                             & ~        & ~                  \\ \hline
+    5.2  & Bruger trykker "Uge".                                                   & Visuel test: Systemet viser en graf med historik for en uge.                             & ~        & ~                  \\ \hline
+    5.3  & Bruger trykker "Måned".                                                   & Visuel test: Systemet viser en graf med historik for en måned.                             & ~        & ~                  \\ \hline
+    5.4  & Bruger trykker "År".                                                   & Visuel test: Systemet viser en graf med historik for et år.                             & ~        & ~                  \\ \hline
+    5.5 & Bruger trykker "Temperatur".                                                     & Visuel test: Historik for temperatur vises ikke på grafen.            & ~        & ~                  \\ \hline
+    5.6 & Bruger trykker "Luftfugtighed".                                                   & Visuel test: Historik for luftfugtighed vises ikke på grafen. & ~        & ~                  \\ \hline
+    5.7 & Bruger trykker "Lys".                                                            & Visuel test: Historik for lys vises ikke på grafen.                         & ~        & ~                  \\ \hline
+    5.8 & Bruger trykker "Temperatur".                                                     & Visuel test: Historik for temperatur vises på grafen.            & ~        & ~                  \\ \hline
+    5.9 & Bruger trykker "Luftfugtighed".                                                   & Visuel test: Historik for luftfugtighed vises på grafen. & ~        & ~                  \\ \hline
+    5.10 & Bruger trykker "Lys".                                                            & Visuel test: Historik for lys vises på grafen.                         & ~        & ~                  \\ \hline
+    5.11 & Bruger trykker "Jordfugtighed" for plante nr 1. & Visuel test: Jordfugtigheden for plante nr. 1 vises på grafen. & ~        & ~                  \\ \hline
+    5.12 & Pkt. 5.11 gentages for plante 2-6. &Visuel test: Jordfugtigheden for planterne vises på grafen.&&\\\hline
+    5.13 & Bruger trykker "Jordfugtighed" for plante nr 1.  & Visuel test: Jordfugtigheden for plante nr. 1 vises ikke på grafen. & ~        & ~                  \\ \hline
+    5.14 & Pkt. 5.12 gentages for plante 2-6. &Visuel test: Jordfugtigheden for planterne vises ikke på grafen.&&\\\hline
+    5.15 & Bruger trykker på "Tilbage" & Visuel test: Hovedmenuen vises. & ~        & ~                  \\ \hline
 	\caption{Accepttest for UC5: Se historik}\label{tbl:acceptUC5}
 \end{longtable}

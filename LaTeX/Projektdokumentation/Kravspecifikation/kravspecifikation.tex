@@ -8,12 +8,12 @@
 	Dato	& Version	& Initialer & Ændring	\\ \hline
 	26. februar & 1 & MHG & Første udkast. \\ \hline
 	6. marts & 2 & MHG & Rettelser efter review. \\ \hline
+	12. marts & 3 & MHG & Mindre rettelser efter fælles gennemlæsning. \\\hline
 	\end{tabularx}
 \end{table}
 
 \section{Systembeskrivelse}
-
-Systemet AutoGreen fungerer som et intelligent drivhus, med hovedformålene at kunne monitorere og regulere nogle forskellige parametre i drivhusets indre. Blandt parametrene vil der være jordfugt-, luftfugt-, temperatur- og lyssensorer og de enheder, som systemet kommer til at bestå af, kan ses på Figur \ref{fig:systemoversigt}. Nogle af parametrene vil desuden kunne reguleres, således det bliver muligt for en bruger at kunne automatisere sit drivhus. Selve drivhuset som projektet drejer sig om, er en mindre model, med dimensioner som set på Figur \ref{fig:dimensioner}. 
+Under udviklingen af prototypen for AutoGreen, anvendes en drivhusmodel, der er vist på Figur \ref{fig:dimensioner}.
 
 \begin{figure}[!h]
 \centering 
@@ -22,24 +22,7 @@ Systemet AutoGreen fungerer som et intelligent drivhus, med hovedformålene at k
 \label{fig:dimensioner}
 \end{figure}
 
-Ud fra billedet ses blæsere samt vinduesmotoren (ej monteret på billedet), som skal regulere temperaturen i drivhuset. Disse indgår som en del af systemet, men selve huset gør ikke. Der vil ydermere være et varmelegeme, som ikke er repræsenteret på billedet. 
-
-\subsubsection{DevKit8000}
-DevKit8000 er systemets kontrolenhed og brugergrænseflade. 
-DevKit8000 modtager input fra brugeren på dens touch skærm, og den kan give output til brugeren på skærmen og via e-mail; den er koblet til internet via ethernet. 
-DevKit8000 kan desuden måle og regulere klimaet i det fysiske drivhus; det sker vha. en \IIC Master, hvortil der kommunikeres vha. UART.
-\subsubsection{\IIC Master}
-I\textsuperscript{2}C Master er realiseret på et PSoC4 udviklingsboard (CY8CKIT-042). 
-\IIC Master modtager input fra DevKit8000 og sender/modtager data til/fra \IIC Slaver, hvorefter respons sendes retur til DevKit8000.	
-\subsubsection{\IIC Slave Temperatur}
-\IIC Slave Temperatur er ansvarlig for alle handlinger og målinger, der har med temperaturen i det fysiske drivhus at gøre. Der er tilkoblet en temperatursensor og tre aktuatorer, hhv. vinduesåbner, blæsere og varmelegeme. 
-Enheden er realiseret på et PSoC4 udviklingsboard (CY8CKIT-042).
-\subsubsection{\IIC Slave Jordfugtighed}
-\IIC Slave Jordfugtighed er ansvarlig for alle handlinger og målinger, der har at gøre med vanding i det fysiske drivhus. Der kan tilkobles 0 - 6 jordfugtighedssensorer med tilhørende aktuator til et evt. vandingssystem. Selve vandingssystemet er ikke en del af AutoGreen, en vandingsaktuator er en high/low bool. Enheden er realiseret på et PSoC4 udviklingsboard (CY8CKIT-042).
-\subsubsection{\IIC Slave Luftfugtighed/Lys}
-\IIC Slave Luftfugtighed/Lys er ansvarlig for måling af lysintensitet og luftfugtighed i det fysiske drivhus. Enheden er realiseret på et PSoC4 udviklingsboard (CY8CKIT-042).
-
-\clearpage
+På billedet ses blæsere samt vinduesmotoren (ikke monteret). Disse indgår som en del af systemet, men selve drivhuset gør ikke. Der vil i systemet ydermere være et varmelegeme, som ikke er repræsenteret på billedet. 
 
 \begin{figure}[!h]
 \centering 
@@ -49,6 +32,18 @@ Enheden er realiseret på et PSoC4 udviklingsboard (CY8CKIT-042).
 \end{figure}
 
 \clearpage
+
+\subsubsection{DevKit8000}
+DevKit8000 er systemets kontrolenhed og brugergrænseflade. 
+DevKit8000 modtager input fra brugeren på dens touch skærm, og den kan give output til brugeren på skærmen og via e-mail; den er koblet til internet via ethernet. 
+DevKit8000 kommunikerer vha. UART med en \IIC Master.
+\subsubsection{\IIC Master}
+I\textsuperscript{2}C Master er realiseret på et PSoC4 udviklingsboard (CY8CKIT-042). 
+\IIC Master modtager input fra DevKit8000 og sender/modtager data til/fra \IIC Slaver, hvorefter respons sendes retur til DevKit8000.
+\subsubsection{\IIC Slave Jordfugtighed}
+\IIC Slave Jordfugtighed er ansvarlig for alle handlinger og målinger, der har at gøre med vanding i det fysiske drivhus. Der kan tilkobles 0 - 6 jordfugtighedssensorer med tilhørende aktuator til et evt. vandingssystem. Selve vandingssystemet er ikke en del af AutoGreen, en vandingsaktuator er en high/low bool. Enheden er realiseret på et PSoC4 udviklingsboard (CY8CKIT-042).
+\subsubsection{\IIC Slave Aktuatorer}
+\IIC Slave Aktuatorer er ansvarlig for al kommunikation mellem \IIC Master og alle aktuatorer i det fysiske drivhus. Enheden er realiseret på et PSoC4 udviklingsboard (CY8CKIT-042).
 
 \section{Ordforklaring}
 
@@ -62,19 +57,18 @@ Denne er opbygget som en database, hvor hver logning indeholder information fra 
 Systemet er udstyret med en log over hvad systemet foretager sig. 
 Dette kunne f.eks. være et indlæg når systemet foretager en måling, sender en e-mail, regulerer miljøet i drivhuset.
 \subsubsection{Virtuelt Drivhus}
-Det virtuelle drivhus er oversigten over planter samt information omkring miljø, som brugeren kan se i selve systemet. 
+Det virtuelle drivhus er systemets repræsentation af det fysiske drivhus. Brugeren kan tilføje planter fra plantedatabasen i det virtuelle drivhus, og på den måde give systemet indirekte oplysninger om ønskede parametre.
+Disse informationer lagres i systemets konfigurationsfil.
 \subsubsection{Fysisk Drivhus}
 Ved det fysiske drivhus forstås det drivhus hvori systemet er monteret. 
-Det virtuelle drivhus skal så vidt muligt afspejle det fysiske drivhus, hvor brugeren har sine planter.
 \subsubsection{Konfigurationsfil}
-Dette er en automatisk genereret fil, der er placeret på dev-kittet, som indeholder brugerens konfigurationer om blandt andet notifikationer, e-mailadresser, antallet af fugtsensorer og deres unikke id mm.
-
-\clearpage
+Dette er en automatisk genereret fil, der er placeret på DevKit8000, som indeholder brugerens konfigurationer om blandt andet notifikationer, e-mailadresser, antallet af fugtsensorer og deres unikke id mm.
+\subsubsection{Notifikations E-mail}
+Dette er en daglig E-mail, som brugeren kan vælge at få tilsendt. Den sendes klokken 12:00, og indeholder informationer om parametrene i det fysiske drivhus.
+\subsubsection{Advarsels E-mail}
+Dette er en E-mail, som brugeren kan vælge at få tilsendt. Den sendes, hvis en parameter i det fysiske drivhus kommer uden for tolerancen af den ønskede værdi.
 
 \section{Brugerfladen}
-
-I Figur \ref{fig:gui_skitse} er vist en skitse over hvordan brugerfladen forventes at se ud. De grå områder uner Hovedmenu er knapper, brugeren kan trykke på for at tilgå yderligere menuer. Nederst ses "Monitorer" og "Reguler" knapper, som kan aktivere eller deaktivere hhv. monitorerings- og reguleringsfunktionalitet. Til højre ses live status for det fysiske drivhus, samt live status for jordfugtighed for hver plante i bunden. I bunden af billedet til højre, kan der ses nogle knapper i forskellige farver. Disse symboliserer planter i det virtuelle drivhus, og forklarer tilfældet for den enkelte plante. Grøn betyder at plantens jordfugtighed er indenfor tolerancerne, hvor rød betyder det modsatte. Grå (Not Available) betyder at der ikke er placeret en plante i det virtuelle drivhus, for den pågældende fugtighedssensor. 
-
 \begin{figure}[h]
 \centering
 \includegraphics[width=\textwidth - 3 cm]{../fig/gui_skitse}
@@ -82,7 +76,11 @@ I Figur \ref{fig:gui_skitse} er vist en skitse over hvordan brugerfladen forvent
 \label{fig:gui_skitse}
 \end{figure}
 
-\clearpage
+I Figur \ref{fig:gui_skitse} er vist en skitse over hvordan brugerfladen forventes at se ud. De grå områder under Hovedmenu er knapper, brugeren kan trykke på for at tilgå yderligere menuer. 
+
+Nederst ses "Monitorér" og "Regulér" knapper, som kan aktivere eller deaktivere hhv. monitorerings- og reguleringsfunktionalitet. 
+
+Til højre ses live status for det fysiske drivhus. Nederst ses live status for jordfugtighed for hver plante. Dette er vist ved seks felter i forskellige farver. Disse symboliserer planter i det virtuelle drivhus, og viser status for den enkelte plante. Grøn betyder at plantens jordfugtighed er indenfor tolerancerne, hvor rød betyder at den er uden for tolerancen. Grå (Not Available) betyder, at der ikke er placeret en plante i det virtuelle drivhus, for den pågældende fugtighedssensor. 
 
 \section{Aktør Kontekst Diagram} 
 \begin{figure}[h]
@@ -104,13 +102,14 @@ Brugeren kan:
 \item Konfigurere systemindstillinger
 \item Se systemlog
 \item Modtage rapportering om klimaet i drivhuset 
+\item Administrere planter i plantedatabasen
 \end{itemize}
 
 \subsubsection{Drivhusklima - Sekundær Aktør}
 Drivhusklimaet består af en række parametre, som systemet måler og/eller regulerer:
 \begin{itemize}
 \item Lufttemperatur
-	\subitem Måles, registreres og reguleres af systemet
+	\subitem Måles, registreres og reguleres af systemet. Reguleringen sker vha. vinduesåbner, blæsere og varmelegeme.
 \item Jordfugtighed
 	\subitem Måles, registreres og reguleres indirekte af systemet
 \item Luftfugtighed
@@ -142,7 +141,7 @@ Systemet\ldots
 	\item \ldots \emph{Bør} gemme alt monitorering i en data log.
 	\item \ldots \emph{Kan} give brugeren mulighed for at redigere og slette planter i plantedatabasen, som brugeren selv har tilføjet.
 	\item \ldots \emph{Kan} give brugeren mulighed for at tilføje/redigere/slette e-mail adresser.
-	\item \ldots \emph{Kan} give brugeren mulighed for valg af varslingse-mail omhandlende dårligt klima og daglig e-mail.
+	\item \ldots \emph{Kan} give brugeren mulighed for valg af varslings e-mail omhandlende dårligt klima og daglig e-mail.
 	\item \ldots \emph{Kan} sende e-mail til brugeren, på baggrund af brugerindstillinger.
 \end{enumerate}
 
@@ -153,10 +152,8 @@ Systemet\ldots
 	\item \ldots \emph{Skal} kunne justere temperaturen i det fysiske drivhus til det ønskede niveau på højst 30 minutter ved en starttemperatur der ligger højst 10 grader fra det ønskede niveau, når alle tre aktuatorer anvendes.
 	\item \ldots \emph{Skal} kunne måle jordfugtighed i trin á 10, hvor 10 er mest fugtigt. 
 	\item \ldots \emph{Skal} kunne indeholde op til seks fugtmålere.
-	\item \ldots \emph{Skal} anvende DevKit8000 med indlejret Linux platform.
-	\item \ldots \emph{Skal} anvende mindst et PSOC 4 udviklingsboard.
 	\item \ldots \emph{Skal} kunne indeholde op til 100 planter i plantedatabasen.
-	\item \ldots \emph{Skal} kunne indeholde data et år tilbage i tiden.
+	\item \ldots \emph{Skal} kunne indeholde måledata et år tilbage i tiden.
 	\item \ldots \emph{Skal} kunne måle temperaturen med en præcision på +/- 1 grad celcius ved 20 grader.
 	\item \ldots \emph{Skal} kunne indeholde op til tre e-mail adresser.
 	\item \ldots \emph{Bør} kunne justere temperaturen til 25 grader celcius i det fysiske drivhus med en præcision på +/- 2 grad, når drivhuset er placeret i et rum ved stuetemperatur (ca. 20 grader).
@@ -190,14 +187,14 @@ Brugeren har mulighed for kun at stoppe regulering. Use Case’en kan stoppe UC1
 \subsubsection{UC3: Overvåg}
 Initieres af: Bruger
 
-Når monitorering er startet, vises der i user interfacets hovedmenu live opdaterede måleværdier. 
-Såfremt UC10 Monitorering er startet, kan værdierne for lufttemperatur og jordfugtighed være røde, hvis de ikke passer med de ønskede værdier.
+Når UC10 Monitorering er startet, vises der i user interfacets hovedmenu live opdaterede måleværdier. 
+Såfremt UC11 Regulering er startet, kan værdierne for lufttemperatur og jordfugtighed være røde, hvis de ikke passer med de ønskede værdier.
 
 \subsubsection{UC4: Administrer Drivhus}
 Initieres af: Bruger
 
 Denne UC giver brugeren mulighed for at informere systemet om hvilke planter der er i drivhuset. 
-Han kan tilføje op til seks planter fra plantedatabasen i drivhuset, og han kan redigere parametre for disse, hvis han ønsker andre parametre end dem der fremgår i plantedatabasen. 
+Brugeren kan tilføje op til seks planter fra plantedatabasen i det virtuelle drivhus, og brugeren kan redigere parametre for disse, hvis brugeren ønsker andre parametre end dem, der fremgår i plantedatabasen. 
 Hver af disse planter kan forbindes med en jordfugtighedsmåler. 
 
 \subsubsection{UC5: Se Historik}
@@ -210,38 +207,38 @@ Brugeren kan se data op til et år tilbage i tiden.
 Initieres af: Bruger
 
 Denne UC giver brugeren mulighed for at se på planter i databasen. 
-Han kan desuden tilføje og fjerne egne planter i databasen, og han kan redigere i de planter han tidligere har tilføjet. 
-Han kan ikke redigere eller fjerne planter han ikke selv har tilføjet. 
+Brugeren kan desuden tilføje og fjerne egne planter i databasen, og brugeren kan redigere i de planter brugeren tidligere har tilføjet. 
 
 \subsubsection{UC7: Konfigurer System}
 Initieres af: Bruger
 
 Denne UC giver brugeren mulighed for at rette i systemindstillinger, herunder:
-\begin{itemize}
+\begin{packed_item}
 \item Indstille tid og dato
 \item Tilføje/fjerne/rette e-mail adresse 
-\item Aktivering/deaktivering af advarsler om dårligt klima sendt pr. mail
-\item Aktivering/deaktivering af daglig status sendt pr. mail
+\item Aktivering/deaktivering af advarsels E-mail
+\item Aktivering/deaktivering af notifikations E-mail
 \item Aktivering/deaktivering af varmelegeme
-\item Aktivering/deakttivering af luftcirkulation
-\end{itemize}
+\item Aktivering/deaktivering af luftcirkulation
+\end{packed_item}
 
 \subsubsection{UC8: Se System Log}
-Initieres af: Bruger/Tekniker
+Initieres af: Bruger
 
-Denne UC giver brugere eller teknikeren mulighed for at se en liste over systemhændelser, herunder:
-\begin{itemize}
+Denne UC giver brugeren mulighed for at se en liste over systemhændelser, herunder:
+\begin{packed_item}
 \item Start og stop af system
 \item Manglende kontakt til sensorer
 \item Afsendte e-mails
 \item Tilføjede/fjernede/redigerede planter i drivhuset
 \item Tilføjede/fjernede/redigerede planter i plantedatabasen
 \item Konfigurationsændringer
-\item Fejl i registrering i datalog
+\item Fejl i registrering i data log
 \item Fejl på vinduesåbner
-\item Fejl på Luftcirkulation
+\item Fejl på luftcirkulation
 \item Fejl på varmelegeme
-\end{itemize}
+\item Foretaget regulering
+\end{packed_item}
 
 \subsubsection{UC9: Rapportering}
 Initieres af: UC10 Monitorering
@@ -252,19 +249,19 @@ Dette sker ved afsendelse af e-mail til den eller de adresser, som brugeren lige
 \subsubsection{UC10: Monitorering}
 Initieres af: UC1 Start.
 
-Denne Use Case lagrer kontinuerligt målinger af lufttemperatur, jordfugtighed, luftfugtighed og lysintensitet i en data log fil. 
-Lagringen sker en gang i minuttet. 
+Denne Use Case lagrer målinger af lufttemperatur, jordfugtighed, luftfugtighed og lysintensitet i en data log fil. 
+Lagringen sker minimum en gang i minuttet. 
 
 \subsubsection{UC11: Regulering}
 Initeres af: UC1 Start.
 
-Denne Use Case regulerer temperaturen i drivhuset, som udgangspunkt vha. vinduesåbner, varmelegeme og luftcirkulation. 
+Denne Use Case regulerer temperaturen i drivhuset, vha. vinduesåbner, varmelegeme og luftcirkulation, med mindre brugeren har slået varmelegeme og/eller luftcirkulation fra. 
 Det kan ske uden luftcirkulation og/eller varmelegeme, hvis brugeren har valgt dette under UC7 Konfigurer System. Det er ikke muligt at aktivere regulering uden at UC10 Monitorering er aktiveret.
 
 \clearpage
 
 \subsection{Use Case Beskrivelser - Fully Dressed}
-For alle Use Cases hvor brugeren navigerer i undermenuer af hovedmenuen, gælder det, at brugeren har mulighed for at gå et skridt tilbage ved at trykke på en ”tilbage knap”. Fremover ved benævningen ”Systemet er operationelt” menes, at systemet er tilsluttet tilstrækkelig strømforsyning og at alt fungerer efter hensigten og at systemet er tilsluttet ethernet.
+For alle Use Cases hvor brugeren navigerer i undermenuer af hovedmenuen, gælder det, at brugeren har mulighed for at gå et skridt tilbage ved at trykke på en ”tilbage knap”. Fremover ved benævningen ”Systemet er operationelt” menes, at systemet er tilsluttet strømforsyning og at alt fungerer samt at systemet er tilsluttet ethernet.
 
 %UC1
 \begin{table}[h]
@@ -275,24 +272,25 @@ For alle Use Cases hvor brugeren navigerer i undermenuer af hovedmenuen, gælder
 \textbf{Initering:}					& Bruger \\ \hline
 \textbf{Aktører:} 					& Bruger (primær) \\ \hline
 \textbf{Reference:} 					& UC10: Monitorering, UC11: Regulering \\ \hline
-\textbf{Antal samtidige forekomster:} & En \\ \hline
+\textbf{Antal samtidige forekomster:} & Én \\ \hline
 \textbf{Forudsætning:} 				& Systemet er stoppet helt, er operationelt og viser hovedmenuen.\\ \hline
-\textbf{Resultat:}					& At systemet er startet helt eller delvist. \\ \hline
+\textbf{Resultat:}					& UC10: Monitorering og evt. UC11: Regulering er startet, systemet viser Hovedmenuen. \\ \hline
 \textbf{Hovedscenarie:}				& 
 
 \begin{packed_enum}
-\item Bruger trykker på monitorerings knap. 
+\item Bruger trykker på "Monitorering". 
 \item System aktiverer UC10: Monitorering. 
-\item Bruger trykker på regulerings knap. 
+\item Bruger trykker på "Regulering". 
 	\begin{packed_item}\itemsep1pt \parskip0pt \parsep0pt
-	\item {[}Ext 3.a : Bruger vælger kun monitorering.{]}
+	\item {[}Ext 3.a : Bruger trykker ikke "Regulering".{]}
 	\end{packed_item}
 \item Systemet aktiverer UC11: Regulering.
+\item UC1 afsluttes.
 \end{packed_enum} \\ \hline
 \textbf{Udvidelser:}				&  
 \textbf{{[}Ext 3.a : Bruger vælger kun monitorering.{]}}
 	\begin{packed_enum}\itemsep1pt \parskip0pt \parsep0pt
-	\item Systemet fortsætter ved pkt. 5 i hovedscenarie.
+	\item Systemet fortsætter ved pkt. 5 i hovedscenariet.
 	\end{packed_enum}
 \\ \hline
 \end{tabularx}
@@ -310,9 +308,9 @@ For alle Use Cases hvor brugeren navigerer i undermenuer af hovedmenuen, gælder
 \textbf{Initering:}					& Bruger \\ \hline
 \textbf{Aktører:} 					& Bruger (primær) \\ \hline
 \textbf{Reference:} 					& UC10: Monitorering, UC11: Regulering \\ \hline
-\textbf{Antal samtidige forekomster:} & En \\ \hline
+\textbf{Antal samtidige forekomster:} & Én \\ \hline
 \textbf{Forudsætning:} 				& Både UC10: Monitorering og UC11: Regulering er startet, systemet er operationelt og viser hovedmenuen.\\ \hline
-\textbf{Resultat:}					& At systemet er stoppet helt eller delvist. \\ \hline
+\textbf{Resultat:}					& UC10: Monitorering og evt. UC11: Regulering er stoppet, systemet viser Hovedmenuen. \\ \hline
 \textbf{Hovedscenarie:}				& 
 
 \begin{packed_enum}
@@ -321,12 +319,14 @@ For alle Use Cases hvor brugeren navigerer i undermenuer af hovedmenuen, gælder
 		\item {[} Ext 1.a: Bruger trykker på regulerings knap.{]}
 	\end{packed_item}
 \item System stopper UC10: Monitorering og UC11: Regulering.
+\item UC2 afsluttes.
 
 \end{packed_enum} \\ \hline
 \textbf{Udvidelser:}				&  
 \textbf{{[}Ext 1.a : Bruger trykker på regulerings knap.{]}}
 	\begin{packed_enum}\itemsep1pt \parskip0pt \parsep0pt
 	\item Systemet stopper UC11: Regulering.
+	\item Systemet fortsætter ved pkt. 3 i hovedscenariet.
 	\end{packed_enum}
 \\ \hline
 \end{tabularx}
@@ -338,17 +338,18 @@ For alle Use Cases hvor brugeren navigerer i undermenuer af hovedmenuen, gælder
 \begin{tabularx}{\textwidth}{| >{\raggedright\arraybackslash}p{3.3 cm} | >{\raggedright\arraybackslash}X |} \hline
 
 \textbf{Navn:} 						& UC3: Overvåg\\ \hline
-\textbf{Mål:}						& Bruger kan se ”live” opdaterede måleværdier. \\ \hline
+\textbf{Mål:}						& At se aktuel status i det fysiske drivhus i Hovedmenuen. \\ \hline
 \textbf{Initering:}					& Bruger \\ \hline
 \textbf{Aktører:} 					& Bruger (primær) \\ \hline
 \textbf{Reference:} 					& Ingen \\ \hline
-\textbf{Antal samtidige forekomster:} & En \\ \hline
+\textbf{Antal samtidige forekomster:} & Én \\ \hline
 \textbf{Forudsætning:} 				& UC10: Monitorering er aktiv, systemet er operationelt og hovedmenuen vises. \\ \hline
-\textbf{Resultat:}					& Der vises et live feed af måleværdier fra data loggen. \\ \hline
+\textbf{Resultat:}					& Brugeren har set et live feed af parametre for det fysiske drivhus. \\ \hline
 \textbf{Hovedscenarie:}				& ~
 
 \begin{packed_enum}
 \item Bruger aflæser måleværdier på brugerfladen.
+\item UC3 afsluttes.
 \end{packed_enum} \\ \hline
 \textbf{Udvidelser:}				& ~
 Ingen \\ \hline
@@ -364,51 +365,49 @@ Ingen \\ \hline
 \begin{tabularx}{\textwidth}{| >{\raggedright\arraybackslash}p{3.3 cm} | >{\raggedright\arraybackslash}X |} \hline
 
 \textbf{Navn:} 						& UC4: Administrer Drivhus\\ \hline
-\textbf{Mål:}						& Bruger har informeret systemet om hvilke planter der er i drivhuset. \\ \hline
+\textbf{Mål:}						& Bruger har informeret systemet om hvilke planter, der er i drivhuset. \\ \hline
 \textbf{Initering:}					& Bruger \\ \hline
 \textbf{Aktører:} 					& Bruger (primær) \\ \hline
 \textbf{Reference:} 					& Ingen \\ \hline
-\textbf{Antal samtidige forekomster:} & En \\ \hline
+\textbf{Antal samtidige forekomster:} & Én \\ \hline
 \textbf{Forudsætning:} 				& Systemet er operationelt og hovedmenuen vises.\\ \hline
-\textbf{Resultat:}					& Bruger har informeret systemet om hvilke planter der er i drivhuset. \\ \hline
+\textbf{Resultat:}					& Konfigureringsfilen er opdateret med informationer fra brugeren. \\ \hline
 \textbf{Hovedscenarie:}				& 
 
 \begin{packed_enum}
-\item Bruger trykker ”Administrer drivhus” i hovedmenu.
-\item System viser undermenu. 
+\item Bruger trykker på ”Administrer drivhus” i hovedmenu.
+\item System viser "Virtuel Drivhus Menu". 
 \item Bruger trykker på ”Tilføj plante”.
 	\begin{packed_item}\itemsep1pt \parskip0pt \parsep0pt
-	\item {[}Alt 3.a : Bruger trykker ”Fjern plante”.{]}
+	\item {[}Alt 3.a : Bruger trykker på en plante, der skal fjernes.{]}
 	\end{packed_item}
 	\begin{packed_item}\itemsep1pt \parskip0pt \parsep0pt
-	\item {[}Alt 3.b : Bruger trykker ”Rediger plante”.{]}
+	\item {[}Alt 3.b : Bruger trykker på en plante, der skal redigeres.{]}
 	\end{packed_item}
-\item System præsenterer bruger for liste af standard planter.
-\item Bruger vælger plante fra plantedatabase.
-\item Systemet opretter planten i det virtuelle drivhus med standardparametre fra plantedatabasen.
-\item System præsenterer opsætningsside for planten.
-\item Bruger redigerer ønskede parametre.
-\item Bruger trykker på gem.
-\item Systemet gemmer brugers valg og præsenterer en liste af planter i drivhuset.
+\item System præsenterer bruger for liste af planter i Plantedatabasen.
+\item Bruger trykker på den plante, der skal tilføjes.
+\item Systemet opretter planten i det virtuelle drivhus med parametrene fra plantedatabasen.
+\item System viser "Planteredigeringsmenu".
+\item Bruger redigerer ønskede parametre og trykker "OK".
+\item Systemet gemmer brugerens valg i konfigurationsfilen og præsenterer "Virtuel Drivhus Menu".
+\item Bruger trykker "Tilbage".
+\item UC4 afsluttes og systemet viser Hovedmenu.
 \end{packed_enum} \\ \hline
 
 \textbf{Alternativ:}				& 
-\textbf{{[}Alt 3.a : Bruger trykker ”Fjern plante”.{]}}
+\textbf{{[}Alt 3.a : Bruger trykker på en plante, der skal fjernes.{]}}
 \begin{packed_enum}
 \setcounter{enumi}{3}
-\item Systemet præsenterer en liste af planter i drivhuset.
-\item Bruger vælger plante der ønskes fjernet.
-\item System præsenterer opsætningsside for planten.
-\item Bruger vælger ”Fjern Plante”.
-\item Systemet fjerner planten fra det virtuelle drivhus og markerer planten som fjernet i dataloggen.
-\item Systemet præsenterer en liste af planter i drivhuset.
+\item System viser "Planteredigeringsmenu".
+\item Bruger trykker på ”Fjern”.
+\item Systemet fjerner planten fra det virtuelle drivhus og markerer planten som fjernet i data loggen.
+\item Systemet præsenterer "Virtuel Drivhus Menu".
+\item UC4 fortsætter fra pkt. 10 i hovedscenariet.
 \end{packed_enum}
-\textbf{{[}Alt 3.b : Bruger trykker ”Rediger plante”.{]}}
+\textbf{{[}Alt 3.b : Bruger trykker på en plante, der skal redigeres.{]}}
 \begin{packed_enum}
 \setcounter{enumi}{3}
-\item Systemet præsenterer en liste af planter i det virtuelle drivhus.
-\item Bruger vælger en plante der ønskes redigeret.
-\item Fortsætter fra pkt. 7 i hovedscenariet.
+\item UC4 fortsætter fra pkt. 7 i hovedscenariet.
 \end{packed_enum}
 \\ \hline
 
@@ -426,22 +425,22 @@ Ingen
 \begin{tabularx}{\textwidth}{| >{\raggedright\arraybackslash}p{3.3 cm} | >{\raggedright\arraybackslash}X |} \hline
 
 \textbf{Navn:} 						& UC5: Se Historik\\ \hline
-\textbf{Mål:}						& Bruger kan se historikken for dataloggen op til et år tilbage. \\ \hline
+\textbf{Mål:}						& At se historik fra data loggen op til et år tilbage. \\ \hline
 \textbf{Initering:}					& Bruger \\ \hline
 \textbf{Aktører:} 					& Bruger (primær) \\ \hline
 \textbf{Reference:} 					& Ingen \\ \hline
-\textbf{Antal samtidige forekomster:} & En \\ \hline
+\textbf{Antal samtidige forekomster:} & Én \\ \hline
 \textbf{Forudsætning:} 				& Systemet er operationelt og hovedmenuen vises. \\ \hline
-\textbf{Resultat:}					& Brugeren vises en graf med oplysninger. \\ \hline
+\textbf{Resultat:}					& Brugeren har set historik, systemet viser Hovedmenuen. \\ \hline
 \textbf{Hovedscenarie:}				& 
 
 \begin{packed_enum}
 \item Bruger trykker ”Se Historik” i hovedmenu.
-\item System viser "historikmenu". 
+\item System viser "Historikmenu". 
 \item Bruger vælger den ønskede tidshorisont (uge/måned/år).
 \item Systemet viser en graf over den valgte periode.
 \item Bruger kan nu vælge at deaktivere nogle måleværdier. Lys, temperatur, luftfugtighed kan deaktiveres således at de kan vises hver for sig eller samtidigt. Desuden kan brugeren vælge mellem jordfugtighed for planter i drivhuset.
-\item Bruger trykker "Tilbage", UC5 afsluttes og hovedmenuen vises.
+\item Bruger trykker "Tilbage", UC5 afsluttes og Hovedmenuen vises.
 \end{packed_enum} \\ \hline
 \end{tabularx}
 \caption{UC5: Se Historik}
@@ -454,49 +453,46 @@ Ingen
 \begin{tabularx}{\textwidth}{| >{\raggedright\arraybackslash}p{3.3 cm} | >{\raggedright\arraybackslash}X |} \hline
 
 \textbf{Navn:} 						& UC6: Administrer Plantedatabase\\ \hline
-\textbf{Mål:}						& Brugeren ser planter i plantedatabasen. \\ \hline
+\textbf{Mål:}						& At administrere planter i plantedatabasen. \\ \hline
 \textbf{Initering:}					& Bruger \\ \hline
 \textbf{Aktører:} 					& Bruger (primær) \\ \hline
 \textbf{Reference:} 					& Ingen \\ \hline
-\textbf{Antal samtidige forekomster:} & En \\ \hline
+\textbf{Antal samtidige forekomster:} & Én \\ \hline
 \textbf{Forudsætning:} 				& Systemet er operationelt og hovedmenuen vises. \\ \hline
-\textbf{Resultat:}					& Bruger har tilføjet en plante til plantedatabasen. \\ \hline
+\textbf{Resultat:}					& Brugeren har tilføjet, redigeret og/eller fjernet plante i plantedatabasen. Systemet viser Hovedmenuen.\\ \hline
 \textbf{Hovedscenarie:}				& 
 
 \begin{packed_enum}
-\item Bruger trykker ”Administrer plantedatabase” i hovedmenu.
-\item System viser undermenu. 
-\item Bruger trykker på tilføj data. 
+\item Bruger trykker ”Administrer Plantedatabase” i hovedmenu.
+\item System viser "Plantedatabasemenu". 
+\item Bruger trykker på "Tilføj Data". 
 	\begin{packed_item}\itemsep1pt \parskip0pt \parsep0pt
-	\item {[}Alt 3.a : Bruger trykker fjern data.{]}
+	\item {[}Alt 3.a : Bruger trykker på en plante, der skal fjernes. {]}
 	\end{packed_item}
 	\begin{packed_item}\itemsep1pt \parskip0pt \parsep0pt
-	\item {[}Alt 3.b : Bruger trykker rediger data.{]}
+	\item {[}Alt 3.b : Bruger trykker på en plante, der skal redigeres. {]}
 	\end{packed_item}
-\item Systemet opretter en plante med standard parametre og præsenterer opsætningsside for planten.
-\item Bruger redigerer ønskede parametre.
-\item Bruger trykker på gem.
-\item Systemet gemmer brugerens valg og præsenterer en liste af planter i plantedatabasen.
+\item Systemet opretter en plante med standardparametre og præsenterer "Databaseredigeringsmenu".
+\item Bruger redigerer ønskede parametre og trykker "OK".
+\item Systemet gemmer brugerens valg og viser "Plantedatabasemenu".
+\item Bruger trykker "Tilbage".
+\item UC6 afsluttes og systemet viser Hovedmenuen.
 \end{packed_enum} \\ \hline
 
 \textbf{Alternativ:}				& 
-\textbf{{[}Alt 3.a : Bruger trykker fjern data.{]}}
+\textbf{{[}Alt 3.a : Bruger trykker på en plante, der skal fjernes.{]}}
 \begin{packed_enum}
 \setcounter{enumi}{3}
-\item Systemet præsenterer en liste af planter der er mulige at fjerne fra plantedatabasen.
-\item Bruger vælger plante der ønskes fjernet.
-\item System præsenterer opsætningsside for planten.
-\item Bruger vælger fjern data.
-\item Systemet fjerner planten fra plantedatabasen.
-\item Systemet præsenterer bruger for liste af planter i plantedatabasen.
+\item System viser "Databaseredigeringsmenu".
+\item Bruger vælger "Fjern Data" og trykker "OK".
+\item Systemet fjerner planten fra Plantedatabasen og viser "Plantedatabasemenu".
+\item UC6 fortsætter fra pkt. 7 i hovedscenariet. 
 \end{packed_enum}
-\textbf{{[}Alt 3.b : Bruger trykker rediger data.{]}}
+\textbf{{[}Alt 3.b : Bruger trykker på en plante, der skal redigeres.{]}}
 \begin{packed_enum}
 \setcounter{enumi}{3}
-\item Systemet præsenterer en liste af redigerbare planter i det plantedatabasen.
-\item Bruger vælger en plante der ønskes redigeret.
-\item System præsenterer opsætningsside for planten.
-\item Fortsætter fra pkt. 5 i hovedscenariet.
+\item Systemet viser "Databaseredigeringsmenu".
+\item UC6 fortsætter fra pkt. 5 i hovedscenariet.
 \end{packed_enum}
 \\ \hline
 
@@ -510,65 +506,65 @@ Ingen
 
 \clearpage
 
-
-%TODO : Lav en LTXtables af denne.
 \begin{table}[!h]
 \begin{tabularx}{\textwidth}{| >{\raggedright\arraybackslash}p{3.3 cm} | >{\raggedright\arraybackslash}X |} \hline
 \textbf{Navn:} 						& UC7: Konfigurer System\\ \hline
-\textbf{Mål:}						& Systemet er blevet konfigureret. \\ \hline
+\textbf{Mål:}						& At konfigurere indstillinger for systemet. \\ \hline
 \textbf{Initering:}					& Bruger \\ \hline
 \textbf{Aktører:} 					& Bruger (primær) \\ \hline
 \textbf{Reference:} 					& Ingen \\ \hline
-\textbf{Antal samtidige forekomster:} & En \\ \hline
+\textbf{Antal samtidige forekomster:} & Én \\ \hline
 \textbf{Forudsætning:} 				& Systemet er operationelt, regulering er aktiveret og hovedmenuen er vist. \\ \hline
-\textbf{Resultat:}					& Systemet er konfigureret efter brugerens ønske. \\ \hline
+\textbf{Resultat:}					& Systemet er konfigureret efter brugerens ønske. Hovedmenuen vises. \\ \hline
 \textbf{Hovedscenarie:}				& 
 
 \begin{packed_enum}
 \item Bruger trykker ”Konfigurer System”.
 \item System viser "Konfigurationsmenu". 
-\item Bruger vælger ”Tilføj E-mail adresse”. 
+\item Bruger vælger "E-mail Adresser”. 
 	\begin{packed_item}\itemsep1pt \parskip0pt \parsep0pt
-	\item {[}Ext 3.a : Bruger vælger ”Notifikationer”.{]}
+	\item {[}Alt 3.a : Bruger vælger ”Notifikationer”.{]}
 	\end{packed_item}
 	\begin{packed_item}\itemsep1pt \parskip0pt \parsep0pt
-	\item {[}Ext 3.b : Bruger vælger ”Indstil dato/tid”.{]}
+	\item {[}Alt 3.b : Bruger vælger ”Indstil dato/tid”.{]}
 	\end{packed_item}
 	\begin{packed_item}\itemsep1pt \parskip0pt \parsep0pt
-	\item {[}Ext 3.c : Bruger vælger ”Hardware indstillinger”.{]}
+	\item {[}Alt 3.c : Bruger vælger ”Hardware indstillinger”.{]}
 	\end{packed_item}
 \item Systemet viser "E-mail menu".
-\item Bruger vælger "Tilføj ny", og indtaster en E-mail adresse.
-\item Bruger trykker ”OK”.
-\item Systemet gemmer E-mail adressen i konfigurationsfilen og E-mail adressen vises i listen af nuværende E-mail adresser.
+\item Brugeren indtaster op til tre ønskede E-mail adresser og trykker "OK".
+\item Systemet gemmer E-mail adresserne i konfigurationsfilen. Systemet viser "Konfigurationsmenu".
 \item Brugeren trykker "tilbage".
-\item Systemet afslutter UC7: Konfigurer System, og hovedmenuen vises.
+\item UC7 afsluttes og Hovedmenuen vises.
 
 \end{packed_enum} \\ \hline
-\textbf{Udvidelser:}				&  
-\textbf{{[}Ext 3.a : Bruger vælger ”Notifikationer”.{]}}
+\textbf{Alternativ:}				&  
+\textbf{{[}Alt 3.a : Bruger vælger ”Notifikationer”.{]}}
 	\begin{packed_enum}\itemsep1pt \parskip0pt \parsep0pt
+	\setcounter{enumi}{3}
 	\item System  viser "Notifikationsmenu".
 	\item Brugeren indtaster ønskede indstillinger for notifikationer.
 	\item Brugeren trykker "OK".
 	\item Systemet gemmer indstillingerne i konfigurationsfilen og viser "Konfigurationsmenu".
-	\item UC7 fortsætter fra punkt 8.
+	\item UC7 fortsætter fra punkt 7 i hovedscenariet.
 	\end{packed_enum}
-\textbf{{[}Ext 3.b : Bruger vælger ”Indstil dato/tid”.{]}}
+\textbf{{[}Alt 3.b : Bruger vælger ”Indstil dato/tid”.{]}}
 	\begin{packed_enum}\itemsep1pt \parskip0pt \parsep0pt
+	\setcounter{enumi}{3}
 	\item Systemet viser "Tid- og datomenu".
 	\item Bruger indtaster dato og tid.
 	\item Brugeren trykker "OK".
-	\item System gemmer de indtastede data i konfigurationsfilen og viser "Tid- og datomenu".
-	\item UC7 fortsætter fra punkt 8. 
+	\item System gemmer de indtastede data i konfigurationsfilen og viser "Konfigurationsmenu".
+	\item UC7 fortsætter fra punkt 7. 
 	\end{packed_enum}
-\textbf{{[}Ext 3.c : Bruger vælger ”Hardware indstillinger”.{]}}
+\textbf{{[}Alt 3.c : Bruger vælger ”Hardware indstillinger”.{]}}
 	\begin{packed_enum}\itemsep1pt \parskip0pt \parsep0pt
-	\item System viser "Hardware indstillingsmenu".
+	\setcounter{enumi}{3}
+	\item System viser "Hardware Indstillingsmenu".
 	\item Brugeren vælger blæser on/off og/eller varmelegeme on/off.
 	\item Brugeren trykker "OK".
-	\item System gemmer de indtastede indstillinger i konfigurationsfilen og viser "Hardware indstillingsmenu".
-	\item UC7 fortsætter fra punkt 8.
+	\item System gemmer de indtastede indstillinger i konfigurationsfilen og viser "Konfigurationsmenu".
+	\item UC7 fortsætter fra punkt 7 i hovedscenariet.
 	\end{packed_enum}
 \\ \hline
 \end{tabularx}
@@ -582,18 +578,18 @@ Ingen
 \begin{tabularx}{\textwidth}{| >{\raggedright\arraybackslash}p{3.3 cm} | >{\raggedright\arraybackslash}X |} \hline
 
 \textbf{Navn:} 						& UC8: Se Systemlog\\ \hline
-\textbf{Mål:}						& Systemloggen vises. \\ \hline
+\textbf{Mål:}						& Brugeren aflæser data i system log. \\ \hline
 \textbf{Initering:}					& Bruger \\ \hline
 \textbf{Aktører:} 					& Bruger \\ \hline
 \textbf{Reference:} 				& Ingen \\ \hline
-\textbf{Antal samtidige forekomster:} & En \\ \hline
+\textbf{Antal samtidige forekomster:} & Én \\ \hline
 \textbf{Forudsætning:} 				& Systemet er operationelt og hovedmenu vises. \\ \hline
-\textbf{Resultat:}					& Systemloggen vises. \\ \hline
+\textbf{Resultat:}					& Brugeren har set system log og Hovedmenuen er vist. \\ \hline
 \textbf{Hovedscenarie:}				& 
 
 \begin{packed_enum}
 \item Bruger vælger ”Se Systemlog”.
-\item Systemet viser en liste af hændelser fra systemloggen på skærmen.
+\item Systemet viser en "Systemlogmenu", der indeholder en liste over hændelser i systemet.
 \item Bruger vælger ”Tilbage”.
 \item UC8 afsluttes og hovedmenuen vises. 
 \end{packed_enum} \\ \hline
@@ -610,13 +606,13 @@ Ingen
 \begin{tabularx}{\textwidth}{| >{\raggedright\arraybackslash}p{3.3 cm} | >{\raggedright\arraybackslash}X |} \hline
 
 \textbf{Navn:} 						& UC9: Rapportering\\ \hline
-\textbf{Mål:}						& Bruger modtager notifikations E-mails. \\ \hline
+\textbf{Mål:}						& Bruger modtager notifikations- og advarsels E-mails. \\ \hline
 \textbf{Initering:}					& UC10: Monitorering \\ \hline
 \textbf{Aktører:} 					& Bruger \\ \hline
 \textbf{Reference:} 					& UC10: Monitorering \\ \hline
-\textbf{Antal samtidige forekomster:} & En \\ \hline
+\textbf{Antal samtidige forekomster:} & Én \\ \hline
 \textbf{Forudsætning:} 				& UC10 er aktiv, systemet er operationelt og notifikations- og advarselsemail er slået til. \\ \hline
-\textbf{Resultat:}					& Bruger modtager en E-mail. \\ \hline
+\textbf{Resultat:}					& Systemet har sendt notifikations- og advarsels E-mail. \\ \hline
 \textbf{Hovedscenarie:}				& 
 
 \begin{packed_enum}
@@ -633,38 +629,37 @@ Ingen \\ \hline
 
 \clearpage
  
-
 \begin{table}[h]
 \begin{tabularx}{\textwidth}{| >{\raggedright\arraybackslash}p{3.3 cm} | >{\raggedright\arraybackslash}X |} \hline
 
 \textbf{Navn:} 						& UC10: Monitorering\\ \hline
-\textbf{Mål:}						& Systemet overvåger drivhus parametre. \\ \hline
+\textbf{Mål:}						& At opdatere live parametre i Hovedmenuen. \\ \hline
 \textbf{Initering:}					& UC1: Start \\ \hline
-\textbf{Aktører:} 					& Drivhusklima (sekundær) \\ \hline
+\textbf{Aktører:} 					& Drivhusklima \\ \hline
 \textbf{Reference:} 					& UC1: Start, UC2: Stop, UC9: Rapportering \\ \hline
-\textbf{Antal samtidige forekomster:} & En \\ \hline
+\textbf{Antal samtidige forekomster:} & Én \\ \hline
 \textbf{Forudsætning:} 				& UC1 er gennemført og systemet er operationelt. \\ \hline
-\textbf{Resultat:}					& Systemet overvåger drivhus parametre. \\ \hline
+\textbf{Resultat:}					& Hovedmenuen er opdateret med nyeste data fra data loggen. \\ \hline
 \textbf{Hovedscenarie:}				& 
 
 \begin{packed_enum}
-\item Systemet indlæser konfigureringsfilen.
-\item Systemet aflæser måleværdier fra sensorer og gemmer dem i dataloggen. 
+\item Systemet indlæser konfigurationsfilen.
+\item Systemet aflæser måleværdier fra sensorer og gemmer dem i data loggen. 
+\item Systemet opdaterer live-status i hovedmenuen med de målte værdier.
 \item Systemet sammenligner aflæste værdier fra sensorerne med ønskede værdier fra det virtuelle drivhus.
-\item Systemet opdaterer live-status i hovedmenuen med de afmålte værdier.
+\item Målte værdier ligger inden for tolerancerne i forhold til ønskede værdier.
 	\begin{packed_item}\itemsep1pt \parskip0pt \parsep0pt
 	\item {[}Ext 4.a : Værdierne ligger ikke inden for tolerancerne.{]}
 	\end{packed_item}
-\item Systemet farver datafelter for jordfugtighed grønne.
+\item Systemet farver alle datafelter for jordfugtighed grønne.
 \item Systemet venter et minut og fortsætter fra pkt. 1 i hovedscenariet.
-
 \end{packed_enum} \\ \hline
 \textbf{Udvidelser:}				&  
 \textbf{{[}Ext 4.a : Værdierne ligger ikke inden for tolerancerne.{]}}
 	\begin{packed_enum}\itemsep1pt \parskip0pt \parsep0pt
 	\item Systemet aktiverer UC9: Rapportering.
-	\item Systemet markerer datafelter, der ligger udenfor tolerenceområderne røde.
-	\item Systemet fortsætter fra pkt. 6 i hovedscenariet.
+	\item Systemet markerer datafelter, der ligger udenfor tolerancerne røde.
+	\item Systemet fortsætter fra pkt. 7 i hovedscenariet.
 	\end{packed_enum}
 \\ \hline
 \end{tabularx}
@@ -679,24 +674,24 @@ Ingen \\ \hline
 \begin{tabularx}{\textwidth}{| >{\raggedright\arraybackslash}p{3.3 cm} | >{\raggedright\arraybackslash}X |} \hline
 
 \textbf{Navn:} 						& UC11: Regulering\\ \hline
-\textbf{Mål:}						& Regulering af parametre i drivhus påbegyndt. \\ \hline
+\textbf{Mål:}						& At regulere temperaturen i det fysiske drivhus til ønsket værdi, samt at jordfugtigheden for hver plante stemmer overens med den angivne jordfugtighed i det virtuelle drivhus. \\ \hline
 \textbf{Initering:}					& UC1: Start \\ \hline
-\textbf{Aktører:} 					& Drivhusklima (sekundær) \\ \hline
+\textbf{Aktører:} 					& Drivhusklima \\ \hline
 \textbf{Reference:} 					& UC1: Start \\ \hline
-\textbf{Antal samtidige forekomster:} & En \\ \hline
+\textbf{Antal samtidige forekomster:} & Én \\ \hline
 \textbf{Forudsætning:} 				& Systemet er operationelt og regulering er aktiveret. \\ \hline
-\textbf{Resultat:}					& Systemet påbegynder regulering af drivhus efter hensigt. \\ \hline
+\textbf{Resultat:}					& Aktuatorer for vindue, blæsere, varmelegeme og vanding er evt. aktiveret. \\ \hline
 \textbf{Hovedscenarie:}				& 
 
 \begin{packed_enum}
 \item Systemet indlæser konfigurationsfilen.
-\item Systemet sammenligner nyeste værdier for jordfugtighed fra dataloggen med ønskede værdier fra det virtuelle drivhus.
-\item Værdierne ligger inden for tolerancerne.
+\item Systemet sammenligner nyeste værdier for jordfugtighed fra data loggen med ønskede værdier fra det virtuelle drivhus.
+\item Jordfugtværdierne ligger inden for tolerancerne.
 	\begin{packed_item}\itemsep1pt \parskip0pt \parsep0pt
-	\item {[}Ext 3.a : Værdierne ligger under tolerancen.{]}
+	\item {[}Ext 3.a : En eller flere jordfugtværdier ligger under tolerancen.{]}
 	\end{packed_item}
-\item Systemet sammenligner nyeste værdier for temperatur fra dataloggen med ideelle værdier fra plantedatabasen.
-\item Værdien ligger inden for tolerancerne.
+\item Systemet sammenligner nyeste værdi for temperatur fra data loggen med angiven værdi i det virtuelle drivhus.
+\item Værdien ligger inden for tolerancen.
 	\begin{packed_item}\itemsep1pt \parskip0pt \parsep0pt
 	\item {[}Ext 5.a : Værdien for temperatur ligger over tolerancen.{]}
 	\end{packed_item}
@@ -706,9 +701,9 @@ Ingen \\ \hline
 \item Systemet venter 1 minut og fortsætter fra pkt. 1 i hovedscenariet.
 \end{packed_enum} \\ \hline
 \textbf{Udvidelser:}				&  
-\textbf{{[}Ext 3.a : Værdierne ligger under tolerancen.{]}}
+\textbf{{[}Ext 3.a : En eller flere jordfugtværdier ligger under tolerancen.{]}}
 	\begin{packed_enum}\itemsep1pt \parskip0pt \parsep0pt
-	\item Systemet aktiverer aktuator for vanding.
+	\item Systemet aktiverer aktuator for vanding for den eller de planter der er under tolerancen.
 	\item Systemet fortsætter fra pkt. 4 i hovedscenariet.
 	\end{packed_enum}
 \textbf{{[}Ext 5.a : Værdien for temperatur ligger over tolerancen.{]}}
