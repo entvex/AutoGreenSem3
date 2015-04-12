@@ -1,0 +1,25 @@
+\clearpage
+\section{Protokol for UART} \label{UART_Protokol} %TODO Skift dette label ud med 'sec:UART_protokol' her og i samtlige steder den bliver brugt :)
+
+I projektforløbets senere faser deles arbejdet op mellem en HW- og en SW-gruppe. SW gruppen har ansvar for design og implementering af SW på DevKit8000, mens HW gruppen har ansvar for design og realisering af HW og SW på PSoC4 Pioneer Kits. UART kommunikationen mellem PSoC Master og DevKit8000 defineres derved som grænsefladen mellem HW og SW, omend en del af funktionaliteten på PSoC4 Pioneer Kits realiseres vha. SW.
+
+\subsection{UART indstillinger}
+
+\begin{itemize}
+\item Baud rate: 9600 
+\item Antal bits: 8
+\item Antal stop bits: 1
+\item Paritet: Even
+\end{itemize}
+
+\subsection{Datavalidering}
+
+For at sikre validering af data sendt fra DevKit8000 til PSoC4 Master, sendes der altid svar tilbage fra PSoC4 Master til DevKit8000. Svaret består af en gentagelse af den modtagne kommando og evt. nogle dataværdier. \newline
+Såfremt der går noget galt i I2C kommunikationen i HW delen af systemet, sendes en fejlkode til DevKit8000. 
+Derved er der mulighed for at SW på DevKit8000 kan logge fejlhændelser i systemloggen, og fx gensende kommandoer eller kassere data. \newline
+Da hver enkelt byte, der sendes via UART er vedlagt en paritetsbit sikrer vi os til dels at hver byte overføres korrekt. \newline
+Når DevKit8000 sender en kommando via UART skal PSoC Master svare indenfor 2 sekunder. Såfremt dette ikke sker, sendes kommandoen igen mindst to gange. Alle kommandoer udføres serielt, hvilket vil sige at næste kommando ikke sendes før der er modtaget svar på den foregående.
+
+\subsection{Kommandoer}
+
+\LTXtable{\textwidth}{Systemarkitektur/UARTprotokol/kommandoer}

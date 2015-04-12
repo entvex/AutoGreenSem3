@@ -1,0 +1,44 @@
+Indstillinger: David
+bool SetMonitorering(bool)
+bool SetRegulering(bool)
+bool SetVirtualPlant(int id, plant)
+bool DelVirtualPlant(int id)
+bool GetEmails(String &,String &,String &)
+bool SetEmails(String &,String &,String &)
+bool GetHardware(bool &,bool &)
+bool SetHardware(bool &,bool &)
+bool GetDateTime(int &,int &,int &,int &)
+bool SetDateTime(int &,int &,int &,int &)
+bool GetNotifications(bool &,bool &)
+bool SetNotifications(bool &,bool &)
+void GetData(int &temp, int &homidity, int &plant[1..6])
+
+Data-log: Kasper
+void GetData(int &time[] int &temp[], int &light[], int &humidity[], int &ground[1..6][])
+void InsertSensorData(const &SensorData)
+void GetNewestData(int &temp, int &homidity, int &plant[1..6])
+
+Plantedatabasen: David
+plant[] GetPlantList()
+plant GetPlant(int ID)
+plant CreatePlant()
+void DeletePlant(int ID)
+
+Systemlog: Kristian
+bool AddMessage(string)
+void PrintSystemLog()
+
+Rapport: Kristian
+void ActivateRapport()
+void sendDailyRapport()
+void sendWarningRapport()
+
+UART: Kasper
+int ScanForSensors()
+SensorData GetSensorData()
+
+Monitor: Kristian
+void CompareData()
+
+Regulator: Kasper
+void ControlData()

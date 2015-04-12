@@ -1,0 +1,33 @@
+lille beskrivelse til Private data
+
+
+DoublyLinkedlist	-færdiggøres -David Done
+			-Screenshots af mockup af GUI. - David Done
+
+Sekvensdiagrammer	-ændre tid til Date Struct -Kristian
+			-fix Regulator  -Kasper
+
+
+
+Regulator 		-beskrivelse af Private datatyper -Kasper
+
+
+Systemlog 		-2 methoder aftalt indsættes _kristian
+
+
+
+Overordnet 		-bedre beskrivelse af Private data -Alle
+			- Head, tail på DoublyLinkedlister - Inkluderes i biblioteket!
+
+
+
+
+Andre Opgaver		-Threads skrives videre på med Trådsikring
+				-brug af mutex (!semophores)
+				-conditional variables signalering
+				-psudo-kode eksempel
+				-undgå deadlocks, osv..
+			-afsnit om QT´- standby
+
+
+

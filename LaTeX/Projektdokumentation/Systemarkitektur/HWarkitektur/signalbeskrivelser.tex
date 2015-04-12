@@ -1,0 +1,31 @@
+\begin{longtable}{| l | >{\raggedright}X | >{\raggedright}X | >{\raggedright\arraybackslash}X |>{\raggedright}X |}
+\hline
+	\textbf{Signaltype} & \textbf{Funktion} & \textbf{Tolerancer} & \textbf{Kommentar}\\ \hline
+	VCC & Forsyning til strømforsyning & 12V $\pm$ 0,25V \newline 3A max. & Lab.forsyning  \\\hline	
+	VDD & Forsyning til alle PSoC4 Pioneer Kits og DevKit8000. & 5V DC $\pm$ 0.15V, \newline 0.5A max & ~ - \\\hline
+	VEE & Forsyning til sensorer & 3.3V DC $\pm$ 0.1V, \newline 0.1A max & ~ - \\\hline
+	12V DC Blæsere & Forsyning til blæsere. & 12V DC $\pm$ 0,25V, \newline 140mA max. & - \\\hline	
+	12V DC Motor & Forsyning til vinduesmotor. & 12V $\pm$ 0,25V, \newline 500mA max. & - \\\hline
+	230V AC & Forsyning til varmelegeme. & 230V AC $\pm$ 10\%, \newline 50 Hz, \newline 0.3A max & - \\\hline
+	Analog & Analogt målesignal fra jordfugtmåler. & 0-3.3V $\pm$ 0.1V & 
+	Niveauer: \newline
+	1: (0.0-0.1)*VEE \newline 
+	2: (0.1-0.2)*VEE \newline
+	3: (0.2-0.3)*VEE \newline
+	4: (0.3-0.4)*VEE \newline
+	5: (0.4-0.5)*VEE \newline
+	6: (0.5-0.6)*VEE \newline
+	7: (0.6-0.7)*VEE \newline
+	8: (0.7-0.8)*VEE \newline
+	9: (0.8-0.9)*VEE \newline
+	10: (0.9-1.0)*VEE \newline	
+	Hysterese: 50mV\\\hline		
+	Bool & Digitalt signal til styring af vanding og varmelegeme. & 0-3.3V & 1=True: 2.8-3.3V \newline 0=False: 0-0.4V \\\hline	
+	Ctrl & Styring af stepper motor & 0-3.3V & 1=True: 2.8-3.3V \newline 0=False: 0-0.4V  \newline Består af fire signaler: \newline 1a, 2a, 1b, 2b \\\hline	
+	GND & Stel & 0V & Reference \\\hline	
+	I2C & Kommunikation mellem \IIC enheder. & 0-3.3V & 1=True: 2.8-3.3V \newline 0=False: 0-0.4V \newline Består af to signaler: \newline sca og scl \\\hline	
+	UART & Kommunikation mellem DevKit8000 og Master & 0-5V & 1=True: 4.5-5V \newline 0=False: 0-0.4V \newline Består af 2 signaler: \newline Tx og Rx \\\hline	
+	PWM & Styring af blæsere vha. pulsbreddemodulation. & 0-3.3V \newline 1 kHz & Duty cycle styres fra 0-100\% i trin fra 0-255. Hvor 0 svarer til 0\% og 255 svarer til 100\% \\\hline
+\caption{Beskrivelse af signaler.}
+\label{tbl:signalbeskriv}
+\end{longtable}
