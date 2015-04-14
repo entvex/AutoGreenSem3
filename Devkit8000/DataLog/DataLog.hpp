@@ -24,9 +24,10 @@ public:
 
 	}
 
-void InsertSensorData(const SensorData &SensorData)
+	void InsertSensorData(const SensorData &SensorData)
 	{
-
+		list.headInsert(SensorData);
+		list.forwardTraversing();
 	}
 
 void GetNewestData(int &time,int &temp,int &light,int &humidity )

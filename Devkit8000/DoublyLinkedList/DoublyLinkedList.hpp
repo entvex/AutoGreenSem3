@@ -91,15 +91,15 @@ public:
 	}
 
 	virtual void forwardTraversing() {
-		for (Node<A_Type>* cursor = headPtr; cursor != nullptr;
-				cursor = cursor->next) {
+		for (Node<A_Type>* cursor = headPtr; cursor != nullptr; cursor = cursor->next)
+		{
 			cout << cursor->info << endl;
 		}
 	}
 
 	virtual void backTraversing() {
-		for (Node<A_Type>* cursor = tailPtr; cursor != nullptr;
-				cursor = cursor->prev) {
+		for (Node<A_Type>* cursor = tailPtr; cursor != nullptr; cursor = cursor->prev)
+		{
 			cout << cursor->info << endl;
 		}
 	}
