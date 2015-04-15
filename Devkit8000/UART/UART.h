@@ -16,11 +16,13 @@ public:
 
 	void connect()
 	{
+		char mode[] = { '8', 'N', '1', 0 };
 		while (RS232_OpenComport(cport_nr, bdrate, mode))
 		{
-			cout << "cannot connect to port number " << cport_nr;
+			cout << "cannot connect to port number " << cport_nr << endl;
 			cport_nr++;
 		}
+		cout << " connection made on port: " << cport_nr << endl;
 
 	}
 	
@@ -29,10 +31,20 @@ public:
 
 	int getSensor()
 	{
-		senddata("GD");
-		recievedata();
-		if (1 == 1)
+		senddata("temp");
+		
+		if (recievedata() == 0)
+		{
+		
+			cout << "SUCESS!";
 			return 6;
+
+		}
+		else
+		{
+			cout << "failure!";
+			return 0;
+		}
 
 	}
 
@@ -56,30 +68,29 @@ private:
 
 	int cport_nr = 0;
 	int bdrate = 9600;
-	char mode[] = { '8', 'N', '1', 0 };
-	unsigned char buf[5];
+	unsigned char buf[2];
 
 
-	bool recievedata()
+	int recievedata()
 	{
 
 		while (1)
 		{
 
+			Sleep(1000);
+			int n = RS232_PollComport(cport_nr, buf, 2);
+			Sleep(1000);
+			
+				if (buf[0] == 'T')
+				{
+					return 0;
+				}
+				else if (buf[0] == 'X' && buf[1] == 'T')
+				{
+					return 1;
+				}
 
-			int n = RS232_PollComport(cport_nr, buf, 1);
-
-			if (buf[0] == 'Tx')
-			{
-				return 0;
-			}
-			else if (buf[0] == 'Lx')
-			{
-				return 1;
-			}
-
-
-		
+				cout << buf[0] << " " << buf[1] << endl;
 		}
 	}
 	void senddata(string command_)
@@ -110,7 +121,7 @@ private:
 			strcpy(command[1], "K");
 		else if (command_ == "window")
 			strcpy(command[1], "W");
-		else if (command_ == "vent)
+		else if (command_ == "vent")
 			strcpy(command[1], "V");
 
 
