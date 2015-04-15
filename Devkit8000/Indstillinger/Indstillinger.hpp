@@ -45,7 +45,8 @@ class Indstillinger {
 
 	void GetHardware(bool &Varmelegeme, bool &blæserne)
 	{
-
+		Varmelegeme = this->Varmelegeme;
+		blæserne = this->blæserne;
 	}
 
 	void SetHardware(const bool Varmelegeme, const bool blæserne)
@@ -69,11 +70,10 @@ class Indstillinger {
 
 	}
 
-	void GetData(int &temp, int &humidity, int &plant[1..6])
+	void GetData(int &temp, int &humidity, int &plant)
 	{
 
 	}
-
 
 private:
 
