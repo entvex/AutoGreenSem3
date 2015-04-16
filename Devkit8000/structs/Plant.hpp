@@ -10,4 +10,5 @@ using namespace std;
 struct Plant
 {
 	int DataSomGivgerMening;
+	bool Enable;
 };
