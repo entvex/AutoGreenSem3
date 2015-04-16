@@ -5,13 +5,21 @@
 #include <string.h>
 using namespace std;
 
+struct SensorData
+{
+	int temp =0;
+	int light =0;
+	int humidity =0;
+};
+
 
 class UART
 {
 public:
 	UART()
 	{
-		
+		cport_nr = 0;
+		bdrate = 9600
 	}
 
 	void connect()
@@ -25,49 +33,64 @@ public:
 		cout << " connection made on port: " << cport_nr << endl;
 
 	}
-	
+
 
 
 
 	int getSensor()
-	{
-		senddata("temp");
-		
-		if (recievedata() == 0)
-		{
-		
-			cout << "SUCESS!";
-			return 6;
-
-		}
-		else
-		{
-			cout << "failure!";
-			return 0;
-		}
+	{ 
+		// later inplementation
 
 	}
 
-	void getSensorData()
+	SensorData getSensorData()
 	{
+		SensorData newdata;
 		//void ændres til Sensordata
-		senddata("TEMP");
-		recievedata();
-		senddata("HUM");
-		recievedata();
-		senddata("LIGHT");
-		recievedata();
-		senddata("GND1");
-		recievedata();
-		senddata("GND2");
-		recievedata();
+		while (newdata.temp <= 0)
+		{
+		
+		senddata("temp");
+		int data = recievedata();
+		if (data != -1)
+		{
+		
+			newdata.temp = (data/2)-20;
+		}
+		}
+		while (newdata.humidity <= 0)
+		{
 
+			senddata("airhum");
+			int data = recievedata();
+			if (data != -2)
+			{
+
+				newdata.humidity = data;
+			}
+		}
+
+		while (newdata.light <= 0)
+		{
+
+			senddata("light");
+			int data = recievedata();
+			if (data != -3)
+			{
+
+				newdata.light = data;
+			}
+		}
+
+
+
+		return newdata;
 	}
 
 private:
 
-	int cport_nr = 0;
-	int bdrate = 9600;
+	int cport_nr;
+	int bdrate;
 	unsigned char buf[2];
 
 
@@ -79,18 +102,37 @@ private:
 
 			Sleep(1000);
 			int n = RS232_PollComport(cport_nr, buf, 2);
-			Sleep(1000);
 			
-				if (buf[0] == 'T')
-				{
-					return 0;
-				}
-				else if (buf[0] == 'X' && buf[1] == 'T')
-				{
-					return 1;
-				}
 
-				cout << buf[0] << " " << buf[1] << endl;
+			if (buf[0] == 'T')
+			{
+
+				return (int)buf[1];
+			}
+			else if (buf[0] == 'X' && buf[1] == 'T')
+			{
+				return -1;
+			}
+			else if (buf[0] == 'L')
+			{
+
+				return (int)buf[1];
+			}
+			else if (buf[0] == 'X' && buf[1] == 'L')
+			{
+				return -2;
+			}
+			else if (buf[0] == 'A')
+			{
+
+				return (int)buf[1];
+			}
+			else if (buf[0] == 'X' && buf[1] == 'A')
+			{
+				return -3;
+			}
+
+			cout << buf[0] << " " << buf[1] << endl;
 		}
 	}
 	void senddata(string command_)
@@ -99,7 +141,7 @@ private:
 		//check
 		if (command_ == "temp")
 			strcpy(command[1], "T");
-		else if(command_ == "light")
+		else if (command_ == "light")
 			strcpy(command[1], "L");
 		else if (command_ == "airhum")
 			strcpy(command[1], "A");
