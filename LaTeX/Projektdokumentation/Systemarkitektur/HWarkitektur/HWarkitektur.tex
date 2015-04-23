@@ -1,7 +1,7 @@
 \section{Hardwarearkitektur}
 Dette afsnit beskriver arkitektur for hardware i AutoGreen.
 
-Forsyning til alle blokke er beskrevet på BDD for system, Figur \ref{fig:bdd_system}. Forsyninger er ikke tegnet ind på øvrige diagrammer for overskuelighedens skyld. Det gælder desuden at alle blokke har fælles reference (GND). 
+Forsyning til alle blokke er beskrevet på IBD for system, Figur \ref{fig:ibd_system_forsyn}. Forsyninger er ikke tegnet ind på øvrige diagrammer for overskuelighedens skyld. Det gælder desuden at alle blokke har fælles reference (GND). 
 
 \clearpage
 
@@ -18,14 +18,14 @@ Forsyning til alle blokke er beskrevet på BDD for system, Figur \ref{fig:bdd_sy
 
 \begin{figure}[h]
 \centering 
-\includegraphics[width={\textwidth}] {../fig/ibd_system_forsyninger.pdf}
+\includegraphics[width={\textwidth-2cm}] {../fig/ibd_system_forsyninger.pdf}
 \caption{IBD for forsyninger i systemet.}
 \label{fig:ibd_system_forsyn}
 \end{figure}
 
 \begin{figure}[h]
 \centering 
-\includegraphics[width={\textwidth}] {../fig/ibd_system_signaler.pdf}
+\includegraphics[width={\textwidth}-2cm] {../fig/ibd_system_signaler.pdf}
 \caption{IBD for signaler i systemet.}
 \label{fig:ibd_system_signal}
 \end{figure}
@@ -33,7 +33,7 @@ Forsyning til alle blokke er beskrevet på BDD for system, Figur \ref{fig:bdd_sy
 
 
 \subsubsection{Strømforsyning}
-Forsyner øvrig hardware i systemet, undtagen varmelegemet. Blokken forsynes fra en laboratorieforyning.
+Forsyner øvrig hardware i systemet, undtagen varmelegemet, Devkit8000 samt \IIC sensorer. Blokken forsynes fra en laboratorieforyning.
 \subsubsection{DevKit8000}
 Systemets brugerflade, er samtidigt controller for systemet. 
 \subsubsection{MasterPSoC}

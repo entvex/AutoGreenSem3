@@ -1,6 +1,6 @@
 % Dokumentklassen sættes til memoir.
 % Manual: http://ctan.org/tex-archive/macros/latex/contrib/memoir/memman.pdf
-\documentclass[a4paper,11pt,oneside,article]{memoir}
+\documentclass[a4paper,11pt,twoside,article]{memoir}
 \setlrmarginsandblock{*}{2.5cm}{0.75} % højre og venstre 
 \setulmarginsandblock{3cm}{*}{1.2} % top og bund 
 \checkandfixthelayout[nearest] % specifikt valg af højde algoritme
@@ -31,6 +31,13 @@
 % Fancy ting med enheder og datatabeller. Læs manualen til pakken
 % Manual: http://www.ctan.org/tex-archive/macros/latex/contrib/siunitx/siunitx.pdf
 \usepackage{siunitx}
+ 
+%Fancy headers, 
+%Manual: https://www.sharelatex.com/learn/Headers_and_footers
+\let\footruleskip\undefined
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+
  
 % Indsættelse af grafik.
 \usepackage{graphicx} 
@@ -131,4 +138,5 @@
 
 %Lækker kommando til at skrive I2C flot uden at bruge \textsuperscript hver gang:
 \newcommand{\IIC}{I\textsuperscript{2}C }
+
 

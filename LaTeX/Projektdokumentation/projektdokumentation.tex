@@ -1,0 +1,54 @@
+\input{../Preamble/preamble}
+
+\title{Projektdokumentation \\ AutoGreen \\ Gruppe 9}
+\author{ 3. Semesterprojekt E3PRJ3-02 \\ Ingeniørhøjskolen, Aarhus Universitet \\ Vejleder: Tore Arne Skogberg}
+\date{\today}
+
+\fancyhf{}
+\fancyhead[LE,RO]{Gruppe 9 - ''AutoGreen''}
+\fancyhead[CE,CO]{Projektdokumentation}
+\fancyhead[RE,LO]{IHA, AU}
+\fancyfoot[CE,CO]{\leftmark}
+\fancyfoot[RE,LO]{\thepage} 
+
+\begin{document}
+\frontmatter
+\maketitle
+
+\vfill
+
+\begin{table} [h]
+	\centering
+	\begin{tabular}{|l|r|l|}
+	\hline 
+	\textbf{Navn} & \textbf{Studienummer} & \textbf{Underskrift~~~~~~~~~~~~~~~~~~~~} \\ \hline
+	Morten Hasseriis Gormsen & 201370948 & \\ && \\ \hline
+	Kristian Thomsen & 201311478 & \\ && \\ \hline
+	Philip Krogh-Pedersen & 201311473 & \\ && \\ \hline
+	Lasse Barner Sivertsen & 201371048 & \\ && \\ \hline
+	Henrik Bagger Jensen & 201304157 & \\ && \\ \hline
+	David Erik Jensen & 11229 & \\ && \\ \hline
+	Kasper Torp Samuelsen & 201311498 & \\ && \\ \hline
+	Kristian Søgaard Sørensen & 20115255 & \\ && \\ \hline
+	\end{tabular}
+\end{table}
+
+\clearpage
+
+\setcounter{page}{1}
+\thispagestyle{plain}
+\tableofcontents
+\thispagestyle{plain}
+\mainmatter
+
+\include{Projektformulering/projektformulering}
+\include{Kravspecifikation/kravspecifikation}
+\include{AcceptTest/accepttest}
+\include{Systemarkitektur/systemarkitektur}
+\include{HardwareDesign/HardwareDesign}
+\include{HardwareImplementering/HardwareImplementering}
+
+\include{Litteraturliste/litteraturliste}
+%etc...
+
+\end{document}

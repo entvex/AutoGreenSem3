@@ -24,6 +24,8 @@ Den konfigureret til at være slave med adressen 0x42, datarate er indstillet ti
 Alle pins i topdeignet er konfigureret til strong drive. 
 Det vil sige at de altd er defineret enten high eller low.
 
+\clearpage
+
 \subsection{SW PSoC4}
 
 \begin{lstlisting}[caption=Udsnit af main.c for PSoC4 i Aktuator, label=fig:main_aktuator]
@@ -142,15 +144,18 @@ Til slut opdateres read buffer, i tilfælde af at MasterPSoC beder om informatio
 \begin{lstlisting}[caption=Udsnit af heat.c for PSoC4 i Aktuator, label=fig:heat_aktuator]
 void InitHeat()
 {   
-    PWM_Varme_Start(); //Start komponent
-    PWM_Varme_WriteCompare(0); //Sluk for varme
-    Position_Reg = Position_Reg & 0b1111000111111111; //Opdater nuvaerende indstillinger
+    //Slukker for Varme
+    Varme_Write(0);
+    
+    //Opdater nuvaerende indstillinger
+    Position_Reg = Position_Reg & 0b1111000111111111;
 }
 
 void AdjustHeat()
 {
-    //Omregn bits fra Status_Reg og start PWM
-    PWM_Varme_WriteCompare((((Status_Reg & 0b0000111000000000) >> 9)*255)/7);
+    //Opdater aktuator for varmelegeme
+    Varme_Write((Status_Reg & 0b0000111000000000) >> 9);
+    
     //Opdater nuvaerende indstillinger
     Position_Reg = Position_Reg & 0b1111000111111111;
     Position_Reg = Position_Reg | (Status_Reg & 0b0000111000000000);
@@ -159,11 +164,9 @@ void AdjustHeat()
 
 Koden i heat.c i Listing \ref{fig:heat_aktuator} består af to funktioner. 
 
-InitHeat() starter PWM komponenten, slukker for varmelegemet (dutycycle = 0\%) og initialiserer indstilling af Position\_Reg for varme.
+InitHeat()trækker pin for varme lav og initialiserer indstilling af Position\_Reg for varme.
 
-AdjustHeat() indstiller ønsket dutycycle i PWM komponenten. 
-Der er som udgangspunkt kun mulighed for at tænde eller slukker for varmen, men ved at lave koden på denne måde, kan systemet meget nemt opgraderes, hvis PWM styring af varmelegemet ønskes. 
-Efter start at PWM komponenten opdateres Position\_Reg med de nuværende indtillinger for aktuatorer.
+AdjustHeat() opdaterer pin for varme og Position\_Reg opdateres med de nuværende indtillinger for aktuator. 
 
 \clearpage
 
@@ -243,7 +246,7 @@ Koden i irrigation.c i Listing \ref{fig:irrigation_aktuator} består af to funkt
 
 InitIrrigation() trækker alle pins for vanding lav og initialiserer Position\_Reg.
 
-AdjustIrrigation() opdaterer alle pins for vanding og initialiserer Position\_Reg.
+AdjustIrrigation() opdaterer alle pins for vanding og indstiller Position\_Reg.
 
 \clearpage
 
@@ -262,10 +265,7 @@ void InitWindow()
 }
 
 void AdjustWindow()
-{
-    //Variabel til oensket stilling paa vindue
-    uint8 desiredTurn;
-       
+{      
     //Konvertering af data fra Status_Reg og indsaettelse i desiredTurn.
     desiredTurn = ((MAX_WINDOW)*(((Status_Reg >> 12)*100)/15))/100;
     
@@ -280,11 +280,6 @@ void AdjustWindow()
         {
             OpenOneTurn();
         }
-        
-        //Tjek for nye data
-        //Det sker for hver omgang, for at undgaa at vinduet skal aabne helt inden det kan lukke.
-        checkForData();
-        desiredTurn = ((MAX_WINDOW)*(((Status_Reg >> 12)*100)/15))/100;
     }
     //Opdatering af nuvaerende indstillinger
     Position_Reg = Position_Reg & 0b0000111111111111;
@@ -292,13 +287,11 @@ void AdjustWindow()
 }
 \end{lstlisting}
 
-\clearpage
-
 Kodeudnsnittet fra window.c på Listing \ref{fig:window1_aktuator} viser de to funktioner InitWindow() og AdjustWindow().
 
-MAX\_WINDOW er en global definition, som angiver antallet af omgange motoren skal køre, for at åbne vinduet helt. 
+MAX\_WINDOW er en global definition, som angiver antallet af steps motoren skal køre, for at åbne vinduet helt. 
 TIME\_BETWEEN\_STEPS er en global definition som angiver hvor mange milisekunder, der går mellem hvert af motorens steps. 
-Ved praktiske forsøg er hhv. 35 omgange og 10 ms fundet hensigtsmæssige.
+Ved praktiske forsøg er hhv. 420 steps og 10 ms fundet hensigtsmæssige.
 
 InitWindow() initialiserer de fire vindues pins til startposition og initialiserer Position\_Reg. 
 
@@ -306,53 +299,53 @@ Den initialiserer desuden variablen currentTurn til 0. Denne variabel holder sty
 
 BEMÆRK! Vinduet skal være lukket, når systemet startes!
 
-AdjustWindow() kontrollerer om currentTurn er større, mindre eller lig desiredTurn. Hvis de er forskellige kaldes enten OpenOneTurn() eller CloseOneTurn(). 
-
-For hver omgang motoren kører, tjekkes der for nye data, og desiredTurn opdateres. Dette sker for at en ny kommando til vinduet eksekveres inden en igangværende kommando afsluttes.
+AdjustWindow() kontrollerer om currentTurn er større, mindre eller lig desiredTurn. Hvis de er forskellige kaldes enten OpenOneTurn() eller CloseOneTurn().
 
 Herefter opdateres Position\_Reg.
-\newline
+
+\clearpage
+
 \begin{lstlisting}[caption=Udsnit B af window.c for PSoC4 i Aktuator, label=fig:window2_aktuator]
-void CloseOneTurn()
+void CloseOneTurn()//48 steps paa en omgang, 12*4=48, funktionen lukker 1/12 af en omgang.
 {
-    int i;
-    for(i = 0; i < 12; i++) //48 steps paa en omgang, 12*4=48
-    {
-        Vindue1a_Write(0);
-        Vindue2a_Write(1);
-        Vindue1b_Write(1);
-        Vindue2b_Write(0);
-        CyDelay(TIME_BETWEEN_STEPS);
-        Vindue1a_Write(0);
-        Vindue2a_Write(0);
-        Vindue1b_Write(1);
-        Vindue2b_Write(1);
-        CyDelay(TIME_BETWEEN_STEPS);
-        Vindue1a_Write(1);
-        Vindue2a_Write(0);
-        Vindue1b_Write(0);
-        Vindue2b_Write(1);
-        CyDelay(TIME_BETWEEN_STEPS);
-        Vindue1a_Write(1);
-        Vindue2a_Write(1);
-        Vindue1b_Write(0);
-        Vindue2b_Write(0);
-        CyDelay(TIME_BETWEEN_STEPS);
-    }
-    currentTurn--; //Opdatering af stilling paa vindue
+    //Efter hvert fjerde step tjekkes der for ny data og stilling samt oenskede stilling opdateres
+    Vindue1a_Write(0);
+    Vindue2a_Write(1);
+    Vindue1b_Write(1);
+    Vindue2b_Write(0);
+    CyDelay(TIME_BETWEEN_STEPS);
+    Vindue1a_Write(0);
+    Vindue2a_Write(0);
+    Vindue1b_Write(1);
+    Vindue2b_Write(1);
+    CyDelay(TIME_BETWEEN_STEPS);
+    Vindue1a_Write(1);
+    Vindue2a_Write(0);
+    Vindue1b_Write(0);
+    Vindue2b_Write(1);
+    CyDelay(TIME_BETWEEN_STEPS);
+    Vindue1a_Write(1);
+    Vindue2a_Write(1);
+    Vindue1b_Write(0);
+    Vindue2b_Write(0);
+    CyDelay(TIME_BETWEEN_STEPS);
+    checkForData();
+    desiredTurn = ((MAX_WINDOW)*(((Status_Reg >> 12)*100)/15))/100;
+    currentTurn--;
 }
-void OpenOneTurn()//48 steps paa en omgang, 12*4=48
+
+void OpenOneTurn()//48 steps paa en omgang, 12*4=48, funktionen åbner 1/12 af en omgang.
 {
-        ...
+    ...
 \end{lstlisting}
 
 Kodeudnsnittet fra window.c på Listing \ref{fig:window2_aktuator} viser de to funktioner CloseOneTurn() (og OpenOneTurn()). 
 
-CloseOneTurn() gennemløber sekvensen for at motoren kører et step mod urets retning. Dette sker 48 gange, hvilket betyder at motoren kører en hel omgang. 
+CloseOneTurn() gennemløber sekvensen for at motoren kører et step mod urets retning.
 
-Sekvensen i OpenOneTurn() er modsat, så motoren kører en omgang med urets retning. 
+Sekvensen i OpenOneTurn() er modsat, så motoren kører med urets retning. 
 
-Begge funktioner opdaterer afslutningvis currentTurn. 
+For hvert step motoren kører, tjekkes der for nye data, og desiredTurn opdateres. Dette sker for at en ny kommando til vinduet eksekveres inden en igangværende kommando afsluttes. Herefter opdateres currentTurn. Denne funktionalitet er implementeret i begge funktioner.
 
 \clearpage
 
