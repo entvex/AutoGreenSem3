@@ -5,31 +5,32 @@
  *      Author: dje
  */
 
+#pragma once
+
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
 #include <cstdlib>
+#include <string>
 #include <iostream>
 #include <time.h>
-#include <sys/time.h>
 #include "DateStruct.hpp"
 #include "Plant.hpp"
-
 
 using namespace std;
 
 class Indstillinger {
-	public:
+public:
 
-		Indstillinger()
-		{
-			Warning = false;
-			daily = false;
-			Varmelegeme = false;
-			bloeserne = false;
-			monitor = false;
-			regulering = false;
-		}
+	Indstillinger()
+{
+		Warning = false;
+		daily = false;
+		Varmelegeme = false;
+		bloeserne = false;
+		monitor = false;
+		regulering = false;
+}
 
 	void SetMonitorering(bool active)
 	{
@@ -89,41 +90,44 @@ class Indstillinger {
 	//Note This code is Devkit8000 specific and needs root access to run.
 	void setDate(Date time)
 	{
-		string prepCommand;
-		std::string pwd = exec("pwd"); // get current path
+		if(time.Year >= 2000 && time.Year <= 2050 && time.Month >= 1 && time.Month <= 24 && time.Day >= 1 && time.Day <= 31 && time.Hour >= 0 && time.Hour <= 23 && time.Min >= 0 && time.Min <= 60 )
+		{
+			string prepCommand;
+			std::string pwd = exec("pwd"); // get current path
 
-		//looks for the return char and removes it
-		if (!pwd.empty() && pwd[pwd.length()-1] == '\n') {
-		    pwd.erase(pwd.length()-1);
+			//looks for the return char and removes it
+			if (!pwd.empty() && pwd[pwd.length()-1] == '\n') {
+				pwd.erase(pwd.length()-1);
+			}
+			//concatenate string.
+			prepCommand += pwd + string("/setTimeBeagleBoard.sh ") + to_string(time.Year) + string(" ") +
+					to_string(time.Month) + string(" ") + to_string(time.Day) + string(" ") + to_string(time.Hour) +
+					string(" ") + to_string(time.Min);
+
+			//cout << prepCommand << endl; //Debug
+			const char * command = prepCommand.c_str();
+			std::string res = exec(command);
+			//cout << res << endl; //Debug
 		}
-		//concatenate string.
-		prepCommand += pwd + string("/setTimeBeagleBoard.sh ") + string(time.Year) + string(" ");
-//				string(time.Month) + string(" ") + string(time.Day) + string(" ") + string(time.Hour) +
-//				string(" ") + string(time.Min);
-
-		cout << prepCommand << endl; //Debug
-		const char * command = prepCommand.c_str();
-		std::string res = exec(command);
-		cout << res << endl; //Debug
 	}
 
 
 	Date getDate()
 	{
-		  time_t mytime = time(0);
-		  struct tm* tm_ptr = localtime(&mytime);
-		  struct Date date;
-		  if (tm_ptr)
-		  {
+		time_t mytime = time(0);
+		struct tm* tm_ptr = localtime(&mytime);
+		struct Date date;
+		if (tm_ptr)
+		{
 
-			  date.Min = tm_ptr->tm_min;
-			  date.Hour = tm_ptr->tm_hour;
-			  date.Day = tm_ptr->tm_mday;
-			  date.Month = tm_ptr->tm_mon+1;
-		      date.Year = tm_ptr->tm_year+1900;
-		      return date;
-		  }
-		  return date;
+			date.Min = tm_ptr->tm_min;
+			date.Hour = tm_ptr->tm_hour;
+			date.Day = tm_ptr->tm_mday;
+			date.Month = tm_ptr->tm_mon+1;
+			date.Year = tm_ptr->tm_year+1900;
+			return date;
+		}
+		return date;
 	}
 
 	void GetNotifications(bool &daily, bool &Warning)
@@ -155,26 +159,26 @@ class Indstillinger {
 
 
 private:
-		Plant virtuallePlants[6]; 
-		string E_mails[3];        
-		bool Warning;
-		bool daily;
-		bool Varmelegeme;
-		bool bloeserne;
-		bool monitor;
-		bool regulering;
+	Plant virtuallePlants[6];
+	string E_mails[3];
+	bool Warning;
+	bool daily;
+	bool Varmelegeme;
+	bool bloeserne;
+	bool monitor;
+	bool regulering;
 
-		string exec(const char* cmd) {
-			//Make a linux shell with read
-		    FILE* pipe = popen(cmd, "r");
-		    if (!pipe) return "ERROR"; //Check if i got pipe
-		    char buffer[128];
-		    string result = "";
-		    while(!feof(pipe)) { //While output read it.
-		    	if(fgets(buffer, 128, pipe) != NULL)
-		    		result += buffer;
-		    }
-		    pclose(pipe); //Close the shell
-		    return result;
+	string exec(const char* cmd) {
+		//Make a linux shell with read
+		FILE* pipe = popen(cmd, "r");
+		if (!pipe) return "ERROR"; //Check if i got pipe
+		char buffer[128];
+		string result = "";
+		while(!feof(pipe)) { //While output read it.
+			if(fgets(buffer, 128, pipe) != NULL)
+				result += buffer;
 		}
+		pclose(pipe); //Close the shell
+		return result;
+	}
 };
