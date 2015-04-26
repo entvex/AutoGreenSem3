@@ -1,5 +1,6 @@
 
 #include <iostream>
+//include others
 
 
 using namespace std;
@@ -102,6 +103,11 @@ public:
 																																													
 
 		/* check waterstatus for plant 1-6*/
+
+                if(control_plant.water > drivhus_data.ground[1])
+                {
+                    //water needed
+                }
 
 
 
