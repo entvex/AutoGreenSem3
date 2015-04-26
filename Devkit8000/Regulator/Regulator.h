@@ -1,5 +1,6 @@
 
 #include <iostream>
+//include others
 
 
 using namespace std;
@@ -73,13 +74,40 @@ public:
 		/*lets make some control checks*/
 		
 		/*Get newestSensorData*/
-		double temp_drivhus = 0;// settings->get_temp;
+		double temp_drivhus = 0;// settings->get_temp();
 
 		/* Compare average temperature for plants to Actual temps*/
 		double avg_temp_drivhus = (plant1.temp + plant2.temp + plant3.temp + plant4.temp + plant5.temp + plant6.temp) / 6;
 
+		bool use_heater = false; //settings->get_heater_use();
+		bool use_vents = false; //settings->get_vents_use();
+
+		if (temp_drivhus == avg_temp_drivhus || (temp_drivhus - 1) == avg_temp_drivhus || (temp_drivhus + 1) == avg_temp_drivhus)
+		{
+			//temp is OK, do nothing
+		}
+		else if (temp_drivhus > avg_temp_drivhus && (temp_drivhus + 3) < (avg_temp_drivhus))
+		{
+			//OPEN WinDOW
+		}
+		else if ((temp_drivhus - 6) > avg_temp_drivhus)
+		{
+			//open window
+
+			//start vent
+		}
+		else if ((temp_drivhus + 2) < avg_temp_drivhus)
+		{
+			//heater on
+		}
+																																													
 
 		/* check waterstatus for plant 1-6*/
+
+                if(control_plant.water > drivhus_data.ground[1])
+                {
+                    //water needed
+                }
 
 
 
