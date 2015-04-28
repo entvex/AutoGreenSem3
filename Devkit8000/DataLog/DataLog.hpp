@@ -30,24 +30,25 @@ public:
 		list.forwardTraversing();
 	}
 
-void GetNewestData(int &time,int &temp,int &light,int &humidity )
+SensorData GetNewestData()
 {
 
+	list.
 }
 
 void SortDay()
 {
-
+	throw;
 }
 
 void SortWeek()
 {
-
+	throw;
 }
 
 void SortMonth()
 {
-
+	throw;
 }
 
 };
