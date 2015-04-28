@@ -64,7 +64,10 @@ public:
 
 	void ControlData(plant control_plant, Sensordata drivhus_data)
 	{
-
+		if(!indstillinger->GetRegulering())
+		{
+			return;
+		}
 		/*lets make some control checks*/
 		
 		/*Get newestSensorData*/
@@ -101,6 +104,7 @@ public:
 			usleep(100);
 			//start vent
 			uart->activateSensor("Venton");
+			usleep(100);
 		}
 		else if ((temp_drivhus + 2) < avg_temp_drivhus)
 		{
