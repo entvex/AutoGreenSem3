@@ -1,22 +1,20 @@
-\section{Aktuator (Henrik og Morten)}
+\section{Aktuator} \label{sec:AktImpl}
 
 Dette afsnit beskriver implementering af SW og HW i blokken Aktuator. Afsnittet beskriver først hhv. HW og SW i underblokken PSoC4, herefter HW i underblokkene Varmelegeme, Blæsere og Vinduesmotor.
 
 \subsection{HW PSoC4}
 \begin{figure}[h]
 \centering 
-\includegraphics[width={\textwidth-6cm}, trim = 100 250 500 110, clip=true] {../fig/TopDesign_Aktuator.pdf}
+\includegraphics[width={\textwidth-6cm}, trim = 110 320 480 100, clip=true] {../fig/TopDesign_Aktuator.pdf}
 \caption{TopDesign.cysch for PSoC4 i Aktuator}
 \label{fig:topdesign_aktuator}
 \end{figure}
 
 Den HW, der syntetiseres i PSoC4 Aktuator er vist på figur\ref{fig:topdesign_aktuator}. 
 
-Clock\_1 forsyner de to PWM komponenter med en grundfrekvens; der er valgt 1 kHz.
+Clock\_1 forsyner PWM komponenten med en grundfrekvens; der er valgt 1 kHz.
 
-PWM\_Ventilation genererer et PWM signal til styring af drivhusets fire ventilatorer. Timeren er indstillet til 8 bit. 
-
-PWM\_Varme genererer et PWM signal til styring af drivhusets varmelegeme. Timeren er indstillet til 8 bit. 
+PWM\_Ventilation genererer et PWM signal til styring af drivhusets fire ventilatorer. Timeren er indstillet til 8 bit.  
 
 I2C\_1 komponenten styrer kommunikation med MasterPSoC via \IIC. 
 Den konfigureret til at være slave med adressen 0x42, datarate er indstillet til 100 kbps.
@@ -29,7 +27,7 @@ Det vil sige at de altd er defineret enten high eller low.
 \subsection{SW PSoC4}
 
 \begin{lstlisting}[caption=Udsnit af main.c for PSoC4 i Aktuator, label=fig:main_aktuator]
-for(;;) //Evigt loop
+    for(;;) //Evigt loop
     {
         checkForData(); //Opdater Status_Reg, hvis der er modtaget data
         
@@ -308,7 +306,7 @@ Herefter opdateres Position\_Reg.
 \begin{lstlisting}[caption=Udsnit B af window.c for PSoC4 i Aktuator, label=fig:window2_aktuator]
 void CloseOneTurn()//48 steps paa en omgang, 12*4=48, funktionen lukker 1/12 af en omgang.
 {
-    //Efter hvert fjerde step tjekkes der for ny data og stilling samt oenskede stilling opdateres
+    //Efter hvert fjerde step checkes der for ny data og stilling samt oenskede stilling opdateres
     Vindue1a_Write(0);
     Vindue2a_Write(1);
     Vindue1b_Write(1);
@@ -334,7 +332,7 @@ void CloseOneTurn()//48 steps paa en omgang, 12*4=48, funktionen lukker 1/12 af 
     currentTurn--;
 }
 
-void OpenOneTurn()//48 steps paa en omgang, 12*4=48, funktionen åbner 1/12 af en omgang.
+void OpenOneTurn()//48 steps paa en omgang, 12*4=48, funktionen aabner 1/12 af en omgang.
 {
     ...
 \end{lstlisting}
@@ -351,6 +349,80 @@ For hvert step motoren kører, tjekkes der for nye data, og desiredTurn opdatere
 
 \subsection{HW Varmelegeme}
 
+\begin{figure}[h]
+\centering 
+\includegraphics[width={\textwidth-8cm}, trim=50 520 390 30, clip=true, angle =90] {../fig/ultiboard_varmelegeme.pdf}
+\caption{Printudlæg for Mosfet driver til Varmelegeme i Ultiboard}
+\label{fig:ultiboard_varmelegeme}
+\end{figure}
+
+Implementering af mosfet driveren til varmelegemet foretages ved at Multisim diagrammet eksporteres til Ultiboard, hvorefter printet udlægges.
+Det forsøges gjort således at printet er overskueligt fremfor at printet fylder så lidt som muligt. 
+Som udgangspunkt er alle forbindelser på printet lagt på bagsiden. 
+Det designede print er vist på Figur \ref{fig:ultiboard_varmelegeme}. 
+
+Kobber på undersiden af printet er vist med rød, mens kobber på oversiden af printet er vist med grøn. 
+Kobberøer er vist med blå.
+Der er en lille hage ved kobberøerne; der er ikke forbindelse mellem oversiden og undersiden. 
+Dette har dog ingen betydning, da der loddes komponentben igennem dem alle. 
+
+Omkredserne af komponenterne (sort) printes ikke, de vises kun som en slags hjælpelag. 
+
+Databasen i Ultiboard indeholder ikke komponenter til modstande, derfor er disse omkredse ikke med på figuren. 
+
+Der skrives lidt forklarende tekst på oversiden af printet, så man kan se hvad der skal kobles til hvor; dette er lidt svært at se på figuren.
+\newline
+
+Printudlægget bestilles ved E-LAB på IHA, hvorefter komponenter loddes på.
+Det færdige print er vist på Figur \ref{fig:varmelegeme_print}.
+
+\begin{figure}[h]
+\centering 
+\includegraphics[width={\textwidth}, trim=0 0 0 0, clip=true] {../fig/ultiboard_stroemforsyning.pdf} %TODO Indsæt billede af det færdige print.
+\caption{Den færdige Mosfet driver til Varmelegeme}
+\label{fig:varmelegeme_print}
+\end{figure}
+
+\clearpage
+
 \subsection{HW Blæsere}
 
+Implementering af Mosfetdriver til Blæsere foretages på samme måde som til Varmelegeme.
+Printudlægget i Ultiboard er vist på Figur \ref{fig:ultiboard_blaesere}, og det færdige print er vist på Figur \ref{fig:blaesere_print}.
+
+\begin{figure}[h]
+\centering 
+\includegraphics[width={\textwidth-8cm}, trim=50 520 390 30, clip=true, angle =90] {../fig/ultiboard_blaesere.pdf}
+\caption{Printudlæg for Mosfet driver til Blæsere i Ultiboard}
+\label{fig:ultiboard_blaesere}
+\end{figure}
+
+\begin{figure}[h]
+\centering 
+\includegraphics[width={\textwidth}, trim=0 0 0 0, clip=true] {../fig/ultiboard_stroemforsyning.pdf} %TODO Indsæt billede af det færdige print.
+\caption{Den færdige Mosfet driver til Blæsere}
+\label{fig:blaesere_print}
+\end{figure}
+
+\clearpage
+
 \subsection{HW Vinduesmotor}
+
+Implementering af Mosfetdriver til Vinduesmotor foretages på samme måde som til Varmelegeme og Blæsere.
+Printudlægget i Ultiboard er vist på Figur \ref{fig:ultiboard_vinduesmotor}, og det færdige print er vist på Figur \ref{fig:vinduesmotor_print}. %TODO
+
+\begin{figure}[h]
+\centering 
+\includegraphics[width={\textwidth-6cm}, trim=50 520 365 30, clip=true, angle =90] {../fig/ultiboard_vinduesmotor.pdf} %TODO
+\caption{Printudlæg for Mosfet driver til Vinduesmotor i Ultiboard}
+\label{fig:ultiboard_vinduesmotor}
+\end{figure}
+
+\begin{figure}[h]
+\centering 
+\includegraphics[width={\textwidth}, trim=0 0 0 0, clip=true] {../fig/ultiboard_stroemforsyning.pdf} %TODO Indsæt billede af det færdige print.
+\caption{Den færdige Mosfet driver til Vinduesmotor}
+\label{fig:vinduesmotor_print}
+\end{figure}
+
+\clearpage

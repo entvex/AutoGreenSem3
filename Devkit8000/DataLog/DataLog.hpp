@@ -19,9 +19,9 @@ DataLog_list list;
 
 public:
 
-	void Getdata(int &time,int &temp,int &light,int &humidity, int &grund )
+	vector<SensorData> GetAll()
 	{
-
+		return list.GetAll();
 	}
 
 	void InsertSensorData(const SensorData &SensorData)
@@ -33,9 +33,9 @@ public:
 SensorData GetNewestData()
 {
 
-	list.
 }
 
+//Not implemented.
 void SortDay()
 {
 	throw;
@@ -52,8 +52,6 @@ void SortMonth()
 }
 
 };
-
-
 
 
 #endif /* DATALOG_HPP_ */

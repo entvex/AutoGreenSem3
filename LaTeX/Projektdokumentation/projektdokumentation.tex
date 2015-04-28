@@ -39,15 +39,34 @@
 \thispagestyle{plain}
 \tableofcontents
 \thispagestyle{plain}
-\mainmatter
 
+\chapter*{Forfattere} %TODO Alle afsnit skal skrives ind her!
+\begin{table}[h]
+\centering
+\begin{tabularx}{\textwidth * 5/6}{|l|X|}
+	\hline
+	Afsnit & Forfatter(e) \\ \hline
+	\ref{ch:Projektformulering} \nameref{ch:Projektformulering} & Alle \\ \hline
+	\ref{ch:Kravspec} \nameref{ch:Kravspec} & Alle \\ \hline
+	\ref{ch:Accepttest} \nameref{ch:Accepttest} & Alle \\ \hline
+	\ref{ch:SysArk} \nameref{ch:SysArk} & Alle \\ \hline
+	\ref{ch:HwDesign} \nameref{ch:HwDesign} & Kristian T, Philip, Lasse, Henrik og Morten \\ \hline
+ 		\ref{sec:PSoC_Master_impl} \nameref{sec:PSoC_Master_impl}  & Philip, Lasse og Kristian T \\ \hline
+		\ref{sec:AktImpl} \nameref{sec:AktImpl} & Henrik og Morten \\ \hline
+		\ref{sec:PsuImpl} \nameref{sec:PsuImpl} & Henrik og Morten \\ \hline
+\end{tabularx}
+\end{table}
+
+\mainmatter
 \include{Projektformulering/projektformulering}
 \include{Kravspecifikation/kravspecifikation}
 \include{AcceptTest/accepttest}
 \include{Systemarkitektur/systemarkitektur}
 \include{HardwareDesign/HardwareDesign}
+%TODO SoftwareDesign?
 \include{HardwareImplementering/HardwareImplementering}
-
+%TODO SoftwareImpl?
+%TODO Konklusion?
 \include{Litteraturliste/litteraturliste}
 %etc...
 

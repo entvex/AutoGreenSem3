@@ -34,3 +34,19 @@ void testSettimeAndGettime()
 	testSettime();
 	testGettime();
 }
+
+void testGethardware()
+{
+
+	Indstillinger indstillinger;
+	cout << "Hardware bliver sat til true" << endl;
+
+	bool blæser = true;
+	bool Varme = true;
+
+	indstillinger.GetHardware(blæser, Varme);
+
+	cout << "Henter hardware bools" << endl;
+	cout << "Blæser: " << blæser << " Varme: " << Varme << endl;
+
+}
