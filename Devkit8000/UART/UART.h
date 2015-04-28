@@ -3,6 +3,7 @@
 #include <iostream>
 #include <string>
 #include <string.h>
+#include <SystemLog.h>
 using namespace std;
 
 struct SensorData
@@ -16,8 +17,9 @@ struct SensorData
 class UART
 {
 public:
-	UART()
+	UART(SystemLog *Log)
 	{
+		systemlog = Log;
 		cport_nr = 0;
 		bdrate = 9600
 	}
@@ -45,10 +47,36 @@ public:
 	
 	void activateSensor(string command_)
 	{
-		if( command_ == "heaton" || command_ == "heatoff" || command_ = "ventoff" || command_ = "venton" || command_ = "windowoff" || command_ "windowon")
+		if( command_ == "heaton")
 		{
 		senddata(command_);
+		systemlog->addMessage("Heat Turned on");
 		}	
+		else if ( command_ == "heatoff")
+		{
+		senddata(command_);	
+		systemlog->addMessage("Heat Turned off");
+		}
+		else if (command_ == "ventoff" )
+		{
+		senddata(command_);	
+		systemlog->addMessage("Vent Turned off");
+		}
+		else if(command_ == "venton" )
+		{
+		senddata(command_);	
+		systemlog->addMessage("Vent Turned on");
+		}
+		else if(command_ == "windowoff" )
+		{
+		senddata(command_);	
+		systemlog->addMessage("Window Closed");
+		}
+		else if(command_ == "windowon")
+		{
+		senddata(command_);	
+		systemlog->addMessage("Window Opened");
+		}
 	}
 
 	SensorData getSensorData()
@@ -100,6 +128,7 @@ private:
 	int cport_nr;
 	int bdrate;
 	unsigned char buf[2];
+	SystemLog * systemlog;
 
 
 	int recievedata()
