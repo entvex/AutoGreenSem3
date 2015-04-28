@@ -66,6 +66,7 @@ public:
 	{
 		if(!indstillinger->GetRegulering())
 		{
+			usleep(5000);
 			return;
 		}
 		/*lets make some control checks*/
