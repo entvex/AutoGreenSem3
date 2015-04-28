@@ -1,36 +1,30 @@
 
 #include <iostream>
 //include others
+#include "Sensordata.h"
+#include "Plant.h"
+#include "UART.h"
+#include "SystemLog.h"
+#include "Indstillinger.h"
 
 
 using namespace std;
 
-struct plant
-{
-	int temp;
-	int water;
-	int light;
 
-};
-
-struct Sensordata
-{
-	int temp;
-	int hum;
-	int light;
-	int ground[6];
-
-};
 
 
 class Regulator
 {
 public:
-	Regulator(UART * uart_, Indstillinger * settings_)																															)
+	Regulator(UART * uart_, Indstillinger * settings_, SystemLog *systemlog_, DataLog *datalog_)																															)
 	{
+		
+		//* set pointers
 		uart = uart_;
 		settings = settings_;
-		//* pointer til DATALOG + UART
+		systemlog = systemlog_;
+		datalog = datalag_;
+		
 		tempHigh = false;
 		tempLow = false;
 		humidityHigh = false;
@@ -60,8 +54,8 @@ public:
 		loadData(plant4);
 		loadData(plant5);
 		loadData(plant6);
-
-
+		Sensordata loadeddata = datalog->GetNewestData();
+		ControlData(plant1,loadeddata);
 
 
 		//linux
@@ -79,35 +73,53 @@ public:
 		/* Compare average temperature for plants to Actual temps*/
 		double avg_temp_drivhus = (plant1.temp + plant2.temp + plant3.temp + plant4.temp + plant5.temp + plant6.temp) / 6;
 
-		bool use_heater = false; //settings->get_heater_use();
-		bool use_vents = false; //settings->get_vents_use();
+		bool use_heater = false; 
+		bool use_vents = false; 
+		indstillinger->GetHardware(use_heater,use_vent);
 
 		if (temp_drivhus == avg_temp_drivhus || (temp_drivhus - 1) == avg_temp_drivhus || (temp_drivhus + 1) == avg_temp_drivhus)
 		{
-			//temp is OK, do nothing
+			//temp is OK, close and shut everything off
+			uart->activateSensor("windowoff");
+			usleep(100);
+			uart->activateSensor("ventoff");
+			usleep(100);
+			uart->activateSensor("heatoff");
+			usleep(100);
+			
 		}
 		else if (temp_drivhus > avg_temp_drivhus && (temp_drivhus + 3) < (avg_temp_drivhus))
 		{
 			//OPEN WinDOW
+			uart->activateSensor("windowon");
+			usleep(100);
 		}
 		else if ((temp_drivhus - 6) > avg_temp_drivhus)
 		{
 			//open window
-
+			uart->activateSensor("windowon");
+			usleep(100);
 			//start vent
+			uart->activateSensor("Venton");
 		}
 		else if ((temp_drivhus + 2) < avg_temp_drivhus)
 		{
 			//heater on
+			//close Window
+			//vent off
+			uart->activateSensor("heaton");
+			usleep(100);
+			uart->activateSensor("windowoff");
+			usleep(100);
+			uart->activateSensor("ventoff");
+			usleep(100);
+			
 		}
 																																													
 
 		/* check waterstatus for plant 1-6*/
 
-                if(control_plant.water > drivhus_data.ground[1])
-                {
-                    //water needed
-                }
+			//added later if needed
 
 
 
@@ -116,6 +128,8 @@ public:
 	void loadData(plant loadplant)
 	{
 		// go to indstillinger
+		
+		//mangler funktionalitet til at hente plante
 		loadplant.light = 0;
 		loadplant.temp = 0;
 		loadplant.water = 0;
@@ -126,6 +140,8 @@ public:
 
 private:
 
+
+//scrap these bools ?
 	bool tempHigh;
 	bool tempLow;
 	bool humidityHigh;
@@ -146,6 +162,8 @@ private:
 
 	UART * uart;
 	Indstillinger * settings;
+	SystemLog * systemlog;
+	DataLog * datalog;
 
 };
 
