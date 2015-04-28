@@ -42,6 +42,14 @@ public:
 		// later inplementation
 
 	}
+	
+	void activateSensor(string command_)
+	{
+		if( command_ == "heaton" || command_ == "heatoff" || command_ = "ventoff" || command_ = "venton" || command_ = "windowoff" || command_ "windowon")
+		{
+		senddata(command_);
+		}	
+	}
 
 	SensorData getSensorData()
 	{
@@ -161,10 +169,14 @@ private:
 			strcpy(command[1], "H");
 		else if (command_ == "heatoff")
 			strcpy(command[1], "K");
-		else if (command_ == "window")
-			strcpy(command[1], "W");
-		else if (command_ == "vent")
-			strcpy(command[1], "V");
+		else if (command_ == "windowon")
+			strcpy(command[1], "W1");
+		else if (command_ == "windowoff")
+			strcpy(command[1], "W0");
+		else if (command_ == "venton")
+			strcpy(command[1], "V1");
+		else if (command_ == "ventoff")
+			strcpy(command[1], "V0");
 
 
 		RS232_cputs(cport_nr, command[1]);
