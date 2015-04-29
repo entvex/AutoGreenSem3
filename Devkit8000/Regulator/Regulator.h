@@ -1,11 +1,12 @@
 
 #include <iostream>
+//#include <unistd.h>
 //include others
-#include "Sensordata.h"
-#include "Plant.h"
+#include "Sensordata.hpp"
+#include "Plant.hpp"
 #include "UART.h"
-#include "SystemLog.h"
-#include "Indstillinger.h"
+#include "SystemLog.hpp"
+#include "Indstillinger.hpp"
 
 
 using namespace std;
@@ -16,14 +17,14 @@ using namespace std;
 class Regulator
 {
 public:
-	Regulator(UART * uart_, Indstillinger * settings_, SystemLog *systemlog_, DataLog *datalog_)																															)
+	Regulator(UART * uart_, Indstillinger * settings_, SystemLog *systemlog_, DataLog *datalog_)																															
 	{
 		
 		//* set pointers
 		uart = uart_;
 		settings = settings_;
 		systemlog = systemlog_;
-		datalog = datalag_;
+		datalog = datalog_;
 		
 
 
@@ -45,7 +46,7 @@ public:
 		loadData(plant4);
 		loadData(plant5);
 		loadData(plant6);
-		Sensordata loadeddata = datalog->GetNewestData();
+		SensorData loadeddata = datalog->GetNewestData();
 		ControlData(plant1,loadeddata);
 
 
@@ -53,11 +54,11 @@ public:
 		//usleep(6000000);
 	}
 
-	void ControlData(plant control_plant, Sensordata drivhus_data)
+	void ControlData(Plant control_plant, SensorData drivhus_data)
 	{
-		if(!indstillinger->GetRegulering())
+		if(!settings->GetRegulering())
 		{
-			usleep(5000);
+			//usleep(5000);
 			
 			return;
 		}
@@ -71,33 +72,33 @@ public:
 
 		bool use_heater = false; 
 		bool use_vents = false; 
-		indstillinger->GetHardware(use_heater,use_vent);
+		settings->GetHardware(use_heater,use_vents);
 
 		if (temp_drivhus == avg_temp_drivhus || (temp_drivhus - 1) == avg_temp_drivhus || (temp_drivhus + 1) == avg_temp_drivhus)
 		{
 			//temp is OK, close and shut everything off
-			uart->activateSensor("windowoff");
-			usleep(100);
+
 			uart->activateSensor("ventoff");
-			usleep(100);
+			//usleep(100);
 			uart->activateSensor("heatoff");
-			usleep(100);
-			
+			//usleep(100);
+			uart->activateSensor("windowoff");
+			//usleep(100);			
 		}
 		else if (temp_drivhus > avg_temp_drivhus && (temp_drivhus + 3) < (avg_temp_drivhus))
 		{
 			//OPEN WinDOW
 			uart->activateSensor("windowon");
-			usleep(100);
+			//usleep(100);
 		}
 		else if ((temp_drivhus - 6) > avg_temp_drivhus)
 		{
 			//open window
 			uart->activateSensor("windowon");
-			usleep(100);
+			//usleep(100);
 			//start vent
 			uart->activateSensor("Venton");
-			usleep(100);
+			//usleep(100);
 		}
 		else if ((temp_drivhus + 2) < avg_temp_drivhus)
 		{
@@ -105,11 +106,11 @@ public:
 			//close Window
 			//vent off
 			uart->activateSensor("heaton");
-			usleep(100);
+			//usleep(100);
 			uart->activateSensor("windowoff");
-			usleep(100);
+			//usleep(100);
 			uart->activateSensor("ventoff");
-			usleep(100);
+			//usleep(100);
 			
 		}
 																																													
@@ -122,7 +123,7 @@ public:
 
 	}
 
-	void loadData(plant loadplant)
+	void loadData(Plant loadplant)
 	{
 		// go to indstillinger
 		
@@ -138,12 +139,12 @@ private:
 
 
 
-	plant plant1;
-	plant plant2;
-	plant plant3;
-	plant plant4;
-	plant plant5;
-	plant plant6;
+	Plant plant1;
+	Plant plant2;
+	Plant plant3;
+	Plant plant4;
+	Plant plant5;
+	Plant plant6;
 
 	UART * uart;
 	Indstillinger * settings;
