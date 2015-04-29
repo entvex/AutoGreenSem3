@@ -27,6 +27,10 @@ public:
 
 private slots:
 
+    void on_btn_konfig_clicked();
+
+    void on_btn_history_clicked();
+
 private:
     Ui::MainWindow *ui;
 };

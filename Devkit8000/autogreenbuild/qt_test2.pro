@@ -8,6 +8,24 @@ DEPENDPATH += .
 INCLUDEPATH += .
 
 # Input
-HEADERS += mainwindow.h
-FORMS += mainwindow.ui
-SOURCES += main.cpp mainwindow.cpp
+HEADERS += mainwindow.h \
+    dialoge_systemconfiguration.h \
+    dialog_hardwaresettings.h \
+    dialoge_mailconfig.h \
+    dialog_noteifictions.h \
+    dialog_datetime.h \
+    dialog_historik.h
+FORMS += mainwindow.ui \
+    dialoge_systemconfiguration.ui \
+    dialog_hardwaresettings.ui \
+    dialoge_mailconfig.ui \
+    dialog_noteifictions.ui \
+    dialog_datetime.ui \
+    dialog_historik.ui
+SOURCES += main.cpp mainwindow.cpp \
+    dialoge_systemconfiguration.cpp \
+    dialog_hardwaresettings.cpp \
+    dialoge_mailconfig.cpp \
+    dialog_noteifictions.cpp \
+    dialog_datetime.cpp \
+    dialog_historik.cpp
