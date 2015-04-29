@@ -41,12 +41,12 @@ void testGethardware()
 	Indstillinger indstillinger;
 	cout << "Hardware bliver sat til true" << endl;
 
-	bool blæser = true;
+	bool bloeser = true;
 	bool Varme = true;
 
-	indstillinger.GetHardware(blæser, Varme);
+	indstillinger.SetHardware(bloeser, Varme);
+	indstillinger.GetHardware(bloeser, Varme);
 
 	cout << "Henter hardware bools" << endl;
-	cout << "Blæser: " << blæser << " Varme: " << Varme << endl;
-
+	cout << "Bloeser: " << bloeser << " Varme: " << Varme << endl;
 }

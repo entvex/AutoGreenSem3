@@ -10,7 +10,6 @@
 
 #include "DataLog_list.hpp"
 
-
 class DataLog
 {
 private:
@@ -19,20 +18,16 @@ DataLog_list list;
 
 public:
 
-	vector<SensorData> GetAll()
-	{
-		return list.GetAll();
-	}
-
 	void InsertSensorData(const SensorData &SensorData)
 	{
 		list.headInsert(SensorData);
-		list.forwardTraversing();
 	}
 
 SensorData GetNewestData()
 {
-
+	SensorData dataToReturn;
+	list.PeekHead(dataToReturn);
+	return dataToReturn;
 }
 
 //Not implemented.
@@ -52,6 +47,5 @@ void SortMonth()
 }
 
 };
-
 
 #endif /* DATALOG_HPP_ */

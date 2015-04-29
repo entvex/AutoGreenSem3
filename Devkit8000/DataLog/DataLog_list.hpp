@@ -8,7 +8,6 @@
 #ifndef DATALOG_LIST_HPP_
 #define DATALOG_LIST_HPP_
 
-#include <vector>
 #include "SensorData.hpp"
 
 
@@ -182,18 +181,6 @@ public:
 //			deleteAt(found);
 //		}
 //	}
-
-		virtual vector<SensorData> GetAll()
-		{
-			int i = 0;
-			int items = this->itemsInList;
-			vector < SensorData > vec;
-			for (Node<SensorData>* cursor = headPtr; cursor != nullptr; cursor = cursor->next)
-			{
-				vec.push_back = cursor->info;
-			}
-			return vec;
-		}
 
 	virtual int GetItemsInList()
 	{

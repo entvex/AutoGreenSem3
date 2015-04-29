@@ -42,6 +42,16 @@ public:
 		this->regulering = active;
 	}
 
+	bool getRegulering()
+	{
+		return regulering;
+	}
+
+	bool getMonitorering()
+	{
+		return monitor;
+	}
+
 	//id mellem 1 og 6
 	//Plant plantToPlace
 	void SetVirtualPlant(int id, Plant plantToPlace)
@@ -119,7 +129,6 @@ public:
 		struct Date date;
 		if (tm_ptr)
 		{
-
 			date.Min = tm_ptr->tm_min;
 			date.Hour = tm_ptr->tm_hour;
 			date.Day = tm_ptr->tm_mday;
@@ -156,7 +165,6 @@ public:
 		}
 		return -1;
 	}
-
 
 private:
 	Plant virtuallePlants[6];
