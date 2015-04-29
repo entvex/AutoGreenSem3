@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'dialoge_mailconfig.h'
 **
-** Created: Wed Apr 29 12:42:20 2015
+** Created: Wed Apr 29 13:48:59 2015
 **      by: The Qt Meta Object Compiler version 63 (Qt 4.8.0)
 **
 ** WARNING! All changes made in this file will be lost!

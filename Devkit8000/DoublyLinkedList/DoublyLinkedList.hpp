@@ -116,36 +116,23 @@ public:
 		return -1;
 	}
 
-	//TODO skal skrives når der er tid...
-//	virtual A_Type* GetAll( )
-//	{
-//		int i = 0;
-//		A_Type list[itemsInList];
-//		for (Node<A_Type>* cursor = headPtr; cursor != nullptr;cursor = cursor->next)
-//		{
-//			list[i] = cursor->info;
-//		}
-//
-//		return list;
-//	}
-
-		virtual int PeekTail(A_Type &PeekTail )
-		{
-			if (tailPtr != nullptr) {
-				PeekTail = tailPtr->info;
-				return 1;
-			}
-			return -1;
+	virtual int PeekTail(A_Type &PeekTail )
+	{
+		if (tailPtr != nullptr) {
+			PeekTail = tailPtr->info;
+			return 1;
 		}
+		return -1;
+	}
 
-		virtual int PeekHead(A_Type &PeekHead )
-		{
-			if (headPtr != nullptr) {
-				PeekHead = headPtr->info;
-				return 1;
-			}
-			return -1;
+	virtual int PeekHead(A_Type &PeekHead )
+	{
+		if (headPtr != nullptr) {
+			PeekHead = headPtr->info;
+			return 1;
 		}
+		return -1;
+	}
 
 	virtual void deleteAt(int place) {
 		Node<A_Type>* cursor = headPtr;
@@ -171,7 +158,6 @@ public:
 					return;
 				}
 			}
-
 			cursor = cursor->next;
 		}
 	}

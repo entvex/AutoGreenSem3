@@ -1,18 +1,5 @@
-/*
- * DataLog_list.hpp
- *
- *  Created on: Apr 13, 2015
- *      Author: stud
- */
-
-#ifndef DATALOG_LIST_HPP_
-#define DATALOG_LIST_HPP_
-
-#include "SensorData.hpp"
-
-
 //============================================================================
-// Name        : DataLog_list.cpp
+// Name        : DoublyLinkedList.cpp
 // Author      : Dje
 // Version     :
 // Copyright   : Your copyright notice
@@ -22,21 +9,25 @@
 #pragma once
 
 #include "Node.h"
+#include "iostream"
+using namespace std;
 
+template<class A_Type>
 class DataLog_list {
 protected:
-	Node<SensorData> *headPtr = nullptr;
-	Node<SensorData> *tailPtr = nullptr;
+	Node<A_Type> *headPtr = nullptr;
+	Node<A_Type> *tailPtr = nullptr;
 	int itemsInList = 0;
 
 public:
 
-	DataLog_list() {}
+	DataLog_list() {
 
+	}
 	virtual ~DataLog_list() {
-		Node<SensorData> *cond = tailPtr;
+		Node<A_Type> *cond = tailPtr;
 		while (cond != nullptr) {
-			Node<SensorData> *cond2 = cond;
+			Node<A_Type> *cond2 = cond;
 			cond = cond->prev;
 			delete cond2;
 		}
@@ -46,8 +37,8 @@ public:
 
 	// Precondition: headPtr points to the head of a list
 	// Postcondition: Info has been inserted at the head of the list, and headPtr is updated
-	virtual void headInsert(SensorData info) {
-		Node<SensorData> *NewNode = new Node<SensorData>(info);
+	virtual void headInsert(A_Type info) {
+		Node<A_Type> *NewNode = new Node<A_Type>(info);
 		if (headPtr == nullptr) //Hvis ikke er nogen list.
 		{
 			headPtr = NewNode;
@@ -64,8 +55,8 @@ public:
 
 	// Precondition: tailPtr points to the end of a list
 	// Postcondition: Info has been inserted at the end of the list, and tailPtr is updated
-	virtual void tailInsert(SensorData info) {
-		Node<SensorData> *NewNode = new Node<SensorData>(info);
+	virtual void tailInsert(A_Type info) {
+		Node<A_Type> *NewNode = new Node<A_Type>(info);
 		if (tailPtr == nullptr) {
 			headPtr = NewNode;
 			tailPtr = NewNode;
@@ -81,7 +72,7 @@ public:
 		if (headPtr == nullptr)
 			return; //Tjekker om der er en liste.
 		{
-			Node<SensorData>* cond = headPtr;    //Tager head og sætterden til cond.
+			Node<A_Type>* cond = headPtr;    //Tager head og sætterden til cond.
 			headPtr = headPtr->next; //Flytter head engang tilbage og gemmer.
 			headPtr->prev = nullptr;
 			delete cond;             //sletter cond.
@@ -93,7 +84,7 @@ public:
 		if (tailPtr == nullptr)
 			return; //Tjekker om der er en liste.
 		{
-			Node<SensorData>* cond = tailPtr;    //Tager tail og sætterden til cond.
+			Node<A_Type>* cond = tailPtr;    //Tager tail og sætterden til cond.
 			tailPtr = tailPtr->prev; //Flytter tail engang frem og gemmer.
 			tailPtr->next = nullptr; // Gør så tail's ikke peger frem, da det er den sidste.
 			delete cond;             //sletter cond.
@@ -102,32 +93,32 @@ public:
 	}
 
 	virtual void forwardTraversing() {
-		for (Node<SensorData>* cursor = headPtr; cursor != nullptr; cursor = cursor->next)
+		for (Node<A_Type>* cursor = headPtr; cursor != nullptr; cursor = cursor->next)
 		{
-			cout << cursor->info.temp << endl;
+			cout << cursor->info << endl;
 		}
 	}
 
 	virtual void backTraversing() {
-		for (Node<SensorData>* cursor = tailPtr; cursor != nullptr; cursor = cursor->prev)
+		for (Node<A_Type>* cursor = tailPtr; cursor != nullptr; cursor = cursor->prev)
 		{
-			cout << cursor->info.temp << endl;
+			cout << cursor->info << endl;
 		}
 	}
 
-//	virtual int Find(SensorData valueToFind) {
-//		int place = 1;
-//		for (Node<SensorData>* cursor = headPtr; cursor != nullptr;
-//				cursor = cursor->next) {
-//			if (cursor->info == valueToFind) {
-//				return place;
-//			}
-//			++place;
-//		}
-//		return -1;
-//	}
+	virtual int Find(A_Type valueToFind) {
+		int place = 1;
+		for (Node<A_Type>* cursor = headPtr; cursor != nullptr;
+				cursor = cursor->next) {
+			if (cursor->info == valueToFind) {
+				return place;
+			}
+			++place;
+		}
+		return -1;
+	}
 
-	virtual int PeekTail(SensorData &PeekTail )
+	virtual int PeekTail(A_Type &PeekTail )
 	{
 		if (tailPtr != nullptr) {
 			PeekTail = tailPtr->info;
@@ -136,7 +127,7 @@ public:
 		return -1;
 	}
 
-	virtual int PeekHead(SensorData &PeekHead )
+	virtual int PeekHead(A_Type &PeekHead )
 	{
 		if (headPtr != nullptr) {
 			PeekHead = headPtr->info;
@@ -146,7 +137,7 @@ public:
 	}
 
 	virtual void deleteAt(int place) {
-		Node<SensorData>* cursor = headPtr;
+		Node<A_Type>* cursor = headPtr;
 
 		for (int i = 1; i <= this->itemsInList; ++i) {
 
@@ -159,8 +150,8 @@ public:
 					return;
 				} else {
 
-					Node<SensorData>* cond = cursor; //pointer til den cond node.
-					Node<SensorData>* prevPtr = cursor->prev; //pointer til den lige før con node.
+					Node<A_Type>* cond = cursor; //pointer til den cond node.
+					Node<A_Type>* prevPtr = cursor->prev; //pointer til den lige før con node.
 
 					prevPtr->next = cond->next; //prevPtr next sættes til conds next.
 					cond->prev = prevPtr->prev; //prevPtr next sættes til conds next.
@@ -169,23 +160,35 @@ public:
 					return;
 				}
 			}
-
 			cursor = cursor->next;
 		}
 	}
 
-//	virtual void findAndDelete(SensorData valueToFind)
-//	{
-//		int found = Find(valueToFind);
-//		if (found != -1) {
-//			deleteAt(found);
-//		}
-//	}
+	virtual void findAndDelete(A_Type valueToFind)
+	{
+		int found = Find(valueToFind);
+		if (found != -1) {
+			deleteAt(found);
+		}
+	}
 
 	virtual int GetItemsInList()
 	{
 		return this->itemsInList;
 	}
+
 };
 
-#endif /* DATALOG_LIST_HPP_ */
+std::ostream& operator<<(std::ostream& os, const SensorData& sensorData)
+{
+    os << sensorData.humidity << " " << sensorData.light << ", " << sensorData.temp;
+
+    return os;
+}
+
+bool operator== (SensorData &sData, SensorData &sData2)
+{
+    return (sData.humidity == sData.humidity &&
+    		sData.light == sData.light &&
+    		sData.temp == sData.temp);
+}

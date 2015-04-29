@@ -8,13 +8,14 @@
 #ifndef DATALOG_HPP_
 #define DATALOG_HPP_
 
+#pragma once
 #include "DataLog_list.hpp"
 
 class DataLog
 {
 private:
 
-DataLog_list list;
+DataLog_list<SensorData> list;
 
 public:
 
@@ -30,7 +31,7 @@ SensorData GetNewestData()
 	return dataToReturn;
 }
 
-//Not implemented.
+//Not implemented because they are part of later req.
 void SortDay()
 {
 	throw;
