@@ -20,7 +20,7 @@
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralWidget">
-   <widget class="QPushButton" name="pushButton_9">
+   <widget class="QPushButton" name="status2">
     <property name="geometry">
      <rect>
       <x>410</x>
@@ -62,7 +62,7 @@
      <string>Konfigurer system</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton_10">
+   <widget class="QPushButton" name="status3">
     <property name="geometry">
      <rect>
       <x>320</x>
@@ -160,7 +160,7 @@
      <string>        Live status</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton_13">
+   <widget class="QPushButton" name="status6">
     <property name="geometry">
      <rect>
       <x>410</x>
@@ -192,7 +192,7 @@
 1</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton_12">
+   <widget class="QPushButton" name="status5">
     <property name="geometry">
      <rect>
       <x>320</x>
@@ -208,7 +208,7 @@
      <string>3/2</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton_11">
+   <widget class="QPushButton" name="status4">
     <property name="geometry">
      <rect>
       <x>410</x>
@@ -253,7 +253,7 @@
      <string>Se systemlog</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton_8">
+   <widget class="QPushButton" name="status1">
     <property name="geometry">
      <rect>
       <x>320</x>

@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'dialog_noteifictions.ui'
 **
-** Created: Wed Apr 29 12:16:38 2015
+** Created: Wed Apr 29 12:42:07 2015
 **      by: Qt User Interface Compiler version 4.8.0
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
