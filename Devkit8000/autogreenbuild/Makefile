@@ -51,6 +51,7 @@ SOURCES       = dialog_datetime.cpp \
 		dialog_noteifictions.cpp \
 		dialoge_mailconfig.cpp \
 		dialoge_systemconfiguration.cpp \
+		dialoge_systemlog.cpp \
 		main.cpp \
 		mainwindow.cpp moc_dialog_datetime.cpp \
 		moc_dialog_hardwaresettings.cpp \
@@ -58,6 +59,7 @@ SOURCES       = dialog_datetime.cpp \
 		moc_dialog_noteifictions.cpp \
 		moc_dialoge_mailconfig.cpp \
 		moc_dialoge_systemconfiguration.cpp \
+		moc_dialoge_systemlog.cpp \
 		moc_mainwindow.cpp
 OBJECTS       = dialog_datetime.o \
 		dialog_hardwaresettings.o \
@@ -65,6 +67,7 @@ OBJECTS       = dialog_datetime.o \
 		dialog_noteifictions.o \
 		dialoge_mailconfig.o \
 		dialoge_systemconfiguration.o \
+		dialoge_systemlog.o \
 		main.o \
 		mainwindow.o \
 		moc_dialog_datetime.o \
@@ -73,6 +76,7 @@ OBJECTS       = dialog_datetime.o \
 		moc_dialog_noteifictions.o \
 		moc_dialoge_mailconfig.o \
 		moc_dialoge_systemconfiguration.o \
+		moc_dialoge_systemlog.o \
 		moc_mainwindow.o
 DIST          = /usr/lib/i386-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		../../../setup-scripts/build/tmp-angstrom_2010_x-eglibc/sysroots/i686-linux/usr/share/qt4/mkspecs/common/unix.conf \
@@ -129,7 +133,7 @@ first: all
 
 all: Makefile $(TARGET)
 
-$(TARGET): ui_dialog_datetime.h ui_dialog_hardwaresettings.h ui_dialog_historik.h ui_dialog_noteifictions.h ui_dialoge_mailconfig.h ui_dialoge_systemconfiguration.h ui_mainwindow.h $(OBJECTS)  
+$(TARGET): ui_dialog_datetime.h ui_dialog_hardwaresettings.h ui_dialog_historik.h ui_dialog_noteifictions.h ui_dialoge_mailconfig.h ui_dialoge_systemconfiguration.h ui_dialoge_systemlog.h ui_mainwindow.h $(OBJECTS)  
 	$(LINK) $(LFLAGS) -o $(TARGET) $(OBJECTS) $(OBJCOMP) $(LIBS)
 
 Makefile: autogreenbuild.pro ../../../setup-scripts/build/tmp-angstrom_2010_x-eglibc/sysroots/i686-linux/usr/share/qt4/mkspecs/linux-g++/qmake.conf /usr/lib/i386-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
@@ -196,7 +200,7 @@ qmake_all: FORCE
 
 dist: 
 	@test -d .tmp/autogreenbuild1.0.0 || mkdir -p .tmp/autogreenbuild1.0.0
-	$(COPY_FILE) --parents $(SOURCES) $(DIST) .tmp/autogreenbuild1.0.0/ && $(COPY_FILE) --parents dialog_datetime.h dialog_hardwaresettings.h dialog_historik.h dialog_noteifictions.h dialoge_mailconfig.h dialoge_systemconfiguration.h mainwindow.h ui_dialog_datetime.h ui_dialog_hardwaresettings.h ui_dialog_historik.h ui_dialog_noteifictions.h ui_dialoge_mailconfig.h ui_dialoge_systemconfiguration.h ui_mainwindow.h .tmp/autogreenbuild1.0.0/ && $(COPY_FILE) --parents dialog_datetime.cpp dialog_hardwaresettings.cpp dialog_historik.cpp dialog_noteifictions.cpp dialoge_mailconfig.cpp dialoge_systemconfiguration.cpp main.cpp mainwindow.cpp .tmp/autogreenbuild1.0.0/ && $(COPY_FILE) --parents dialog_datetime.ui dialog_hardwaresettings.ui dialog_historik.ui dialog_noteifictions.ui dialoge_mailconfig.ui dialoge_systemconfiguration.ui mainwindow.ui .tmp/autogreenbuild1.0.0/ && (cd `dirname .tmp/autogreenbuild1.0.0` && $(TAR) autogreenbuild1.0.0.tar autogreenbuild1.0.0 && $(COMPRESS) autogreenbuild1.0.0.tar) && $(MOVE) `dirname .tmp/autogreenbuild1.0.0`/autogreenbuild1.0.0.tar.gz . && $(DEL_FILE) -r .tmp/autogreenbuild1.0.0
+	$(COPY_FILE) --parents $(SOURCES) $(DIST) .tmp/autogreenbuild1.0.0/ && $(COPY_FILE) --parents dialog_datetime.h dialog_hardwaresettings.h dialog_historik.h dialog_noteifictions.h dialoge_mailconfig.h dialoge_systemconfiguration.h dialoge_systemlog.h mainwindow.h .tmp/autogreenbuild1.0.0/ && $(COPY_FILE) --parents dialog_datetime.cpp dialog_hardwaresettings.cpp dialog_historik.cpp dialog_noteifictions.cpp dialoge_mailconfig.cpp dialoge_systemconfiguration.cpp dialoge_systemlog.cpp main.cpp mainwindow.cpp .tmp/autogreenbuild1.0.0/ && $(COPY_FILE) --parents dialog_datetime.ui dialog_hardwaresettings.ui dialog_historik.ui dialog_noteifictions.ui dialoge_mailconfig.ui dialoge_systemconfiguration.ui dialoge_systemlog.ui mainwindow.ui .tmp/autogreenbuild1.0.0/ && (cd `dirname .tmp/autogreenbuild1.0.0` && $(TAR) autogreenbuild1.0.0.tar autogreenbuild1.0.0 && $(COMPRESS) autogreenbuild1.0.0.tar) && $(MOVE) `dirname .tmp/autogreenbuild1.0.0`/autogreenbuild1.0.0.tar.gz . && $(DEL_FILE) -r .tmp/autogreenbuild1.0.0
 
 
 clean:compiler_clean 
@@ -220,9 +224,9 @@ mocclean: compiler_moc_header_clean compiler_moc_source_clean
 
 mocables: compiler_moc_header_make_all compiler_moc_source_make_all
 
-compiler_moc_header_make_all: moc_dialog_datetime.cpp moc_dialog_hardwaresettings.cpp moc_dialog_historik.cpp moc_dialog_noteifictions.cpp moc_dialoge_mailconfig.cpp moc_dialoge_systemconfiguration.cpp moc_mainwindow.cpp
+compiler_moc_header_make_all: moc_dialog_datetime.cpp moc_dialog_hardwaresettings.cpp moc_dialog_historik.cpp moc_dialog_noteifictions.cpp moc_dialoge_mailconfig.cpp moc_dialoge_systemconfiguration.cpp moc_dialoge_systemlog.cpp moc_mainwindow.cpp
 compiler_moc_header_clean:
-	-$(DEL_FILE) moc_dialog_datetime.cpp moc_dialog_hardwaresettings.cpp moc_dialog_historik.cpp moc_dialog_noteifictions.cpp moc_dialoge_mailconfig.cpp moc_dialoge_systemconfiguration.cpp moc_mainwindow.cpp
+	-$(DEL_FILE) moc_dialog_datetime.cpp moc_dialog_hardwaresettings.cpp moc_dialog_historik.cpp moc_dialog_noteifictions.cpp moc_dialoge_mailconfig.cpp moc_dialoge_systemconfiguration.cpp moc_dialoge_systemlog.cpp moc_mainwindow.cpp
 moc_dialog_datetime.cpp: dialog_datetime.h \
 		$(OE_QMAKE_MOC)
 	$(OE_QMAKE_MOC) $(DEFINES) $(INCPATH) dialog_datetime.h -o moc_dialog_datetime.cpp
@@ -247,6 +251,10 @@ moc_dialoge_systemconfiguration.cpp: dialoge_systemconfiguration.h \
 		$(OE_QMAKE_MOC)
 	$(OE_QMAKE_MOC) $(DEFINES) $(INCPATH) dialoge_systemconfiguration.h -o moc_dialoge_systemconfiguration.cpp
 
+moc_dialoge_systemlog.cpp: dialoge_systemlog.h \
+		$(OE_QMAKE_MOC)
+	$(OE_QMAKE_MOC) $(DEFINES) $(INCPATH) dialoge_systemlog.h -o moc_dialoge_systemlog.cpp
+
 moc_mainwindow.cpp: mainwindow.h \
 		$(OE_QMAKE_MOC)
 	$(OE_QMAKE_MOC) $(DEFINES) $(INCPATH) mainwindow.h -o moc_mainwindow.cpp
@@ -258,9 +266,9 @@ compiler_image_collection_clean:
 	-$(DEL_FILE) qmake_image_collection.cpp
 compiler_moc_source_make_all:
 compiler_moc_source_clean:
-compiler_uic_make_all: ui_dialog_datetime.h ui_dialog_hardwaresettings.h ui_dialog_historik.h ui_dialog_noteifictions.h ui_dialoge_mailconfig.h ui_dialoge_systemconfiguration.h ui_mainwindow.h
+compiler_uic_make_all: ui_dialog_datetime.h ui_dialog_hardwaresettings.h ui_dialog_historik.h ui_dialog_noteifictions.h ui_dialoge_mailconfig.h ui_dialoge_systemconfiguration.h ui_dialoge_systemlog.h ui_mainwindow.h
 compiler_uic_clean:
-	-$(DEL_FILE) ui_dialog_datetime.h ui_dialog_hardwaresettings.h ui_dialog_historik.h ui_dialog_noteifictions.h ui_dialoge_mailconfig.h ui_dialoge_systemconfiguration.h ui_mainwindow.h
+	-$(DEL_FILE) ui_dialog_datetime.h ui_dialog_hardwaresettings.h ui_dialog_historik.h ui_dialog_noteifictions.h ui_dialoge_mailconfig.h ui_dialoge_systemconfiguration.h ui_dialoge_systemlog.h ui_mainwindow.h
 ui_dialog_datetime.h: dialog_datetime.ui
 	$(OE_QMAKE_UIC) dialog_datetime.ui -o ui_dialog_datetime.h
 
@@ -278,6 +286,9 @@ ui_dialoge_mailconfig.h: dialoge_mailconfig.ui
 
 ui_dialoge_systemconfiguration.h: dialoge_systemconfiguration.ui
 	$(OE_QMAKE_UIC) dialoge_systemconfiguration.ui -o ui_dialoge_systemconfiguration.h
+
+ui_dialoge_systemlog.h: dialoge_systemlog.ui
+	$(OE_QMAKE_UIC) dialoge_systemlog.ui -o ui_dialoge_systemlog.h
 
 ui_mainwindow.h: mainwindow.ui
 	$(OE_QMAKE_UIC) mainwindow.ui -o ui_mainwindow.h
@@ -320,13 +331,18 @@ dialoge_systemconfiguration.o: dialoge_systemconfiguration.cpp dialoge_systemcon
 		dialog_datetime.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o dialoge_systemconfiguration.o dialoge_systemconfiguration.cpp
 
+dialoge_systemlog.o: dialoge_systemlog.cpp dialoge_systemlog.h \
+		ui_dialoge_systemlog.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o dialoge_systemlog.o dialoge_systemlog.cpp
+
 main.o: main.cpp mainwindow.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o main.cpp
 
 mainwindow.o: mainwindow.cpp mainwindow.h \
 		ui_mainwindow.h \
 		dialoge_systemconfiguration.h \
-		dialog_historik.h
+		dialog_historik.h \
+		dialoge_systemlog.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o mainwindow.o mainwindow.cpp
 
 moc_dialog_datetime.o: moc_dialog_datetime.cpp 
@@ -346,6 +362,9 @@ moc_dialoge_mailconfig.o: moc_dialoge_mailconfig.cpp
 
 moc_dialoge_systemconfiguration.o: moc_dialoge_systemconfiguration.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_dialoge_systemconfiguration.o moc_dialoge_systemconfiguration.cpp
+
+moc_dialoge_systemlog.o: moc_dialoge_systemlog.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_dialoge_systemlog.o moc_dialoge_systemlog.cpp
 
 moc_mainwindow.o: moc_mainwindow.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_mainwindow.o moc_mainwindow.cpp

@@ -31,6 +31,8 @@ private slots:
 
     void on_btn_history_clicked();
 
+    void on_btn_systemlog_clicked();
+
 private:
     Ui::MainWindow *ui;
 };

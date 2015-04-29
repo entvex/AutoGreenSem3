@@ -2,6 +2,7 @@
 #include "ui_mainwindow.h"
 #include "dialoge_systemconfiguration.h"
 #include "dialog_historik.h"
+#include "dialoge_systemlog.h"
 #include <QtCore/QCoreApplication>
 
 MainWindow::MainWindow(QWidget *parent)
@@ -81,4 +82,11 @@ void MainWindow::on_btn_history_clicked()
     dialog_historik historik;
     historik.setModal(true);
     historik.exec();
+}
+
+void MainWindow::on_btn_systemlog_clicked()
+{
+    dialoge_systemlog systemlog;
+    systemlog.setModal(true);
+    systemlog.exec();
 }
