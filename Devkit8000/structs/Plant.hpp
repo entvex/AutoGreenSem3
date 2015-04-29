@@ -9,6 +9,10 @@ using namespace std;
 
 struct Plant
 {
-	int DataSomGivgerMening;
+	string name;
+	int temp;
+	int light;
+	int hum;
+	int water;
 	bool Enable;
 };
