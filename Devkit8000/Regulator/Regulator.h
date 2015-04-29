@@ -127,9 +127,7 @@ public:
 		// go to indstillinger
 		
 		//mangler funktionalitet til at hente plante
-		loadplant.light = 0;
-		loadplant.temp = 0;
-		loadplant.water = 0;
+		
 		
 
 
