@@ -1,22 +1,24 @@
+#ifndef MONITOR_H_
+#define MONITOR_H_
+
 #include "rs232.h"
-#include "SensorData.h"
+#include "SensorData.hpp"
 #include <iostream>
 #include <string>
 #include <string.h>
-#include <SystemLog.h>
+#include "SystemLog.hpp"
+
 using namespace std;
-
-
 
 class UART
 {
  public:
-  UART(SystemLog *Log)
+  UART(/*SystemLog *Log*/)
     {
-      systemlog = Log;
+      //systemlog = Log;
       cport_nr = 0;
-      bdrate = 9600
-	}
+      bdrate = 9600;
+    }
 
   void connect()
   {
@@ -29,8 +31,6 @@ class UART
     cout << " connection made on port: " << cport_nr << endl;
 
   }
-
-
 
 
   int getSensor()
@@ -131,7 +131,7 @@ class UART
     while (1)
       {
 
-	Sleep(1000);
+	usleep(1000);
 	int n = RS232_PollComport(cport_nr, buf, 2);
 			
 
@@ -166,6 +166,7 @@ class UART
 	cout << buf[0] << " " << buf[1] << endl;
       }
   }
+
   void senddata(string command_)
   {
     char command[2][5];
@@ -207,3 +208,4 @@ class UART
   }
 };
 
+#endif

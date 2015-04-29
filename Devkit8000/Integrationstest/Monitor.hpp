@@ -2,11 +2,10 @@
 #define MONITOR_HPP_
 
 #include <iostream>
-#include "UART.hpp"
+#include "UART.h"
 #include "DataLog.hpp"
 #include "Plant.hpp"
 #include "SensorData.hpp"
-#include "DateStruct.hpp"
 #include "Indstillinger.hpp"
 
 using namespace std;
@@ -16,12 +15,11 @@ class Monitor
 public:
   Monitor(){}
 
-  /*void setInd(UART* uart, Datalog* data)
+  void setInd(UART &uart, DataLog &data)
   {
-    //  uart_ =  uart;
-    //  datalog_ = data;
+      uart_ =  uart;
+      datalog_ = data;
   }
-  */
 
   void compareData()
   {
@@ -33,15 +31,15 @@ public:
     */
 
     // check for sensors
-    uart_->scanForSensors();
-    sensordata_ = uart_->getSensorData();
-    datalog_->InsertSensorData(sensordata_);
+    int s = uart_.getSensor();
+    sensordata_ = uart_.getSensorData();
+    datalog_.InsertSensorData(sensordata_);
     
     // compare sensor with virtual plants settings
     bool status; int i;
-    while(i < 6)
+    while(i < s)
       {
-	status = compareSet(virtuel_[i], sensordata_, 2);
+	status = compareSet(sensordata_, virtuel_[i], 2);
 	if(!status)
 	  status = true; //send message to systemlog
       }
@@ -66,13 +64,13 @@ private:
     return true;
   }
 
-  Plant[] virtuel_;
+  Plant virtuel_[6];
   Date date_;
   bool daily_;
   bool warning_;
   Indstillinger ind_;
-  DataLog* datalog_;
-  UART* uart_;
+  DataLog datalog_;
+  UART uart_;
   SensorData sensordata_;
 };
 

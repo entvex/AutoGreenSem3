@@ -1,4 +1,4 @@
-SRC= TestMonitor.cpp Monitor.hpp UART.hpp DataLog.hpp DateStruct.hpp Plant.hpp Indstillinger.hpp SensorData.hpp rs232.c DataLog_list.hpp DoublyLinkedList.hpp
+SRC= TestMonitor.cpp Monitor.hpp UART.h DataLog.hpp Date.hpp Plant.hpp Indstillinger.hpp SensorData.hpp rs232.c DataLog_list.hpp DoublyLinkedList.hpp Message.hpp MsgQueue.hpp SystemLog.hpp
 DEP= rs232.h Node.h
 OBJ= TestMonitor.o 
 EXE= Monitor

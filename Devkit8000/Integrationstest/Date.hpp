@@ -1,3 +1,5 @@
+#ifndef Date_HPP_
+#define Date_HPP_
  
 struct Date
 {
@@ -7,3 +9,5 @@ struct Date
   int Month;
   int Year;
 };
+
+#endif

@@ -1,4 +1,9 @@
+#ifndef Plant_HPP_
+#define Plant_HPP_
+
 #include <iostream>
+
+using namespace std;
 
 struct Plant
 {
@@ -9,3 +14,5 @@ struct Plant
   int water;
   bool Enable;
 };
+
+#endif

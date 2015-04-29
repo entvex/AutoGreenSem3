@@ -6,6 +6,9 @@
 // Description : Hello World in C++, Ansi-style
 //============================================================================
 
+#ifndef DataLog_list_HPP_
+#define DataLog_list_HPP_
+
 #include "Node.h"
 #include <iostream>
 #include "SensorData.hpp"
@@ -192,3 +195,5 @@ bool operator== (SensorData &sData, SensorData &sData2)
 	  sData.light == sData.light &&
 	  sData.temp == sData.temp);
 }
+
+#endif

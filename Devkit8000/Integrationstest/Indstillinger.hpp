@@ -5,13 +5,16 @@
  *      Author: dje
  */
 
+#ifndef Indstillinger_HPP_
+#define Indstillinger_HPP_
+
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
 #include <cstdlib>
 #include <iostream>
 #include <time.h>
-#include "DateStruct.hpp"
+#include "Date.hpp"
 #include "Plant.hpp"
 
 using namespace std;
@@ -187,3 +190,5 @@ private:
     return result;
   }
 };
+
+#endif

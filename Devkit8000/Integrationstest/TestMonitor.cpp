@@ -3,15 +3,17 @@
 #include <stdlib.h>
 #include "stdio.h"
 #include "Monitor.hpp"
-#include "UART.hpp"
+#include "UART.h"
 #include "DataLog.hpp"
+#include "SystemLog.hpp"
 
 using namespace std;
 
 struct MtnPkg
 {
-  UART* uart_;
-  DataLog* datalog_;
+  SystemLog syslog;
+  UART uart_;
+  DataLog datalog_;
 };
 
 void *MonitorTrd(void *data)
@@ -25,9 +27,10 @@ void *MonitorTrd(void *data)
 }
 
 int main()
-{  
-  UART* ua;
-  DataLog* data;
+{ 
+  SystemLog sl;
+  UART ua;
+  DataLog data;
   
   MtnPkg msg;
   msg.uart_ = ua;
@@ -41,3 +44,4 @@ int main()
 
   return 0;
 }
+

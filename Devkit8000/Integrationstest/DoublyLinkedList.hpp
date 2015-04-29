@@ -6,6 +6,9 @@
 // Description : Hello World in C++, Ansi-style
 //============================================================================
 
+#ifndef DoublyLinkedList_HPP_
+#define DoublyLinkedList_HPP_
+
 #include "Node.h"
 
 template<class A_Type>
@@ -175,3 +178,4 @@ public:
 
 };
 
+#endif
