@@ -25,16 +25,7 @@ public:
 		systemlog = systemlog_;
 		datalog = datalag_;
 		
-		tempHigh = false;
-		tempLow = false;
-		humidityHigh = false;
-		humidityLow = false;
-		plante1water = false;
-		plante2water = false;
-		plante3water = false;
-		plante4water = false;
-		plante5water = false;
-		plante6water = false;
+
 
 
 	}
@@ -147,17 +138,7 @@ public:
 private:
 
 
-//scrap these bools ?
-	bool tempHigh;
-	bool tempLow;
-	bool humidityHigh;
-	bool humidityLow;
-	bool plante1water;
-	bool plante2water;
-	bool plante3water;
-	bool plante4water;
-	bool plante5water;
-	bool plante6water;
+
 
 	plant plant1;
 	plant plant2;
