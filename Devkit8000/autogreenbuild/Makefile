@@ -200,7 +200,7 @@ qmake_all: FORCE
 
 dist: 
 	@test -d .tmp/autogreenbuild1.0.0 || mkdir -p .tmp/autogreenbuild1.0.0
-	$(COPY_FILE) --parents $(SOURCES) $(DIST) .tmp/autogreenbuild1.0.0/ && $(COPY_FILE) --parents DateStruct.hpp dialog_datetime.h dialog_hardwaresettings.h dialog_historik.h dialog_noteifictions.h dialoge_mailconfig.h dialoge_systemconfiguration.h dialoge_systemlog.h Indstillinger.hpp mainwindow.h Plant.hpp .tmp/autogreenbuild1.0.0/ && $(COPY_FILE) --parents dialog_datetime.cpp dialog_hardwaresettings.cpp dialog_historik.cpp dialog_noteifictions.cpp dialoge_mailconfig.cpp dialoge_systemconfiguration.cpp dialoge_systemlog.cpp main.cpp mainwindow.cpp .tmp/autogreenbuild1.0.0/ && $(COPY_FILE) --parents dialog_datetime.ui dialog_hardwaresettings.ui dialog_historik.ui dialog_noteifictions.ui dialoge_mailconfig.ui dialoge_systemconfiguration.ui dialoge_systemlog.ui mainwindow.ui .tmp/autogreenbuild1.0.0/ && (cd `dirname .tmp/autogreenbuild1.0.0` && $(TAR) autogreenbuild1.0.0.tar autogreenbuild1.0.0 && $(COMPRESS) autogreenbuild1.0.0.tar) && $(MOVE) `dirname .tmp/autogreenbuild1.0.0`/autogreenbuild1.0.0.tar.gz . && $(DEL_FILE) -r .tmp/autogreenbuild1.0.0
+	$(COPY_FILE) --parents $(SOURCES) $(DIST) .tmp/autogreenbuild1.0.0/ && $(COPY_FILE) --parents DateStruct.hpp dialog_datetime.h dialog_hardwaresettings.h dialog_historik.h dialog_noteifictions.h dialoge_mailconfig.h dialoge_systemconfiguration.h dialoge_systemlog.h Indstillinger.hpp mainwindow.h Plant.hpp ui_dialog_datetime.h ui_dialog_hardwaresettings.h ui_dialog_historik.h ui_dialog_noteifictions.h ui_dialoge_mailconfig.h ui_dialoge_systemconfiguration.h ui_dialoge_systemlog.h ui_mainwindow.h .tmp/autogreenbuild1.0.0/ && $(COPY_FILE) --parents dialog_datetime.cpp dialog_hardwaresettings.cpp dialog_historik.cpp dialog_noteifictions.cpp dialoge_mailconfig.cpp dialoge_systemconfiguration.cpp dialoge_systemlog.cpp main.cpp mainwindow.cpp .tmp/autogreenbuild1.0.0/ && $(COPY_FILE) --parents dialog_datetime.ui dialog_hardwaresettings.ui dialog_historik.ui dialog_noteifictions.ui dialoge_mailconfig.ui dialoge_systemconfiguration.ui dialoge_systemlog.ui mainwindow.ui .tmp/autogreenbuild1.0.0/ && (cd `dirname .tmp/autogreenbuild1.0.0` && $(TAR) autogreenbuild1.0.0.tar autogreenbuild1.0.0 && $(COMPRESS) autogreenbuild1.0.0.tar) && $(MOVE) `dirname .tmp/autogreenbuild1.0.0`/autogreenbuild1.0.0.tar.gz . && $(DEL_FILE) -r .tmp/autogreenbuild1.0.0
 
 
 clean:compiler_clean 
@@ -307,7 +307,11 @@ compiler_clean: compiler_moc_header_clean compiler_uic_clean
 ####### Compile
 
 dialog_datetime.o: dialog_datetime.cpp dialog_datetime.h \
-		ui_dialog_datetime.h
+		ui_dialog_datetime.h \
+		mainwindow.h \
+		Indstillinger.hpp \
+		DateStruct.hpp \
+		Plant.hpp
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o dialog_datetime.o dialog_datetime.cpp
 
 dialog_hardwaresettings.o: dialog_hardwaresettings.cpp dialog_hardwaresettings.h \
