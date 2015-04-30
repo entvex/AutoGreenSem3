@@ -39,7 +39,7 @@
     <string>                Tids indstillinger</string>
    </property>
   </widget>
-  <widget class="QPushButton" name="pushButton">
+  <widget class="QPushButton" name="btn_back">
    <property name="geometry">
     <rect>
      <x>50</x>
@@ -88,7 +88,7 @@
     <string>M/d</string>
    </property>
   </widget>
-  <widget class="QPushButton" name="pushButton_2">
+  <widget class="QPushButton" name="btn_ok">
    <property name="geometry">
     <rect>
      <x>380</x>

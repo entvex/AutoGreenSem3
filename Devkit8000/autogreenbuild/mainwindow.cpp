@@ -75,6 +75,7 @@ void MainWindow::on_btn_konfig_clicked()
     dialoge_systemconfiguration systemconfiguration;
     systemconfiguration.setModal(true);
     systemconfiguration.exec();
+
 }
 
 void MainWindow::on_btn_history_clicked()

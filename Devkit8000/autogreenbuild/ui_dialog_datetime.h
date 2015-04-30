@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'dialog_datetime.ui'
 **
-** Created: Wed Apr 29 13:48:34 2015
+** Created: Thu Apr 30 09:55:51 2015
 **      by: Qt User Interface Compiler version 4.8.0
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -27,11 +27,11 @@ class Ui_dialog_datetime
 {
 public:
     QLabel *label_3;
-    QPushButton *pushButton;
+    QPushButton *btn_back;
     QLabel *label;
     QTimeEdit *timeEdit;
     QDateEdit *dateEdit;
-    QPushButton *pushButton_2;
+    QPushButton *btn_ok;
     QLabel *label_2;
 
     void setupUi(QDialog *dialog_datetime)
@@ -48,9 +48,9 @@ public:
         font.setBold(true);
         font.setWeight(75);
         label_3->setFont(font);
-        pushButton = new QPushButton(dialog_datetime);
-        pushButton->setObjectName(QString::fromUtf8("pushButton"));
-        pushButton->setGeometry(QRect(50, 200, 51, 23));
+        btn_back = new QPushButton(dialog_datetime);
+        btn_back->setObjectName(QString::fromUtf8("btn_back"));
+        btn_back->setGeometry(QRect(50, 200, 51, 23));
         label = new QLabel(dialog_datetime);
         label->setObjectName(QString::fromUtf8("label"));
         label->setGeometry(QRect(130, 50, 61, 20));
@@ -60,9 +60,9 @@ public:
         dateEdit = new QDateEdit(dialog_datetime);
         dateEdit->setObjectName(QString::fromUtf8("dateEdit"));
         dateEdit->setGeometry(QRect(170, 50, 110, 24));
-        pushButton_2 = new QPushButton(dialog_datetime);
-        pushButton_2->setObjectName(QString::fromUtf8("pushButton_2"));
-        pushButton_2->setGeometry(QRect(380, 210, 51, 23));
+        btn_ok = new QPushButton(dialog_datetime);
+        btn_ok->setObjectName(QString::fromUtf8("btn_ok"));
+        btn_ok->setGeometry(QRect(380, 210, 51, 23));
         label_2 = new QLabel(dialog_datetime);
         label_2->setObjectName(QString::fromUtf8("label_2"));
         label_2->setGeometry(QRect(130, 90, 61, 20));
@@ -76,10 +76,10 @@ public:
     {
         dialog_datetime->setWindowTitle(QApplication::translate("dialog_datetime", "Dialog", 0, QApplication::UnicodeUTF8));
         label_3->setText(QApplication::translate("dialog_datetime", "                Tids indstillinger", 0, QApplication::UnicodeUTF8));
-        pushButton->setText(QApplication::translate("dialog_datetime", "Tilbage", 0, QApplication::UnicodeUTF8));
+        btn_back->setText(QApplication::translate("dialog_datetime", "Tilbage", 0, QApplication::UnicodeUTF8));
         label->setText(QApplication::translate("dialog_datetime", "Dato", 0, QApplication::UnicodeUTF8));
         dateEdit->setDisplayFormat(QApplication::translate("dialog_datetime", "M/d", 0, QApplication::UnicodeUTF8));
-        pushButton_2->setText(QApplication::translate("dialog_datetime", "OK", 0, QApplication::UnicodeUTF8));
+        btn_ok->setText(QApplication::translate("dialog_datetime", "OK", 0, QApplication::UnicodeUTF8));
         label_2->setText(QApplication::translate("dialog_datetime", "Tid", 0, QApplication::UnicodeUTF8));
     } // retranslateUi
 

@@ -5,7 +5,10 @@
  *      Author: stud
  */
 
+#pragma once
+
 #include "DateStruct.hpp"
+
 
 struct SensorData
 {

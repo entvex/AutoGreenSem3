@@ -2,6 +2,8 @@
 #define MAINWINDOW_H
 
 #include <QtGui/QMainWindow>
+#include "Indstillinger.hpp"
+#include "DateStruct.hpp"
 
 namespace Ui {
     class MainWindow;
@@ -25,6 +27,8 @@ public:
 
     void showExpanded();
 
+    static Indstillinger indstillinger;
+
 private slots:
 
     void on_btn_konfig_clicked();
@@ -37,4 +41,4 @@ private:
     Ui::MainWindow *ui;
 };
 
-#endif // MAINWINDOW_H
+#endif // MAINWINDOW_

@@ -14,7 +14,7 @@ CC            = $(OE_QMAKE_CC)
 CXX           = $(OE_QMAKE_CXX)
 DEFINES       = -DQT_NO_DEBUG -DQT_GUI_LIB -DQT_CORE_LIB
 CFLAGS        = -pipe -pipe $(OE_QMAKE_CFLAGS) -O2 -Wall -W -Wall -W -D_REENTRANT $(DEFINES)
-CXXFLAGS      = -pipe -pipe -pipe $(OE_QMAKE_CFLAGS) $(OE_QMAKE_CXXFLAGS) -O2 -O2 -Wall -W -Wall -W -Wall -W -D_REENTRANT $(DEFINES)
+CXXFLAGS      = -pipe -pipe -pipe $(OE_QMAKE_CFLAGS) $(OE_QMAKE_CXXFLAGS) -std=c++0x -O2 -O2 -Wall -W -Wall -W -Wall -W -D_REENTRANT $(DEFINES)
 INCPATH       = -I../../../setup-scripts/build/tmp-angstrom_2010_x-eglibc/sysroots/i686-linux/usr/share/qt4/mkspecs/linux-g++ -I. -I$(OE_QMAKE_INCDIR_QT)/QtCore -I$(OE_QMAKE_INCDIR_QT)/QtGui -I$(OE_QMAKE_INCDIR_QT) -I. -I. -I.
 LINK          = $(OE_QMAKE_LINK)
 LFLAGS        = $(OE_QMAKE_LDFLAGS) -Wl,-rpath-link,$(OE_QMAKE_LIBDIR_QT)
@@ -200,7 +200,7 @@ qmake_all: FORCE
 
 dist: 
 	@test -d .tmp/autogreenbuild1.0.0 || mkdir -p .tmp/autogreenbuild1.0.0
-	$(COPY_FILE) --parents $(SOURCES) $(DIST) .tmp/autogreenbuild1.0.0/ && $(COPY_FILE) --parents dialog_datetime.h dialog_hardwaresettings.h dialog_historik.h dialog_noteifictions.h dialoge_mailconfig.h dialoge_systemconfiguration.h dialoge_systemlog.h mainwindow.h .tmp/autogreenbuild1.0.0/ && $(COPY_FILE) --parents dialog_datetime.cpp dialog_hardwaresettings.cpp dialog_historik.cpp dialog_noteifictions.cpp dialoge_mailconfig.cpp dialoge_systemconfiguration.cpp dialoge_systemlog.cpp main.cpp mainwindow.cpp .tmp/autogreenbuild1.0.0/ && $(COPY_FILE) --parents dialog_datetime.ui dialog_hardwaresettings.ui dialog_historik.ui dialog_noteifictions.ui dialoge_mailconfig.ui dialoge_systemconfiguration.ui dialoge_systemlog.ui mainwindow.ui .tmp/autogreenbuild1.0.0/ && (cd `dirname .tmp/autogreenbuild1.0.0` && $(TAR) autogreenbuild1.0.0.tar autogreenbuild1.0.0 && $(COMPRESS) autogreenbuild1.0.0.tar) && $(MOVE) `dirname .tmp/autogreenbuild1.0.0`/autogreenbuild1.0.0.tar.gz . && $(DEL_FILE) -r .tmp/autogreenbuild1.0.0
+	$(COPY_FILE) --parents $(SOURCES) $(DIST) .tmp/autogreenbuild1.0.0/ && $(COPY_FILE) --parents DateStruct.hpp dialog_datetime.h dialog_hardwaresettings.h dialog_historik.h dialog_noteifictions.h dialoge_mailconfig.h dialoge_systemconfiguration.h dialoge_systemlog.h Indstillinger.hpp mainwindow.h Plant.hpp .tmp/autogreenbuild1.0.0/ && $(COPY_FILE) --parents dialog_datetime.cpp dialog_hardwaresettings.cpp dialog_historik.cpp dialog_noteifictions.cpp dialoge_mailconfig.cpp dialoge_systemconfiguration.cpp dialoge_systemlog.cpp main.cpp mainwindow.cpp .tmp/autogreenbuild1.0.0/ && $(COPY_FILE) --parents dialog_datetime.ui dialog_hardwaresettings.ui dialog_historik.ui dialog_noteifictions.ui dialoge_mailconfig.ui dialoge_systemconfiguration.ui dialoge_systemlog.ui mainwindow.ui .tmp/autogreenbuild1.0.0/ && (cd `dirname .tmp/autogreenbuild1.0.0` && $(TAR) autogreenbuild1.0.0.tar autogreenbuild1.0.0 && $(COMPRESS) autogreenbuild1.0.0.tar) && $(MOVE) `dirname .tmp/autogreenbuild1.0.0`/autogreenbuild1.0.0.tar.gz . && $(DEL_FILE) -r .tmp/autogreenbuild1.0.0
 
 
 clean:compiler_clean 
@@ -255,7 +255,10 @@ moc_dialoge_systemlog.cpp: dialoge_systemlog.h \
 		$(OE_QMAKE_MOC)
 	$(OE_QMAKE_MOC) $(DEFINES) $(INCPATH) dialoge_systemlog.h -o moc_dialoge_systemlog.cpp
 
-moc_mainwindow.cpp: mainwindow.h \
+moc_mainwindow.cpp: Indstillinger.hpp \
+		DateStruct.hpp \
+		Plant.hpp \
+		mainwindow.h \
 		$(OE_QMAKE_MOC)
 	$(OE_QMAKE_MOC) $(DEFINES) $(INCPATH) mainwindow.h -o moc_mainwindow.cpp
 
@@ -335,10 +338,16 @@ dialoge_systemlog.o: dialoge_systemlog.cpp dialoge_systemlog.h \
 		ui_dialoge_systemlog.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o dialoge_systemlog.o dialoge_systemlog.cpp
 
-main.o: main.cpp mainwindow.h
+main.o: main.cpp mainwindow.h \
+		Indstillinger.hpp \
+		DateStruct.hpp \
+		Plant.hpp
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o main.cpp
 
 mainwindow.o: mainwindow.cpp mainwindow.h \
+		Indstillinger.hpp \
+		DateStruct.hpp \
+		Plant.hpp \
 		ui_mainwindow.h \
 		dialoge_systemconfiguration.h \
 		dialog_historik.h \

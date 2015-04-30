@@ -15,6 +15,12 @@ public:
     explicit dialog_datetime(QWidget *parent = 0);
     ~dialog_datetime();
 
+private slots:
+
+    void on_btn_back_clicked();
+
+    void on_btn_ok_clicked();
+
 private:
     Ui::dialog_datetime *ui;
 };
