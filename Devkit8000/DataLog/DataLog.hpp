@@ -8,45 +8,58 @@
 #ifndef DATALOG_HPP_
 #define DATALOG_HPP_
 
-#pragma once
-#include "DataLog_list.hpp"
+#include "DoublyLinkedList.hpp"
 
 class DataLog
 {
 private:
 
-DataLog_list<SensorData> list;
+  DoublyLinkedList<SensorData> list;
 
 public:
 
-	void InsertSensorData(const SensorData &SensorData)
-	{
-		list.headInsert(SensorData);
-	}
+  void InsertSensorData(SensorData SensorData)
+  {
+    list.headInsert(SensorData);
+  }
 
-SensorData GetNewestData()
-{
-	SensorData dataToReturn;
-	list.PeekHead(dataToReturn);
-	return dataToReturn;
-}
+  SensorData GetNewestData()
+  {
+    SensorData dataToReturn;
+    list.PeekHead(dataToReturn);
+    return dataToReturn;
+  }
 
-//Not implemented because they are part of later req.
-void SortDay()
-{
-	throw;
-}
+  //Not implemented because they are part of later req.
+  void SortDay()
+  {
+    throw;
+  }
 
-void SortWeek()
-{
-	throw;
-}
+  void SortWeek()
+  {
+    throw;
+  }
 
-void SortMonth()
-{
-	throw;
-}
+  void SortMonth()
+  {
+    throw;
+  }
 
 };
+
+std::ostream& operator<<(std::ostream& os, const SensorData& sensorData)
+{
+  os << sensorData.humidity << " " << sensorData.light << ", " << sensorData.temp;
+
+  return os;
+}
+
+bool operator== (SensorData &sData, SensorData &sData2)
+{
+  return (sData.humidity == sData.humidity &&
+	  sData.light == sData.light &&
+	  sData.temp == sData.temp);
+}
 
 #endif /* DATALOG_HPP_ */
