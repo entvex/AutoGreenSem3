@@ -132,6 +132,8 @@ while(1) {
 	{
 		// go to indstillinger
 		
+
+		//loadplant = settings->GetPlant()
 		//mangler funktionalitet til at hente plante
 		
 		
