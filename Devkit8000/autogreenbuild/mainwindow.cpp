@@ -9,6 +9,7 @@ MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent), ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+
 }
 
 MainWindow::~MainWindow()
@@ -90,4 +91,56 @@ void MainWindow::on_btn_systemlog_clicked()
     dialoge_systemlog systemlog;
     systemlog.setModal(true);
     systemlog.exec();
+}
+
+void MainWindow::on_btn_monitor_clicked()
+{
+
+    if( !indstillinger.getRegulering() )
+    {
+
+        if( indstillinger.getMonitorering()  ) //Toggle
+        {
+            //red
+            ui->btn_monitor->setStyleSheet("background-color: rgb(255, 0, 0)");
+            indstillinger.SetMonitorering(false);
+
+        } else
+        {
+            //green
+            ui->btn_monitor->setStyleSheet("background-color: rgb(0, 255, 0)");
+            indstillinger.SetMonitorering(true);
+        }
+    }
+    else
+    {
+        if( indstillinger.getMonitorering()  ) //Toggle
+        {
+            //red
+            ui->btn_monitor->setStyleSheet("background-color: rgb(255, 0, 0)");
+            ui->btn_reguler->setStyleSheet("background-color: rgb(255, 0, 0)");
+            indstillinger.SetMonitorering(false);
+            indstillinger.SetRegulering(false);
+
+        }
+    }
+}
+
+void MainWindow::on_btn_reguler_clicked()
+{
+    if( indstillinger.getMonitorering() )
+    {
+        if( indstillinger.getRegulering()  ) //Toggle
+        {
+            //red
+            ui->btn_reguler->setStyleSheet("background-color: rgb(255, 0, 0)");
+            indstillinger.SetRegulering(false);
+
+        } else
+        {
+            //green
+            ui->btn_reguler->setStyleSheet("background-color: rgb(0, 255, 0)");
+            indstillinger.SetRegulering(true);
+        }
+    }
 }

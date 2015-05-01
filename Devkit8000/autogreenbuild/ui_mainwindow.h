@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'mainwindow.ui'
 **
-** Created: Fri May 1 12:23:37 2015
+** Created: Fri May 1 14:05:31 2015
 **      by: Qt User Interface Compiler version 4.8.0
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -108,7 +108,7 @@ public:
         btn_monitor = new QPushButton(centralWidget);
         btn_monitor->setObjectName(QString::fromUtf8("btn_monitor"));
         btn_monitor->setGeometry(QRect(10, 175, 131, 41));
-        btn_monitor->setStyleSheet(QString::fromUtf8("background-color: rgb(0, 255, 0);"));
+        btn_monitor->setStyleSheet(QString::fromUtf8("background-color: rgb(255, 0, 0);"));
         btn_systemlog = new QPushButton(centralWidget);
         btn_systemlog->setObjectName(QString::fromUtf8("btn_systemlog"));
         btn_systemlog->setGeometry(QRect(10, 150, 271, 21));

@@ -4,8 +4,10 @@
 #include <QtGui/QMainWindow>
 #include "Indstillinger.hpp"
 #include "Date.hpp"
+#include "DataLog.hpp"
 
 static Indstillinger indstillinger;
+static DataLog DataLog;
 
 namespace Ui {
     class MainWindow;
@@ -38,6 +40,10 @@ private slots:
     void on_btn_history_clicked();
 
     void on_btn_systemlog_clicked();
+
+    void on_btn_monitor_clicked();
+
+    void on_btn_reguler_clicked();
 
 private:
     Ui::MainWindow *ui;
