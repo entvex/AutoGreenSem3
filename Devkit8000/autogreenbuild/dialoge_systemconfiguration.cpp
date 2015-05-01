@@ -45,3 +45,8 @@ void dialoge_systemconfiguration::on_btn_Time_clicked()
     datetime.setModal(true);
     datetime.exec();
 }
+
+void dialoge_systemconfiguration::on_btn_Back_clicked()
+{
+    this->close();
+}

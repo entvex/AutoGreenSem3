@@ -15,6 +15,15 @@ public:
     explicit dialog_noteifictions(QWidget *parent = 0);
     ~dialog_noteifictions();
 
+private slots:
+    void on_btn_back_clicked();
+
+    void on_btn_daglig_clicked();
+
+    void on_btn_advarsels_clicked();
+
+    void on_btn_ok_clicked();
+
 private:
     Ui::dialog_noteifictions *ui;
 };

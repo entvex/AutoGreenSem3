@@ -15,6 +15,15 @@ public:
     explicit dialog_hardwaresettings(QWidget *parent = 0);
     ~dialog_hardwaresettings();
 
+private slots:
+    void on_btn_back_clicked();
+
+    void on_btn_varme_clicked();
+
+    void on_btn_ok_clicked();
+
+    void on_btn_bloeser_clicked();
+
 private:
     Ui::dialog_hardwaresettings *ui;
 };

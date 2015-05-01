@@ -3,7 +3,9 @@
 
 #include <QtGui/QMainWindow>
 #include "Indstillinger.hpp"
-#include "DateStruct.hpp"
+#include "Date.hpp"
+
+static Indstillinger indstillinger;
 
 namespace Ui {
     class MainWindow;
@@ -27,7 +29,7 @@ public:
 
     void showExpanded();
 
-    static Indstillinger indstillinger;
+
 
 private slots:
 

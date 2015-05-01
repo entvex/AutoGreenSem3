@@ -15,6 +15,11 @@ public:
     explicit dialoge_mailconfig(QWidget *parent = 0);
     ~dialoge_mailconfig();
 
+private slots:
+    void on_btn_ok_clicked();
+
+    void on_btn_back_clicked();
+
 private:
     Ui::dialoge_mailconfig *ui;
 };

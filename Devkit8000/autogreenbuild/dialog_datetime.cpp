@@ -12,18 +12,12 @@ dialog_datetime::dialog_datetime(QWidget *parent) :
 
     //Set boxes to show current time.
     Date timenow;
-    timenow = MainWindow::indstillinger.getDate();
+    timenow = indstillinger.getDate();
     ui->lineEdit_year->setText(QString::number(timenow.Year));
     ui->lineEdit_month->setText(QString::number(timenow.Month));
     ui->lineEdit_day->setText(QString::number(timenow.Day));
     ui->lineEdit_hour->setText(QString::number(timenow.Hour));
     ui->lineEdit_min->setText(QString::number(timenow.Min));
-
-    //QTime time(timenow.Hour,timenow.Min);
-    //ui->timeEdit->setTime(time);
-
-    //QDate date(timenow.Year,timenow.Month,timenow.Day);
-    //ui->dateEdit->setDate(date);
 }
 
 dialog_datetime::~dialog_datetime()
@@ -46,6 +40,6 @@ void dialog_datetime::on_btn_ok_clicked()
     timeset.Hour = ui->lineEdit_hour->text().toInt();
     timeset.Min = ui->lineEdit_min->text().toInt();
 
-    MainWindow::indstillinger.setDate(timeset);
+indstillinger.setDate(timeset);
     this->close();
 }
