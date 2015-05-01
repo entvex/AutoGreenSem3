@@ -39,6 +39,13 @@ public:
 	{
 		//run is running at all times
 
+	if(!settings->GetRegulering())
+		{
+			//usleep(5000);
+			
+		}
+		else 
+		{
 		//load data into plants from Settings (indstillinger)
 		loadData(plant1);
 		loadData(plant2);
@@ -52,16 +59,12 @@ public:
 
 		//linux
 		//usleep(6000000);
+		}
 	}
 
 	void ControlData(Plant control_plant, SensorData drivhus_data)
 	{
-		if(!settings->GetRegulering())
-		{
-			//usleep(5000);
-			
-			return;
-		}
+	
 		/*lets make some control checks*/
 		
 		/*Get newestSensorData*/
