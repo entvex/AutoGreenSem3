@@ -24,6 +24,8 @@ private slots:
 
     void on_btn_Time_clicked();
 
+    void on_btn_Back_clicked();
+
 private:
     Ui::dialoge_systemconfiguration *ui;
 };

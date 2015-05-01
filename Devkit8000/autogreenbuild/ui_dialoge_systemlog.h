@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'dialoge_systemlog.ui'
 **
-** Created: Thu Apr 30 08:53:57 2015
+** Created: Fri May 1 12:23:36 2015
 **      by: Qt User Interface Compiler version 4.8.0
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!

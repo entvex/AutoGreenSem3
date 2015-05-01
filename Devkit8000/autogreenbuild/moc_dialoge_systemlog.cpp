@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'dialoge_systemlog.h'
 **
-** Created: Thu Apr 30 08:55:31 2015
+** Created: Fri May 1 12:30:20 2015
 **      by: The Qt Meta Object Compiler version 63 (Qt 4.8.0)
 **
 ** WARNING! All changes made in this file will be lost!

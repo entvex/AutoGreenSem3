@@ -315,7 +315,11 @@ dialog_datetime.o: dialog_datetime.cpp dialog_datetime.h \
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o dialog_datetime.o dialog_datetime.cpp
 
 dialog_hardwaresettings.o: dialog_hardwaresettings.cpp dialog_hardwaresettings.h \
-		ui_dialog_hardwaresettings.h
+		ui_dialog_hardwaresettings.h \
+		mainwindow.h \
+		Indstillinger.hpp \
+		DateStruct.hpp \
+		Plant.hpp
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o dialog_hardwaresettings.o dialog_hardwaresettings.cpp
 
 dialog_historik.o: dialog_historik.cpp dialog_historik.h \

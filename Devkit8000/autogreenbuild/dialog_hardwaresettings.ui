@@ -39,7 +39,7 @@
     <string>Hardware indstillinger</string>
    </property>
   </widget>
-  <widget class="QPushButton" name="pushButton_3">
+  <widget class="QPushButton" name="btn_varme">
    <property name="geometry">
     <rect>
      <x>110</x>
@@ -55,7 +55,7 @@
     <string>VarmeLegme</string>
    </property>
   </widget>
-  <widget class="QPushButton" name="pushButton_2">
+  <widget class="QPushButton" name="btn_ok">
    <property name="geometry">
     <rect>
      <x>370</x>
@@ -68,7 +68,7 @@
     <string>OK</string>
    </property>
   </widget>
-  <widget class="QPushButton" name="pushButton_4">
+  <widget class="QPushButton" name="btn_bloeser">
    <property name="geometry">
     <rect>
      <x>110</x>
@@ -84,7 +84,7 @@
     <string>Blæserne</string>
    </property>
   </widget>
-  <widget class="QPushButton" name="pushButton">
+  <widget class="QPushButton" name="btn_back">
    <property name="geometry">
     <rect>
      <x>50</x>

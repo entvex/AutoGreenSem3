@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'dialoge_mailconfig.ui'
 **
-** Created: Thu Apr 30 08:53:57 2015
+** Created: Fri May 1 13:25:59 2015
 **      by: Qt User Interface Compiler version 4.8.0
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -25,12 +25,12 @@ QT_BEGIN_NAMESPACE
 class Ui_dialoge_mailconfig
 {
 public:
-    QLineEdit *lineEdit_3;
+    QLineEdit *lineEditMail3;
     QLabel *label_4;
     QLabel *label_2;
     QPushButton *btn_back;
-    QLineEdit *lineEdit;
-    QLineEdit *lineEdit_2;
+    QLineEdit *lineEditMail1;
+    QLineEdit *lineEditMail2;
     QLabel *label;
     QPushButton *btn_ok;
     QLabel *label_3;
@@ -41,9 +41,9 @@ public:
             dialoge_mailconfig->setObjectName(QString::fromUtf8("dialoge_mailconfig"));
         dialoge_mailconfig->resize(480, 257);
         dialoge_mailconfig->setMaximumSize(QSize(480, 257));
-        lineEdit_3 = new QLineEdit(dialoge_mailconfig);
-        lineEdit_3->setObjectName(QString::fromUtf8("lineEdit_3"));
-        lineEdit_3->setGeometry(QRect(120, 170, 191, 23));
+        lineEditMail3 = new QLineEdit(dialoge_mailconfig);
+        lineEditMail3->setObjectName(QString::fromUtf8("lineEditMail3"));
+        lineEditMail3->setGeometry(QRect(120, 170, 191, 23));
         label_4 = new QLabel(dialoge_mailconfig);
         label_4->setObjectName(QString::fromUtf8("label_4"));
         label_4->setGeometry(QRect(120, 20, 231, 16));
@@ -57,19 +57,19 @@ public:
         label_2->setGeometry(QRect(120, 100, 56, 15));
         btn_back = new QPushButton(dialoge_mailconfig);
         btn_back->setObjectName(QString::fromUtf8("btn_back"));
-        btn_back->setGeometry(QRect(40, 230, 51, 23));
-        lineEdit = new QLineEdit(dialoge_mailconfig);
-        lineEdit->setObjectName(QString::fromUtf8("lineEdit"));
-        lineEdit->setGeometry(QRect(120, 70, 191, 23));
-        lineEdit_2 = new QLineEdit(dialoge_mailconfig);
-        lineEdit_2->setObjectName(QString::fromUtf8("lineEdit_2"));
-        lineEdit_2->setGeometry(QRect(120, 120, 191, 23));
+        btn_back->setGeometry(QRect(40, 210, 51, 23));
+        lineEditMail1 = new QLineEdit(dialoge_mailconfig);
+        lineEditMail1->setObjectName(QString::fromUtf8("lineEditMail1"));
+        lineEditMail1->setGeometry(QRect(120, 70, 191, 23));
+        lineEditMail2 = new QLineEdit(dialoge_mailconfig);
+        lineEditMail2->setObjectName(QString::fromUtf8("lineEditMail2"));
+        lineEditMail2->setGeometry(QRect(120, 120, 191, 23));
         label = new QLabel(dialoge_mailconfig);
         label->setObjectName(QString::fromUtf8("label"));
         label->setGeometry(QRect(120, 50, 56, 15));
         btn_ok = new QPushButton(dialoge_mailconfig);
         btn_ok->setObjectName(QString::fromUtf8("btn_ok"));
-        btn_ok->setGeometry(QRect(350, 230, 61, 23));
+        btn_ok->setGeometry(QRect(350, 210, 61, 23));
         label_3 = new QLabel(dialoge_mailconfig);
         label_3->setObjectName(QString::fromUtf8("label_3"));
         label_3->setGeometry(QRect(120, 150, 56, 15));
