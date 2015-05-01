@@ -73,7 +73,7 @@ p, li { white-space: pre-wrap; }
    <property name="geometry">
     <rect>
      <x>30</x>
-     <y>230</y>
+     <y>210</y>
      <width>51</width>
      <height>23</height>
     </rect>
@@ -184,6 +184,19 @@ p, li { white-space: pre-wrap; }
    </property>
    <property name="text">
     <string>p3</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="btn_newData">
+   <property name="geometry">
+    <rect>
+     <x>410</x>
+     <y>120</y>
+     <width>51</width>
+     <height>23</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Dump</string>
    </property>
   </widget>
  </widget>

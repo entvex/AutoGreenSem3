@@ -7,7 +7,7 @@
 #include "DataLog.hpp"
 
 static Indstillinger indstillinger;
-static DataLog DataLog;
+static DataLog datalog;
 
 namespace Ui {
     class MainWindow;
@@ -30,8 +30,6 @@ public:
     void setOrientation(ScreenOrientation orientation);
 
     void showExpanded();
-
-
 
 private slots:
 

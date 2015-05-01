@@ -14,18 +14,21 @@ HEADERS += mainwindow.h \
     dialoge_mailconfig.h \
     dialog_noteifictions.h \
     dialog_datetime.h \
-    dialog_historik.h
+    dialog_historik.h \
+    dialoge_systemlog.h
 FORMS += mainwindow.ui \
     dialoge_systemconfiguration.ui \
     dialog_hardwaresettings.ui \
     dialoge_mailconfig.ui \
     dialog_noteifictions.ui \
     dialog_datetime.ui \
-    dialog_historik.ui
+    dialog_historik.ui \
+    dialoge_systemlog.ui
 SOURCES += main.cpp mainwindow.cpp \
     dialoge_systemconfiguration.cpp \
     dialog_hardwaresettings.cpp \
     dialoge_mailconfig.cpp \
     dialog_noteifictions.cpp \
     dialog_datetime.cpp \
-    dialog_historik.cpp
+    dialog_historik.cpp \
+    dialoge_systemlog.cpp

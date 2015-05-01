@@ -15,6 +15,11 @@ public:
     explicit dialog_historik(QWidget *parent = 0);
     ~dialog_historik();
 
+private slots:
+    void on_btn_back_clicked();
+
+    void on_btn_newData_clicked();
+
 private:
     Ui::dialog_historik *ui;
 };

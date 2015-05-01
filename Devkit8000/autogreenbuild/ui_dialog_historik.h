@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'dialog_historik.ui'
 **
-** Created: Fri May 1 12:23:36 2015
+** Created: Fri May 1 15:30:01 2015
 **      by: Qt User Interface Compiler version 4.8.0
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -38,6 +38,7 @@ public:
     QCheckBox *checkBox_7;
     QCheckBox *checkBox_8;
     QCheckBox *checkBox_3;
+    QPushButton *btn_newData;
 
     void setupUi(QDialog *dialog_historik)
     {
@@ -61,7 +62,7 @@ public:
         checkBox_5->setGeometry(QRect(180, 220, 81, 21));
         btn_back = new QPushButton(dialog_historik);
         btn_back->setObjectName(QString::fromUtf8("btn_back"));
-        btn_back->setGeometry(QRect(30, 230, 51, 23));
+        btn_back->setGeometry(QRect(30, 210, 51, 23));
         checkBox = new QCheckBox(dialog_historik);
         checkBox->setObjectName(QString::fromUtf8("checkBox"));
         checkBox->setGeometry(QRect(100, 190, 81, 21));
@@ -86,6 +87,9 @@ public:
         checkBox_3 = new QCheckBox(dialog_historik);
         checkBox_3->setObjectName(QString::fromUtf8("checkBox_3"));
         checkBox_3->setGeometry(QRect(180, 190, 81, 21));
+        btn_newData = new QPushButton(dialog_historik);
+        btn_newData->setObjectName(QString::fromUtf8("btn_newData"));
+        btn_newData->setGeometry(QRect(410, 120, 51, 23));
 
         retranslateUi(dialog_historik);
 
@@ -111,6 +115,7 @@ public:
         checkBox_7->setText(QApplication::translate("dialog_historik", "Temp", 0, QApplication::UnicodeUTF8));
         checkBox_8->setText(QApplication::translate("dialog_historik", "Lys", 0, QApplication::UnicodeUTF8));
         checkBox_3->setText(QApplication::translate("dialog_historik", "p3", 0, QApplication::UnicodeUTF8));
+        btn_newData->setText(QApplication::translate("dialog_historik", "Dump", 0, QApplication::UnicodeUTF8));
     } // retranslateUi
 
 };

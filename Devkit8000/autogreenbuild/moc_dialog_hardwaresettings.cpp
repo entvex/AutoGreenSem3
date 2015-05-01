@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'dialog_hardwaresettings.h'
 **
-** Created: Fri May 1 13:03:10 2015
+** Created: Fri May 1 15:23:20 2015
 **      by: The Qt Meta Object Compiler version 63 (Qt 4.8.0)
 **
 ** WARNING! All changes made in this file will be lost!

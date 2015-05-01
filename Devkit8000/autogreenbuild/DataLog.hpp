@@ -9,6 +9,7 @@
 #define DATALOG_HPP_
 
 #include "DoublyLinkedList.hpp"
+#include "SensorData.hpp"
 
 class DataLog
 {
@@ -48,18 +49,18 @@ public:
 
 };
 
-std::ostream& operator<<(std::ostream& os, const SensorData& sensorData)
-{
-  os << sensorData.humidity << " " << sensorData.light << ", " << sensorData.temp;
+// std::ostream& operator<<(std::ostream& os, const SensorData& sensorData)
+// {
+//   os << sensorData.humidity << " " << sensorData.light << ", " << sensorData.temp;
+// 
+//   return os;
+// }
 
-  return os;
-}
-
-bool operator== (SensorData &sData, SensorData &sData2)
-{
-  return (sData.humidity == sData.humidity &&
-	  sData.light == sData.light &&
-	  sData.temp == sData.temp);
-}
+// bool operator== (SensorData &sData, SensorData &sData2)
+// {
+//   return (sData.humidity == sData2.humidity &&
+// 	  sData.light == sData2.light &&
+// 	  sData.temp == sData2.temp);
+// }
 
 #endif /* DATALOG_HPP_ */

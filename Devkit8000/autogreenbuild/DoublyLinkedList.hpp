@@ -94,31 +94,31 @@ public:
     --this->itemsInList;
   }
 
-  virtual void forwardTraversing() {
-    for (Node<A_Type>* cursor = headPtr; cursor != NULL; cursor = cursor->next)
-      {
-	cout << cursor->info << endl;
-      }
-  }
-
-  virtual void backTraversing() {
-    for (Node<A_Type>* cursor = tailPtr; cursor != NULL; cursor = cursor->prev)
-      {
-	cout << cursor->info << endl;
-      }
-  }
-
-  virtual int Find(A_Type valueToFind) {
-    int place = 1;
-    for (Node<A_Type>* cursor = headPtr; cursor != NULL;
-	 cursor = cursor->next) {
-      if (cursor->info == valueToFind) {
-	return place;
-      }
-      ++place;
-    }
-    return -1;
-  }
+//   virtual void forwardTraversing() {
+//     for (Node<A_Type>* cursor = headPtr; cursor != NULL; cursor = cursor->next)
+//       {
+// 	cout << cursor->info << endl;
+//       }
+//   }
+// 
+//   virtual void backTraversing() {
+//     for (Node<A_Type>* cursor = tailPtr; cursor != NULL; cursor = cursor->prev)
+//       {
+// 	cout << cursor->info << endl;
+//       }
+//   }
+// 
+//   virtual int Find(A_Type valueToFind) {
+//     int place = 1;
+//     for (Node<A_Type>* cursor = headPtr; cursor != NULL;
+// 	 cursor = cursor->next) {
+//       if (cursor->info == valueToFind) {
+// 	return place;
+//       }
+//       ++place;
+//     }
+//     return -1;
+//   }
 
   virtual int PeekTail(A_Type &PeekTail )
   {
@@ -138,41 +138,41 @@ public:
     return -1;
   }
 
-  virtual void deleteAt(int place) {
-    Node<A_Type>* cursor = headPtr;
-
-    for (int i = 1; i <= this->itemsInList; ++i) {
-
-      if (i == place) {
-	if (cursor == headPtr) {
-	  headDelete();
-	  return;
-	} else if (cursor == tailPtr) {
-	  tailDelete();
-	  return;
-	} else {
-
-	  Node<A_Type>* cond = cursor; //pointer til den cond node.
-	  Node<A_Type>* prevPtr = cursor->prev; //pointer til den lige før con node.
-
-	  prevPtr->next = cond->next; //prevPtr next sættes til conds next.
-	  cond->prev = prevPtr->prev; //prevPtr next sættes til conds next.
-	  delete cond; //Sletter cond.
-	  --this->itemsInList;
-	  return;
-	}
-      }
-      cursor = cursor->next;
-    }
-  }
-
-  virtual void findAndDelete(A_Type valueToFind)
-  {
-    int found = Find(valueToFind);
-    if (found != -1) {
-      deleteAt(found);
-    }
-  }
+//   virtual void deleteAt(int place) {
+//     Node<A_Type>* cursor = headPtr;
+// 
+//     for (int i = 1; i <= this->itemsInList; ++i) {
+// 
+//       if (i == place) {
+// 	if (cursor == headPtr) {
+// 	  headDelete();
+// 	  return;
+// 	} else if (cursor == tailPtr) {
+// 	  tailDelete();
+// 	  return;
+// 	} else {
+// 
+// 	  Node<A_Type>* cond = cursor; //pointer til den cond node.
+// 	  Node<A_Type>* prevPtr = cursor->prev; //pointer til den lige før con node.
+// 
+// 	  prevPtr->next = cond->next; //prevPtr next sættes til conds next.
+// 	  cond->prev = prevPtr->prev; //prevPtr next sættes til conds next.
+// 	  delete cond; //Sletter cond.
+// 	  --this->itemsInList;
+// 	  return;
+// 	}
+//       }
+//       cursor = cursor->next;
+//     }
+//   }
+// 
+//   virtual void findAndDelete(A_Type valueToFind)
+//   {
+//     int found = Find(valueToFind);
+//     if (found != -1) {
+//       deleteAt(found);
+//     }
+//   }
 
   virtual int GetItemsInList()
   {
