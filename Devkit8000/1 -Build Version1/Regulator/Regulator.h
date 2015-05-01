@@ -1,6 +1,6 @@
 
 #include <iostream>
-//#include <unistd.h>
+#include <unistd.h>
 //include others
 #include "Sensordata.hpp"
 #include "Plant.hpp"
@@ -38,7 +38,14 @@ public:
 	void run()
 	{
 		//run is running at all times
-
+while(1) {
+	if(!settings->GetRegulering())
+		{
+			usleep(600000);
+			
+		}
+		else 
+		{
 		//load data into plants from Settings (indstillinger)
 		loadData(plant1);
 		loadData(plant2);
@@ -51,17 +58,14 @@ public:
 
 
 		//linux
-		//usleep(6000000);
+		usleep(600000);
+		}
+	}
 	}
 
 	void ControlData(Plant control_plant, SensorData drivhus_data)
 	{
-		if(!settings->GetRegulering())
-		{
-			//usleep(5000);
-			
-			return;
-		}
+	
 		/*lets make some control checks*/
 		
 		/*Get newestSensorData*/
@@ -79,26 +83,27 @@ public:
 			//temp is OK, close and shut everything off
 
 			uart->activateSensor("ventoff");
-			//usleep(100);
+			usleep(100);
 			uart->activateSensor("heatoff");
-			//usleep(100);
+			usleep(100);
 			uart->activateSensor("windowoff");
-			//usleep(100);			
+			usleep(100);			
 		}
 		else if (temp_drivhus > avg_temp_drivhus && (temp_drivhus + 3) < (avg_temp_drivhus))
 		{
 			//OPEN WinDOW
 			uart->activateSensor("windowon");
-			//usleep(100);
+			usleep(100);
 		}
 		else if ((temp_drivhus - 6) > avg_temp_drivhus)
 		{
-			//open window
-			uart->activateSensor("windowon");
-			//usleep(100);
+		
 			//start vent
 			uart->activateSensor("Venton");
-			//usleep(100);
+			usleep(100);
+	//open window
+			uart->activateSensor("windowon");
+			usleep(100);
 		}
 		else if ((temp_drivhus + 2) < avg_temp_drivhus)
 		{
@@ -106,11 +111,11 @@ public:
 			//close Window
 			//vent off
 			uart->activateSensor("heaton");
-			//usleep(100);
-			uart->activateSensor("windowoff");
-			//usleep(100);
+			usleep(100);
 			uart->activateSensor("ventoff");
-			//usleep(100);
+			usleep(100);
+			uart->activateSensor("windowoff");
+			usleep(100);
 			
 		}
 																																													
@@ -127,6 +132,8 @@ public:
 	{
 		// go to indstillinger
 		
+
+		//loadplant = settings->GetPlant()
 		//mangler funktionalitet til at hente plante
 		
 		
