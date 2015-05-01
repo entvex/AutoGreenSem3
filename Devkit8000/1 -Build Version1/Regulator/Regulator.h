@@ -38,10 +38,10 @@ public:
 	void run()
 	{
 		//run is running at all times
-
+while(1) {
 	if(!settings->GetRegulering())
 		{
-			usleep(5000);
+			usleep(600000);
 			
 		}
 		else 
@@ -60,6 +60,7 @@ public:
 		//linux
 		usleep(600000);
 		}
+	}
 	}
 
 	void ControlData(Plant control_plant, SensorData drivhus_data)
