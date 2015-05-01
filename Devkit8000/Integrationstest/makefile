@@ -3,7 +3,7 @@ DEP= rs232.h Node.h
 OBJ= TestMonitor.o 
 EXE= Monitor
 CXX= g++
-CXXFLG= -lpthread -std=c++0x
+CXXFLG= -lpthread -std=c++0x -Wall -Wextra -o2
 
 $(EXE) : $(OBJ)
 	$(CXX) -o $@ $^ $(DEP) $(CXXFLG)
