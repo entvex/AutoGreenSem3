@@ -31,7 +31,7 @@ int main(int argc, char *argv[])
     Indstillinger indstillinger;
     DataLog datalog;
     SystemLog systemlog(mq);
-    UART uart;
+    UART uart(mq);
     Monitor monitor(uart, datalog, indstillinger, mq);
 
     referenceStruct.indstillinger = &indstillinger;
