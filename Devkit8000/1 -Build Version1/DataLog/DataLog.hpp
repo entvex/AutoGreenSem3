@@ -18,9 +18,9 @@ private:
 
 public:
 
-  void InsertSensorData(SensorData SensorData)
+  void InsertSensorData(SensorData sensorData)
   {
-    list.headInsert(SensorData);
+    list.headInsert(sensorData);
   }
 
   SensorData GetNewestData()
