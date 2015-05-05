@@ -122,7 +122,7 @@ Prototype & \texttt{int8 respondSoilHum(uint8 index, uint8 soilHum)} \\\hline
 Parametre & \texttt{uint8 soilHum} \newline
 Den nyeste midlede jordfugtighed hentet fra domæneklassen DSP. \newline
 \texttt{uint8 index} \newline
-Indexet fortæller hvilket sensornummer der svares fra. \\\hline
+Indexet fortæller hvilket sensornummer der svares fra. Kan være værdierne 0-5. \\\hline
 Returværdi & \texttt{int8} \newline
 Er denne værdi nul er der blevet returneret en gyldig værdi. Hvis værdien er -1 er der blevet returneret ’XS’ over UART.\\\hline
 Beskrivelse & Hvis parameter værdien ligger inden for decimalværdien 1-10 (begge inklusive), skal metoden sende en char ’S’, efterfulgt af index og soilHum parametrene over UART. Hvis værdien for soilHum er lig nul, skal metoden sende strengen ”XS". \\\hline
@@ -343,7 +343,7 @@ Beskrivelse & Metoden skriver ubehandlet data fra sensoren i en variabel. Der he
 
 \begin{table}[h]
 \begin{tabularx}{\textwidth}{| >{\raggedright\arraybackslash}p{2.5 cm} | >{\raggedright\arraybackslash}X |} \hline
-Prototype & \texttt{uint8* getSoilHum(uint8 index, int16* soilHum)} \\\hline
+Prototype & \texttt{int8 getSoilHum(uint8 index, int16* soilHum)} \\\hline
 Parametre & \texttt{uint8* index} \newline 
 Indeks for hvilken jordfugtsensor der ønskes at læse fra, den første sensor hedder 0 og den sidste 5. \newline
 \texttt{int16* soilHum} \newline 

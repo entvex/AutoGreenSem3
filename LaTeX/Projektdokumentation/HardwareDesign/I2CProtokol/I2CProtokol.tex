@@ -167,3 +167,69 @@ W3 & W2 & W1 & W0 & H2 & H1 & H0 & V2 & V1 & V0 & I5 & I4 & I3 & I2 & I1 & I0			
 \end{table}
 
 \clearpage
+
+\subsection{Slave Jordfugt}
+
+%Slave Jordfugt
+\begin{table}[h]
+\centering
+\begin{tabularx}{0.6\textwidth}{| X | X |} 				\hline
+\multicolumn{2}{ | l | }{\textbf{Adresse:} 0x32} 		\\ \hline
+\textbf{Kommando} 		& \textbf{Beskrivelse}			\\ \hline
+WriteDesiredSensor		& Sensor der ønskes data fra	\\ \hline
+ReadDesiredSensor		& Anmodning om sensor data		\\ \hline
+\end{tabularx}
+\caption{\IIC Kommandoer for Slave Jordfugt}
+\label{tbl:I2CJordfugtKommandoer}
+\end{table}
+
+
+
+%WriteSensorNumber
+\begin{table}[h]
+\centering
+\begin{tabularx}{0.6\textwidth}{| >{\centering\arraybackslash}X | >{\centering\arraybackslash}X | >{\centering\arraybackslash}X | >{\centering\arraybackslash}X | >{\centering\arraybackslash}X | >{\centering\arraybackslash}X | >{\centering\arraybackslash}X | >{\centering\arraybackslash}X |}	\hline
+S7 & S6 & S5 & S4 & S3 & S2 & S1 & S0				\\ \hline
+\multicolumn{5}{ | l | }{Don't Care} 				&
+\multicolumn{3}{  l | }{Værdi for sensor}
+\\
+\multicolumn{5}{ | l | }{} 							&
+\multicolumn{3}{  l | }{nummer der ønskes}
+\\
+\multicolumn{5}{ | l | }{} 							&
+\multicolumn{3}{  l | }{læsning af, ved}
+\\
+\multicolumn{5}{ | l | }{} 							&
+\multicolumn{3}{  l | }{næste ReadStatus;}
+\\
+\multicolumn{5}{ | l | }{} 							&
+\multicolumn{3}{  l | }{0x0 = sensor 1,}
+\\
+\multicolumn{5}{ | l | }{} 							&
+\multicolumn{3}{  l | }{0x5 = sensor 6}
+\\ \hline
+\end{tabularx}
+\caption{\IIC Kommando WriteDesiredSensor}
+\label{tbl:I2CJordfugtKommandoWriteDesiredSensor}
+\end{table}
+
+
+
+%ReadStatus
+\begin{table}[h]
+\centering
+\begin{tabularx}{0.6\textwidth}{| >{\centering\arraybackslash}X | >{\centering\arraybackslash}X | >{\centering\arraybackslash}X | >{\centering\arraybackslash}X | >{\centering\arraybackslash}X | >{\centering\arraybackslash}X | >{\centering\arraybackslash}X | >{\centering\arraybackslash}X |}	\hline
+S7 & S6 & S5 & S4 & S3 & S2 & S1 & S0				\\ \hline
+\multicolumn{1}{ | l | }{Sensor status,}			&
+\multicolumn{7}{  l | }{Sensor værdi, 0x0 - 0x64}
+\\
+\multicolumn{1}{ | l | }{0x1 = deaktive,} 			&
+\multicolumn{7}{  l | }{}
+\\
+\multicolumn{1}{ | l | }{0x0 = aktive} 				&
+\multicolumn{7}{  l | }{}
+\\ \hline
+\end{tabularx}
+\caption{\IIC Kommando ReadDesiredSensor}
+\label{tbl:I2CJordfugtKommandoReadDesiredSensor}
+\end{table}

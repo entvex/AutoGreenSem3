@@ -15,7 +15,69 @@ Selve topdesignet er lavet ud fra de behov der er stillet i Design-fasen. Der bl
 \clearpage
 
 \subsection{\IIC implementering}
-%TODO Lasse skal kopiere tekst ind her.
+I forbindelse med implementeringen af \IIC klassen blev prototyperne oprettet jf. \IIC protokollen (se side REFREFREF. 
+Klassen reagerer på kald fra timer interruptet, og er i stand til at sende og indhente information hhv. til og fra sensorer og aktuatorer der er tilkoblet \IIC-bussen. 
+Det blev valgt fra start af, at det mest ideelle når der skal sendes data, er at der altid er noget data klar til at blive sendt. 
+Pga. dette er der behov for at timer interrupten kan kalde \IIC-klassens metoder og derved opdatere de værdier der skal indhentes til DSP klassen. Pga. problemer med de bestilte sensorer, er temperatursensoren LM75 blevet anvendt istedet for den tidligere oplyste temperatur/luftfugtsensor. Ligeledes er lyssensorens implementering nedprioriteret, pga. tidsmangel. 
+
+\begin{lstlisting}[language=C,caption=Implementering af getTemp(),label=lst:I2C_Class_getTemp()]
+int8 getTemp(int32* temp){
+
+    uint8 dataget[2] = {0,0};
+    uint32 errorStatus[2] = {9,9};      // For debugging and error handling
+    
+    I2C_I2CMasterClearReadBuf();
+    errorStatus[0] = I2C_I2CMasterSendStart(TEMP_SENSOR_ADDRESS, I2C_I2C_READ_XFER_MODE);
+    if (errorStatus[0] == I2C_I2C_MSTR_NO_ERROR){
+        dataget[0] = I2C_I2CMasterReadByte(I2C_I2C_ACK_DATA);
+        dataget[1] = I2C_I2CMasterReadByte(I2C_I2C_NAK_DATA);
+        errorStatus[1] = I2C_I2CMasterSendStop();
+    }
+    else{
+        I2C_I2CMasterSendStop();
+        return -1;
+    }
+...
+\end{lstlisting}
+
+I Figur \ref{lst:I2C_Class_getTemp()}, ses der et eksempel på håndtering af en request fra timer interruptet. 
+Som det kan ses, bliver der kaldt nogle metoder der kommunikerer med slaven over bussen. For at LM75 reagerer på masterens kald, sendes der en slaveadresse og en read-request. Herefter sender slaven to bytes, som gemmes i bufferen og til sidst bliver der sendt en stopsekvens. Jf. \IIC protokollen på side \pageref{sec:I2C_protokol}, indeholder de to bytes temperaturdata, hvor MSB angiver om temperaturen er negativ eller ej (værdien er signed) og de 8 efterfølgende bits angiver selve temperaturen med en halv grads opløsning. 
+
+Fra aktuatorens side er det valgt, at når der modtages en kommando over \IIC, aktiveres der en interrupt der holder håndterer den pågældende kommando. For \IIC-klassen betyder det at uanset tidspunktet, kan der sendes kommandoer hele tiden, men af hensyn til svaret der skal modtages over bussen, holder masteren klokken lav, indtil enten et svar eller en fejl er modtaget. Princippet i read/write funktionen er, at masteren blokerer for andre interrupts og sender en slaveadresse ud på bussen, hvorefter der kommer et acknowledge tilbage fra slaven, som derefter sender et antal bytes ud. Det samme kan overordnet siges om write metoden. Eftersom \IIC er lavet som master/slave forhold som standard vil det, medmindre der er tale om et multimaster system, altid være masteren der dominerer bussen, således må slaven aldrig holde clocken LOW. 
+
+\begin{lstlisting}[language=C,caption=Implementering af getActuatorStatus(),label=lst:I2C_Class_getActuatorStatus()]
+int8 getActuatorStatus(uint8* window, uint8* heat, uint8* vent, uint8* irrigation){
+    uint8 result = 0;
+    int RDbuf = 2;
+    uint8 dataget[RDbuf];
+    
+    //I2C_I2CMasterClearStatus();     // Clear status flags TODO test
+    
+    while (0u == (I2C_I2CMasterStatus() & I2C_I2C_MSTAT_WR_CMPLT)); //Wait for the bus to be ready
+    
+    CyDelay(60);
+    
+    I2C_I2CMasterClearReadBuf();
+    result = I2C_I2CMasterReadBuf(ACTUATOR_ADRESS, dataget, RDbuf, I2C_I2C_MODE_COMPLETE_XFER);
+    
+    while (0u == (I2C_I2CMasterStatus() & I2C_I2C_MSTAT_RD_CMPLT)); //Wait for the dataget array to be updated
+\end{lstlisting}
+
+Det kan ses på Listing \ref{lst:I2C_Class_getActuatorStatus()} linje 8 og 15, at systemet venter på, at bussen bliver ledig. Under debugging af \IIC-klassen var der store problemer, netop med at bussen ikke var ledig under fx. en læsning. Problemet viste sig at ligge i rækkefølgen PSoC4 afvikler de interrupts der kommer. Eftersom standard prioritering af interrupts sætter første interrupt kald (UART) som højst prioriteret, venter systemet med at udføre alle andre metodekald indtil efter UART'en har fået et returkald. Dog udførte systemet stadig en del af funktionaliteten for read/write \IIC, hvilket betød at bussen var optaget i den tid der blev forsøgt at læse. Løsningen på problemet viste sig at være en genopbygning af UART-interruptet, således alt funktionelt blev rykket ud i main og at der bliver sat flag, når det er nødvendigt.
+
+\begin{lstlisting}[language=C,caption=Implementering af getActuatorStatus(),label=lst:I2C_Class_getActuatorStatus()]
+...
+if ((result == I2C_I2C_MSTR_NO_ERROR) && (I2C_I2CMasterGetReadBufSize() != 0)){
+	if (window){                                   			// Expecting to receive MSB first 
+    	*window = (dataget[0] >> 4);      					// Shifting out the 4 LSB.
+        #ifdef debugging
+        	UART_UartPutChar(*window+48);
+        #endif
+	}
+...
+\end{lstlisting}
+
+
 
 \subsection{UART implementering}
 UART klassen har til formål at modtage kommandoer fra DevKit8000, tolke disse og give passende svar. 
@@ -69,7 +131,57 @@ int32* lightArrayPtr;
 uint8 temp, hum, soilHum[NBR_OF_SOILHUM_SENSORS], light;     // Used for storing the newest value
 \end{lstlisting}
 
+Arrays'ne bliver brugt til at gemme en række datapunkter i råt format. Disse data punkter kan herefter konverteres og midles.
+For jordfugt (soilHumArray), er der oprettet et todimensionelt array således at der kan gemmes et array med data for hver af de 6 sensorer.
 
+Når der er målt en ny værdi fra en sensor, via \IIC klassen, bliver den indlæst i DSP klassen med input-funktionerne.
+
+\begin{lstlisting}[language=C, label=lst:DSP_inputTemp, caption=Funktion til at indlæse en sensorværdi i DSP klassen]
+void inputTemp(int32* temp){
+    *tempArrayPtr = *temp;      // The input value is written to the array
+    tempArrayPtr++;             // The pointer is moved to the next place in array
+    if(tempArrayPtr > &tempArray[ARRAYSIZE-1]){
+        tempArrayPtr = &tempArray[0];   // If the pointer is pointing past the end of the array it's reset
+    }
+    
+    avgTemp();      // The average value is calculated and onverted into temp(globel) 
+}
+\end{lstlisting}
+
+I Listing \ref{lst:DSP_inputTemp} ses inputTemp funktionen der indlæser den målte værdi i tempArray vha den tilhørende pointer tempArrayPtr. Pointeren flyttes herefter til næste plads i arrayet. Arrayet overskrives på ny når dette er fuldt. Til sidst kaldes den private funktion avgTemp.
+
+\begin{lstlisting}[language=C, label=lst:DSP_avgTemp, caption=Funktion til at indlæse en sensorværdi i DSP klassen]
+void avgTemp(void){
+    uint8 skip = 0;
+    int64 total = 0;
+    {
+        uint8 i;
+        for(i = 0 ; i<ARRAYSIZE ; i++){
+            if(tempArray[i]>=0){
+                total += tempArray[i];
+            }
+            else{
+                skip++;
+            }
+        }
+    }
+    // Makes sure that enough datapoints are pressent
+    if(ARRAYSIZE-skip>=NMR_OF_VALID_DATAPOINTS_NEEDED){    
+        int32 avg = total/(ARRAYSIZE-skip);		// Calculate the average value
+        
+        // TODO limit temp output to 1 and 200
+        
+        temp = (uint8)avg;
+    }
+    else{
+        temp = 0;
+    }
+}
+\end{lstlisting}
+%TODO latlisting indhold skal opdateres
+
+I Listing \ref{lst:DSP_avgTemp} vises avgTemp funktionen. Denne har flere funktoner, da den kun skal sørge for at der er nok datapunkter til at midle arrayet.
+%TODO Skal laves færdig
 
 \subsection{Controller implementering}
 

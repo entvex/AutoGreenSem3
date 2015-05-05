@@ -5,11 +5,11 @@
 \date{\today}
 
 \fancyhf{}
-\fancyhead[LE,RO]{Gruppe 9 - ''AutoGreen''}
+\fancyhead[LO,RE]{Gruppe 9 - ''AutoGreen''}
 \fancyhead[CE,CO]{Projektdokumentation}
-\fancyhead[RE,LO]{IHA, AU}
-\fancyfoot[CE,CO]{\leftmark}
-\fancyfoot[RE,LO]{\thepage} 
+\fancyhead[RO,LE]{IHA, AU}
+\fancyfoot[CO,CE]{\nouppercase{\leftmark}}
+\fancyfoot[RE,LO]{\thepage}
 
 \begin{document}
 \frontmatter
@@ -35,7 +35,6 @@
 
 \clearpage
 
-\setcounter{page}{1}
 \thispagestyle{plain}
 \tableofcontents
 \thispagestyle{plain}
@@ -57,13 +56,16 @@
 \end{tabularx}
 \end{table}
 
+\clearpage
+
+\setcounter{page}{1}
 \mainmatter
 \include{Projektformulering/projektformulering}
 \include{Kravspecifikation/kravspecifikation}
 \include{AcceptTest/accepttest}
 \include{Systemarkitektur/systemarkitektur}
 \include{HardwareDesign/HardwareDesign}
-%TODO SoftwareDesign?
+\include{SoftwareDesign/SoftwareDesign}
 \include{HardwareImplementering/HardwareImplementering}
 %TODO SoftwareImpl?
 %TODO Konklusion?
