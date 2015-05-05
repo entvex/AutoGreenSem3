@@ -13,20 +13,20 @@
 
 template<class A_Type>
 class DoublyLinkedList {
-protected:
+private:
     Node<A_Type> *headPtr;
     Node<A_Type> *tailPtr;
     int itemsInList;
 
 public:
 
-  DoublyLinkedList() 
+  DoublyLinkedList()
   {
 	    headPtr = NULL;
 	    tailPtr = NULL;
 	    itemsInList = 0;
   }
-  virtual ~DoublyLinkedList() {
+    ~DoublyLinkedList() {
     Node<A_Type> *cond = tailPtr;
     while (cond != NULL) {
       Node<A_Type> *cond2 = cond;
@@ -39,7 +39,7 @@ public:
 
   // Precondition: headPtr points to the head of a list
   // Postcondition: Info has been inserted at the head of the list, and headPtr is updated
-  virtual void headInsert(A_Type info) {
+    void headInsert(A_Type info) {
     Node<A_Type> *NewNode = new Node<A_Type>(info);
     if (headPtr == NULL) //Hvis ikke er nogen list.
       {
@@ -57,7 +57,7 @@ public:
 
   // Precondition: tailPtr points to the end of a list
   // Postcondition: Info has been inserted at the end of the list, and tailPtr is updated
-  virtual void tailInsert(A_Type info) {
+    void tailInsert(A_Type info) {
     Node<A_Type> *NewNode = new Node<A_Type>(info);
     if (tailPtr == NULL) {
       headPtr = NewNode;
@@ -70,7 +70,7 @@ public:
     ++this->itemsInList;
   }
 
-  virtual void headDelete() {
+    void headDelete() {
     if (headPtr == NULL)
       return; //Tjekker om der er en liste.
     {
@@ -82,7 +82,7 @@ public:
     --this->itemsInList;
   }
 
-  virtual void tailDelete() {
+    void tailDelete() {
     if (tailPtr == NULL)
       return; //Tjekker om der er en liste.
     {
@@ -94,21 +94,21 @@ public:
     --this->itemsInList;
   }
 
-  virtual void forwardTraversing() {
+    void forwardTraversing() {
     for (Node<A_Type>* cursor = headPtr; cursor != NULL; cursor = cursor->next)
       {
 	cout << cursor->info << endl;
       }
   }
 
-  virtual void backTraversing() {
+    void backTraversing() {
     for (Node<A_Type>* cursor = tailPtr; cursor != NULL; cursor = cursor->prev)
       {
 	cout << cursor->info << endl;
       }
   }
 
-  virtual int Find(A_Type valueToFind) {
+    int Find(A_Type valueToFind) {
     int place = 1;
     for (Node<A_Type>* cursor = headPtr; cursor != NULL;
 	 cursor = cursor->next) {
@@ -120,7 +120,7 @@ public:
     return -1;
   }
 
-  virtual int PeekTail(A_Type &PeekTail )
+  int PeekTail(A_Type &PeekTail )
   {
     if (tailPtr != NULL) {
       PeekTail = tailPtr->info;
@@ -129,7 +129,7 @@ public:
     return -1;
   }
 
-  virtual int PeekHead(A_Type &PeekHead )
+  int PeekHead(A_Type &PeekHead )
   {
     if (headPtr != NULL) {
       PeekHead = headPtr->info;
@@ -138,7 +138,8 @@ public:
     return -1;
   }
 
-  virtual void deleteAt(int place) {
+  void deleteAt(int place)
+  {
     Node<A_Type>* cursor = headPtr;
 
     for (int i = 1; i <= this->itemsInList; ++i) {
@@ -166,7 +167,7 @@ public:
     }
   }
 
-  virtual void findAndDelete(A_Type valueToFind)
+  void findAndDelete(A_Type valueToFind)
   {
     int found = Find(valueToFind);
     if (found != -1) {
@@ -174,7 +175,7 @@ public:
     }
   }
 
-  virtual int GetItemsInList()
+  int GetItemsInList()
   {
     return this->itemsInList;
   }
