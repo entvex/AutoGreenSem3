@@ -132,7 +132,7 @@ class UART
       {
 
 	usleep(1000);
-	int n = RS232_PollComport(cport_nr, buf, 2);
+	RS232_PollComport(cport_nr, buf, 2);
 			
 
 	if (buf[0] == 'T')
