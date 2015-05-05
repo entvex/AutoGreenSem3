@@ -41,8 +41,7 @@ public:
 while(1) {
 	if(!settings->GetRegulering())
 		{
-			usleep(600000);
-			
+			usleep(600000);	
 		}
 		else 
 		{
@@ -54,7 +53,7 @@ while(1) {
 		loadData(plant5);
 		loadData(plant6);
 		SensorData loadeddata = datalog->GetNewestData();
-		ControlData(plant1,loadeddata);
+		ControlData(loadeddata);
 
 
 		//linux
@@ -63,7 +62,7 @@ while(1) {
 	}
 	}
 
-	void ControlData(Plant control_plant, SensorData drivhus_data)
+	void ControlData( SensorData drivhus_data)
 	{
 	
 		/*lets make some control checks*/
@@ -81,7 +80,7 @@ while(1) {
 		if (temp_drivhus == avg_temp_drivhus || (temp_drivhus - 1) == avg_temp_drivhus || (temp_drivhus + 1) == avg_temp_drivhus)
 		{
 			//temp is OK, close and shut everything off
-
+			systemlog->addMessage("slukker alle aktuatorer");
 			uart->activateSensor("ventoff");
 			usleep(100);
 			uart->activateSensor("heatoff");
@@ -92,14 +91,15 @@ while(1) {
 		else if (temp_drivhus > avg_temp_drivhus && (temp_drivhus + 3) < (avg_temp_drivhus))
 		{
 			//OPEN WinDOW
+				systemlog->addMessage("Window åbnes");
 			uart->activateSensor("windowon");
 			usleep(100);
 		}
 		else if ((temp_drivhus - 6) > avg_temp_drivhus)
 		{
-		
+			systemlog->addMessage("vent tændes, window åbnes");
 			//start vent
-			uart->activateSensor("Venton");
+			uart->activateSensor("venton");
 			usleep(100);
 	//open window
 			uart->activateSensor("windowon");
@@ -110,6 +110,7 @@ while(1) {
 			//heater on
 			//close Window
 			//vent off
+			systemlog->addMessage(" heater tændes, vent slukkes, Window lukkes");
 			uart->activateSensor("heaton");
 			usleep(100);
 			uart->activateSensor("ventoff");
