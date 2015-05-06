@@ -13,8 +13,8 @@ MAKEFILE      = Makefile
 CC            = $(OE_QMAKE_CC)
 CXX           = $(OE_QMAKE_CXX)
 DEFINES       = -DQT_NO_DEBUG -DQT_GUI_LIB -DQT_CORE_LIB
-CFLAGS        = -pipe -pipe $(OE_QMAKE_CFLAGS) -O2 -Wall -W -Wall -W -D_REENTRANT $(DEFINES)
-CXXFLAGS      = -pipe -pipe -pipe $(OE_QMAKE_CFLAGS) $(OE_QMAKE_CXXFLAGS) -std=c++0x -lpthread -O2 -O2 -Wall -W -Wall -W -Wall -W -D_REENTRANT $(DEFINES)
+CFLAGS        = -pipe -pipe $(OE_QMAKE_CFLAGS) -std=c++0x -Wextra -O -O2 -Wall -W -Wall -W -D_REENTRANT $(DEFINES)
+CXXFLAGS      = -pipe -pipe -pipe $(OE_QMAKE_CFLAGS) $(OE_QMAKE_CXXFLAGS) -std=c++0x -Wextra -O -O2 -O2 -Wall -W -Wall -W -Wall -W -D_REENTRANT $(DEFINES)
 INCPATH       = -I../../../setup-scripts/build/tmp-angstrom_2010_x-eglibc/sysroots/i686-linux/usr/share/qt4/mkspecs/linux-g++ -I. -I$(OE_QMAKE_INCDIR_QT)/QtCore -I$(OE_QMAKE_INCDIR_QT)/QtGui -I$(OE_QMAKE_INCDIR_QT) -I. -I. -I.
 LINK          = $(OE_QMAKE_LINK)
 LFLAGS        = $(OE_QMAKE_LDFLAGS) -Wl,-rpath-link,$(OE_QMAKE_LIBDIR_QT)
@@ -53,7 +53,8 @@ SOURCES       = dialog_datetime.cpp \
 		dialoge_systemconfiguration.cpp \
 		dialoge_systemlog.cpp \
 		main.cpp \
-		mainwindow.cpp moc_dialog_datetime.cpp \
+		mainwindow.cpp \
+		rs232.c moc_dialog_datetime.cpp \
 		moc_dialog_hardwaresettings.cpp \
 		moc_dialog_historik.cpp \
 		moc_dialog_noteifictions.cpp \
@@ -70,6 +71,7 @@ OBJECTS       = dialog_datetime.o \
 		dialoge_systemlog.o \
 		main.o \
 		mainwindow.o \
+		rs232.o \
 		moc_dialog_datetime.o \
 		moc_dialog_hardwaresettings.o \
 		moc_dialog_historik.o \
@@ -200,7 +202,7 @@ qmake_all: FORCE
 
 dist: 
 	@test -d .tmp/autogreenbuild1.0.0 || mkdir -p .tmp/autogreenbuild1.0.0
-	$(COPY_FILE) --parents $(SOURCES) $(DIST) .tmp/autogreenbuild1.0.0/ && $(COPY_FILE) --parents DateStruct.hpp dialog_datetime.h dialog_hardwaresettings.h dialog_historik.h dialog_noteifictions.h dialoge_mailconfig.h dialoge_systemconfiguration.h dialoge_systemlog.h Indstillinger.hpp mainwindow.h Plant.hpp ui_dialog_datetime.h ui_dialog_hardwaresettings.h ui_dialog_historik.h ui_dialog_noteifictions.h ui_dialoge_mailconfig.h ui_dialoge_systemconfiguration.h ui_dialoge_systemlog.h ui_mainwindow.h .tmp/autogreenbuild1.0.0/ && $(COPY_FILE) --parents dialog_datetime.cpp dialog_hardwaresettings.cpp dialog_historik.cpp dialog_noteifictions.cpp dialoge_mailconfig.cpp dialoge_systemconfiguration.cpp dialoge_systemlog.cpp main.cpp mainwindow.cpp .tmp/autogreenbuild1.0.0/ && $(COPY_FILE) --parents dialog_datetime.ui dialog_hardwaresettings.ui dialog_historik.ui dialog_noteifictions.ui dialoge_mailconfig.ui dialoge_systemconfiguration.ui dialoge_systemlog.ui mainwindow.ui .tmp/autogreenbuild1.0.0/ && (cd `dirname .tmp/autogreenbuild1.0.0` && $(TAR) autogreenbuild1.0.0.tar autogreenbuild1.0.0 && $(COMPRESS) autogreenbuild1.0.0.tar) && $(MOVE) `dirname .tmp/autogreenbuild1.0.0`/autogreenbuild1.0.0.tar.gz . && $(DEL_FILE) -r .tmp/autogreenbuild1.0.0
+	$(COPY_FILE) --parents $(SOURCES) $(DIST) .tmp/autogreenbuild1.0.0/ && $(COPY_FILE) --parents DataLog.hpp Date.hpp DateStruct.hpp dialog_datetime.h dialog_hardwaresettings.h dialog_historik.h dialog_noteifictions.h dialoge_mailconfig.h dialoge_systemconfiguration.h dialoge_systemlog.h DoublyLinkedList.hpp Indstillinger.hpp mainwindow.h Message.hpp Monitor.hpp MsgQueue.hpp Node.h Plant.hpp ReferenceStruct.hpp rs232.h SensorData.hpp SystemLog.hpp UART.h ui_dialog_datetime.h ui_dialog_hardwaresettings.h ui_dialog_historik.h ui_dialog_noteifictions.h ui_dialoge_mailconfig.h ui_dialoge_systemconfiguration.h ui_dialoge_systemlog.h ui_mainwindow.h .tmp/autogreenbuild1.0.0/ && $(COPY_FILE) --parents dialog_datetime.cpp dialog_hardwaresettings.cpp dialog_historik.cpp dialog_noteifictions.cpp dialoge_mailconfig.cpp dialoge_systemconfiguration.cpp dialoge_systemlog.cpp main.cpp mainwindow.cpp rs232.c .tmp/autogreenbuild1.0.0/ && $(COPY_FILE) --parents dialog_datetime.ui dialog_hardwaresettings.ui dialog_historik.ui dialog_noteifictions.ui dialoge_mailconfig.ui dialoge_systemconfiguration.ui dialoge_systemlog.ui mainwindow.ui .tmp/autogreenbuild1.0.0/ && (cd `dirname .tmp/autogreenbuild1.0.0` && $(TAR) autogreenbuild1.0.0.tar autogreenbuild1.0.0 && $(COMPRESS) autogreenbuild1.0.0.tar) && $(MOVE) `dirname .tmp/autogreenbuild1.0.0`/autogreenbuild1.0.0.tar.gz . && $(DEL_FILE) -r .tmp/autogreenbuild1.0.0
 
 
 clean:compiler_clean 
@@ -227,11 +229,19 @@ mocables: compiler_moc_header_make_all compiler_moc_source_make_all
 compiler_moc_header_make_all: moc_dialog_datetime.cpp moc_dialog_hardwaresettings.cpp moc_dialog_historik.cpp moc_dialog_noteifictions.cpp moc_dialoge_mailconfig.cpp moc_dialoge_systemconfiguration.cpp moc_dialoge_systemlog.cpp moc_mainwindow.cpp
 compiler_moc_header_clean:
 	-$(DEL_FILE) moc_dialog_datetime.cpp moc_dialog_hardwaresettings.cpp moc_dialog_historik.cpp moc_dialog_noteifictions.cpp moc_dialoge_mailconfig.cpp moc_dialoge_systemconfiguration.cpp moc_dialoge_systemlog.cpp moc_mainwindow.cpp
-moc_dialog_datetime.cpp: dialog_datetime.h \
+moc_dialog_datetime.cpp: ReferenceStruct.hpp \
+		Indstillinger.hpp \
+		Date.hpp \
+		Plant.hpp \
+		dialog_datetime.h \
 		$(OE_QMAKE_MOC)
 	$(OE_QMAKE_MOC) $(DEFINES) $(INCPATH) dialog_datetime.h -o moc_dialog_datetime.cpp
 
-moc_dialog_hardwaresettings.cpp: dialog_hardwaresettings.h \
+moc_dialog_hardwaresettings.cpp: ReferenceStruct.hpp \
+		Indstillinger.hpp \
+		Date.hpp \
+		Plant.hpp \
+		dialog_hardwaresettings.h \
 		$(OE_QMAKE_MOC)
 	$(OE_QMAKE_MOC) $(DEFINES) $(INCPATH) dialog_hardwaresettings.h -o moc_dialog_hardwaresettings.cpp
 
@@ -239,15 +249,27 @@ moc_dialog_historik.cpp: dialog_historik.h \
 		$(OE_QMAKE_MOC)
 	$(OE_QMAKE_MOC) $(DEFINES) $(INCPATH) dialog_historik.h -o moc_dialog_historik.cpp
 
-moc_dialog_noteifictions.cpp: dialog_noteifictions.h \
+moc_dialog_noteifictions.cpp: ReferenceStruct.hpp \
+		Indstillinger.hpp \
+		Date.hpp \
+		Plant.hpp \
+		dialog_noteifictions.h \
 		$(OE_QMAKE_MOC)
 	$(OE_QMAKE_MOC) $(DEFINES) $(INCPATH) dialog_noteifictions.h -o moc_dialog_noteifictions.cpp
 
-moc_dialoge_mailconfig.cpp: dialoge_mailconfig.h \
+moc_dialoge_mailconfig.cpp: ReferenceStruct.hpp \
+		Indstillinger.hpp \
+		Date.hpp \
+		Plant.hpp \
+		dialoge_mailconfig.h \
 		$(OE_QMAKE_MOC)
 	$(OE_QMAKE_MOC) $(DEFINES) $(INCPATH) dialoge_mailconfig.h -o moc_dialoge_mailconfig.cpp
 
-moc_dialoge_systemconfiguration.cpp: dialoge_systemconfiguration.h \
+moc_dialoge_systemconfiguration.cpp: ReferenceStruct.hpp \
+		Indstillinger.hpp \
+		Date.hpp \
+		Plant.hpp \
+		dialoge_systemconfiguration.h \
 		$(OE_QMAKE_MOC)
 	$(OE_QMAKE_MOC) $(DEFINES) $(INCPATH) dialoge_systemconfiguration.h -o moc_dialoge_systemconfiguration.cpp
 
@@ -256,8 +278,19 @@ moc_dialoge_systemlog.cpp: dialoge_systemlog.h \
 	$(OE_QMAKE_MOC) $(DEFINES) $(INCPATH) dialoge_systemlog.h -o moc_dialoge_systemlog.cpp
 
 moc_mainwindow.cpp: Indstillinger.hpp \
-		DateStruct.hpp \
+		Date.hpp \
 		Plant.hpp \
+		DataLog.hpp \
+		DoublyLinkedList.hpp \
+		Node.h \
+		SensorData.hpp \
+		SystemLog.hpp \
+		MsgQueue.hpp \
+		Message.hpp \
+		UART.h \
+		rs232.h \
+		Monitor.hpp \
+		ReferenceStruct.hpp \
 		mainwindow.h \
 		$(OE_QMAKE_MOC)
 	$(OE_QMAKE_MOC) $(DEFINES) $(INCPATH) mainwindow.h -o moc_mainwindow.cpp
@@ -307,34 +340,105 @@ compiler_clean: compiler_moc_header_clean compiler_uic_clean
 ####### Compile
 
 dialog_datetime.o: dialog_datetime.cpp dialog_datetime.h \
+		ReferenceStruct.hpp \
+		Indstillinger.hpp \
+		Date.hpp \
+		Plant.hpp \
 		ui_dialog_datetime.h \
 		mainwindow.h \
-		Indstillinger.hpp \
-		DateStruct.hpp \
-		Plant.hpp
+		DataLog.hpp \
+		DoublyLinkedList.hpp \
+		Node.h \
+		SensorData.hpp \
+		SystemLog.hpp \
+		MsgQueue.hpp \
+		Message.hpp \
+		UART.h \
+		rs232.h \
+		Monitor.hpp
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o dialog_datetime.o dialog_datetime.cpp
 
 dialog_hardwaresettings.o: dialog_hardwaresettings.cpp dialog_hardwaresettings.h \
+		ReferenceStruct.hpp \
+		Indstillinger.hpp \
+		Date.hpp \
+		Plant.hpp \
 		ui_dialog_hardwaresettings.h \
 		mainwindow.h \
-		Indstillinger.hpp \
-		DateStruct.hpp \
-		Plant.hpp
+		DataLog.hpp \
+		DoublyLinkedList.hpp \
+		Node.h \
+		SensorData.hpp \
+		SystemLog.hpp \
+		MsgQueue.hpp \
+		Message.hpp \
+		UART.h \
+		rs232.h \
+		Monitor.hpp
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o dialog_hardwaresettings.o dialog_hardwaresettings.cpp
 
 dialog_historik.o: dialog_historik.cpp dialog_historik.h \
-		ui_dialog_historik.h
+		ui_dialog_historik.h \
+		mainwindow.h \
+		Indstillinger.hpp \
+		Date.hpp \
+		Plant.hpp \
+		DataLog.hpp \
+		DoublyLinkedList.hpp \
+		Node.h \
+		SensorData.hpp \
+		SystemLog.hpp \
+		MsgQueue.hpp \
+		Message.hpp \
+		UART.h \
+		rs232.h \
+		Monitor.hpp \
+		ReferenceStruct.hpp
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o dialog_historik.o dialog_historik.cpp
 
 dialog_noteifictions.o: dialog_noteifictions.cpp dialog_noteifictions.h \
-		ui_dialog_noteifictions.h
+		ReferenceStruct.hpp \
+		Indstillinger.hpp \
+		Date.hpp \
+		Plant.hpp \
+		ui_dialog_noteifictions.h \
+		mainwindow.h \
+		DataLog.hpp \
+		DoublyLinkedList.hpp \
+		Node.h \
+		SensorData.hpp \
+		SystemLog.hpp \
+		MsgQueue.hpp \
+		Message.hpp \
+		UART.h \
+		rs232.h \
+		Monitor.hpp
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o dialog_noteifictions.o dialog_noteifictions.cpp
 
 dialoge_mailconfig.o: dialoge_mailconfig.cpp dialoge_mailconfig.h \
-		ui_dialoge_mailconfig.h
+		ReferenceStruct.hpp \
+		Indstillinger.hpp \
+		Date.hpp \
+		Plant.hpp \
+		ui_dialoge_mailconfig.h \
+		mainwindow.h \
+		DataLog.hpp \
+		DoublyLinkedList.hpp \
+		Node.h \
+		SensorData.hpp \
+		SystemLog.hpp \
+		MsgQueue.hpp \
+		Message.hpp \
+		UART.h \
+		rs232.h \
+		Monitor.hpp
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o dialoge_mailconfig.o dialoge_mailconfig.cpp
 
 dialoge_systemconfiguration.o: dialoge_systemconfiguration.cpp dialoge_systemconfiguration.h \
+		ReferenceStruct.hpp \
+		Indstillinger.hpp \
+		Date.hpp \
+		Plant.hpp \
 		ui_dialoge_systemconfiguration.h \
 		dialog_hardwaresettings.h \
 		dialoge_mailconfig.h \
@@ -348,19 +452,44 @@ dialoge_systemlog.o: dialoge_systemlog.cpp dialoge_systemlog.h \
 
 main.o: main.cpp mainwindow.h \
 		Indstillinger.hpp \
-		DateStruct.hpp \
-		Plant.hpp
+		Date.hpp \
+		Plant.hpp \
+		DataLog.hpp \
+		DoublyLinkedList.hpp \
+		Node.h \
+		SensorData.hpp \
+		SystemLog.hpp \
+		MsgQueue.hpp \
+		Message.hpp \
+		UART.h \
+		rs232.h \
+		Monitor.hpp \
+		ReferenceStruct.hpp
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o main.cpp
 
 mainwindow.o: mainwindow.cpp mainwindow.h \
 		Indstillinger.hpp \
-		DateStruct.hpp \
+		Date.hpp \
 		Plant.hpp \
+		DataLog.hpp \
+		DoublyLinkedList.hpp \
+		Node.h \
+		SensorData.hpp \
+		SystemLog.hpp \
+		MsgQueue.hpp \
+		Message.hpp \
+		UART.h \
+		rs232.h \
+		Monitor.hpp \
+		ReferenceStruct.hpp \
 		ui_mainwindow.h \
 		dialoge_systemconfiguration.h \
 		dialog_historik.h \
 		dialoge_systemlog.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o mainwindow.o mainwindow.cpp
+
+rs232.o: rs232.c rs232.h
+	$(CC) -c $(CFLAGS) $(INCPATH) -o rs232.o rs232.c
 
 moc_dialog_datetime.o: moc_dialog_datetime.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_dialog_datetime.o moc_dialog_datetime.cpp

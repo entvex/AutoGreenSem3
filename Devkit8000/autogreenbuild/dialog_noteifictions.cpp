@@ -5,13 +5,15 @@
     bool daliy = false;
     bool Warning = false;
 
-dialog_noteifictions::dialog_noteifictions(QWidget *parent) :
+dialog_noteifictions::dialog_noteifictions(ReferenceStruct refs,QWidget *parent) :
     QDialog(parent),
     ui(new Ui::dialog_noteifictions)
 {
     ui->setupUi(this);
 
-    indstillinger.GetNotifications(daliy,Warning);
+    refs_ = refs;
+
+    refs_.indstillinger->GetNotifications(daliy,Warning);
 
     if( daliy  )
     {
@@ -80,6 +82,6 @@ void dialog_noteifictions::on_btn_advarsels_clicked()
 
 void dialog_noteifictions::on_btn_ok_clicked()
 {
-    indstillinger.SetNotifications(daliy,Warning);
+    refs_.indstillinger->SetNotifications(daliy,Warning);
     this->close();
 }

@@ -2,10 +2,11 @@
 #include "ui_dialog_historik.h"
 #include "mainwindow.h"
 
-dialog_historik::dialog_historik(QWidget *parent) :
+dialog_historik::dialog_historik(ReferenceStruct refs,QWidget *parent) :
     QDialog(parent),
     ui(new Ui::dialog_historik)
 {
+    ref_ = refs;
     ui->setupUi(this);
 }
 
@@ -21,15 +22,9 @@ void dialog_historik::on_btn_back_clicked()
 
 void dialog_historik::on_btn_newData_clicked()
 {
+    SensorData newData = ref_.dataLog->GetNewestData();
+    QString text = "Temp: ";
+    text.append( QString::number(newData.temp) );
 
-    SensorData ost;
-    ost.temp = 43;
-
-    datalog.InsertSensorData(ost);
-
-    SensorData newData = datalog.GetNewestData();
-
-    ui->textEdit->setText("Tempratur: " + QString::number(newData.temp));
-
-
+    ui->textEdit->setText(text);
 }

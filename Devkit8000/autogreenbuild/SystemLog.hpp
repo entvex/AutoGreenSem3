@@ -29,6 +29,7 @@ public:
 
 private:
   DoublyLinkedList<string> syslog;
+  //MsgQueue* message_;
 };
 
 #endif

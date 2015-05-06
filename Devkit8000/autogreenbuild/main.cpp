@@ -1,36 +1,42 @@
 #include "mainwindow.h"
 #include "Indstillinger.hpp"
-#include "lala.hpp"
+#include "ReferenceStruct.hpp"
 #include <pthread.h>
 
 #include <QtGui/QApplication>
 
-static Indstillinger ind;
-static Monitor mon;
 
 
 void* MonitorTrd(void *ptr)
 {
-    mon.compareData();
+    Monitor* monitor = static_cast<Monitor*>(ptr);
+    monitor->compareData();
     return NULL;
 }
 
 int main(int argc, char *argv[])
 {
 
-    dump d;
+    ReferenceStruct referenceStruct;
 
-    Indstillinger in;
+    MsgQueue mq(10);
 
-    d.ind_ = &in;
+    Indstillinger indstillinger;
+    DataLog datalog;
+    //SystemLog systemlog;
+    UART uart;
+    Monitor monitor(uart, datalog, indstillinger);
+
+    referenceStruct.indstillinger = &indstillinger;
+    referenceStruct.dataLog = &datalog;
 
     QApplication app(argc, argv);
 
         // Start af monitor
     pthread_t thread;
-    pthread_create(&thread, NULL, &MonitorTrd, NULL);
+    pthread_create(&thread, NULL, &MonitorTrd, &monitor);
 
-    MainWindow mainWindow(d);
+    MainWindow mainWindow(referenceStruct);
     mainWindow.setOrientation(MainWindow::ScreenOrientationAuto);
     mainWindow.showExpanded();
     return app.exec();

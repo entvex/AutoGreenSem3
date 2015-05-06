@@ -13,9 +13,9 @@ using namespace std;
 class UART
 {
  public:
-  UART(SystemLog *Log)
+  UART(/*SystemLog *Log*/)
     {
-      systemlog = Log;
+      //systemlog = Log;
       cport_nr = 0;
       bdrate = 9600;
     }
@@ -44,32 +44,32 @@ class UART
     if( command_ == "heaton")
       {
 	senddata(command_);
-	systemlog->addMessage("Heat Turned on");
+	//systemlog->addMessage("Heat Turned on");
       }	
     else if ( command_ == "heatoff")
       {
 	senddata(command_);	
-	systemlog->addMessage("Heat Turned off");
+	//systemlog->addMessage("Heat Turned off");
       }
     else if (command_ == "ventoff" )
       {
 	senddata(command_);	
-	systemlog->addMessage("Vent Turned off");
+	//systemlog->addMessage("Vent Turned off");
       }
     else if(command_ == "venton" )
       {
 	senddata(command_);	
-	systemlog->addMessage("Vent Turned on");
+	//systemlog->addMessage("Vent Turned on");
       }
     else if(command_ == "windowoff" )
       {
 	senddata(command_);	
-	systemlog->addMessage("Window Closed");
+	//systemlog->addMessage("Window Closed");
       }
     else if(command_ == "windowon")
       {
 	senddata(command_);	
-	systemlog->addMessage("Window Opened");
+	//systemlog->addMessage("Window Opened");
       }
   }
 
@@ -77,6 +77,9 @@ class UART
   {
     SensorData newdata;
     //void ændres til Sensordata
+    buf[0] = 0;
+    buf[1] = 0;
+    newdata.temp = 0;
     while (newdata.temp <= 0)
       {
 		
@@ -88,6 +91,7 @@ class UART
 	    newdata.temp = (data/2)-20;
 	  }
       }
+      /*
     while (newdata.humidity <= 0)
       {
 
@@ -111,7 +115,7 @@ class UART
 	    newdata.light = data;
 	  }
       }
-
+*/
 
 
     return newdata;
@@ -122,7 +126,7 @@ class UART
   int cport_nr;
   int bdrate;
   unsigned char buf[2];
-  SystemLog * systemlog;
+  //SystemLog * systemlog;
 
 
   int recievedata()
@@ -131,7 +135,7 @@ class UART
     while (1)
       {
 
-	usleep(1000);
+	usleep(1000000);
 	int n = RS232_PollComport(cport_nr, buf, 2);
 			
 

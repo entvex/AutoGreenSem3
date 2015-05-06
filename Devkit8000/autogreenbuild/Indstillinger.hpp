@@ -128,8 +128,8 @@ public:
 
   void SetNotifications(const bool &daily, const bool &Warning)
   {
-    this->Varmelegeme = Varmelegeme;
-    this->bloeserne = bloeserne;
+    this->daily = daily;
+    this->Warning = Warning;
   }
 
   // returns 1 If the selected plant is active
@@ -154,10 +154,19 @@ public:
 
   void DelVirtualPlant(int id)
   {
-	  if (id > 0 && id < 7)
-	  {
-		  virtuallePlants[id - 1];
-	  }
+      if (id > 0 && id < 7)
+      {
+          virtuallePlants[id - 1].hum = 0;
+          virtuallePlants[id - 1].light = 0;
+          virtuallePlants[id - 1].name = "None";
+          virtuallePlants[id - 1].water = 0;
+      }
+  }
+
+  void GetPlants(Plant* plants)
+  {
+    for(int i = 0; i < 6; ++i)
+      plants[i] = virtuallePlants[i];
   }
 
 private:

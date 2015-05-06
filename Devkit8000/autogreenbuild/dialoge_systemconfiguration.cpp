@@ -4,14 +4,14 @@
 #include "dialoge_mailconfig.h"
 #include "dialog_noteifictions.h"
 #include "dialog_datetime.h"
-#include "lala.hpp"
+#include "ReferenceStruct.hpp"
 
-dialoge_systemconfiguration::dialoge_systemconfiguration(dump d,QWidget *parent) :
+dialoge_systemconfiguration::dialoge_systemconfiguration(ReferenceStruct refs, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::dialoge_systemconfiguration)
 {
     ui->setupUi(this);
-    d_ = d;
+    refs_ = refs;
 }
 
 dialoge_systemconfiguration::~dialoge_systemconfiguration()
@@ -21,28 +21,28 @@ dialoge_systemconfiguration::~dialoge_systemconfiguration()
 
 void dialoge_systemconfiguration::on_btn_Hardware_clicked()
 {
-    dialog_hardwaresettings hardwaresettings(d_);
+    dialog_hardwaresettings hardwaresettings(refs_);
     hardwaresettings.setModal(true);
     hardwaresettings.exec();
 }
 
 void dialoge_systemconfiguration::on_btn_E_mail_clicked()
 {
-    dialoge_mailconfig mailconfig;
+    dialoge_mailconfig mailconfig(refs_);
     mailconfig.setModal(true);
     mailconfig.exec();
 }
 
 void dialoge_systemconfiguration::on_btn_Notefication_clicked()
 {
-    dialog_noteifictions noteifictions;
+    dialog_noteifictions noteifictions(refs_);
     noteifictions.setModal(true);
     noteifictions.exec();
 }
 
 void dialoge_systemconfiguration::on_btn_Time_clicked()
 {
-    dialog_datetime datetime(d_);
+    dialog_datetime datetime(refs_);
     datetime.setModal(true);
     datetime.exec();
 }

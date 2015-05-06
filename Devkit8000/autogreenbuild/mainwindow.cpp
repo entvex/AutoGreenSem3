@@ -3,16 +3,14 @@
 #include "dialoge_systemconfiguration.h"
 #include "dialog_historik.h"
 #include "dialoge_systemlog.h"
+#include "ReferenceStruct.hpp"
 #include <QtCore/QCoreApplication>
 
 
-MainWindow::MainWindow(dump d, QWidget *parent)
-    : QMainWindow(parent), ui(new Ui::MainWindow)
+MainWindow::MainWindow(ReferenceStruct refs, QWidget *parent): QMainWindow(parent), ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-
-    d_ = d;
-
+    refs_ = refs;
 }
 
 MainWindow::~MainWindow()
@@ -76,7 +74,7 @@ void MainWindow::showExpanded()
 
 void MainWindow::on_btn_konfig_clicked()
 {
-    dialoge_systemconfiguration systemconfiguration(d_);
+    dialoge_systemconfiguration systemconfiguration(refs_);
     systemconfiguration.setModal(true);
     systemconfiguration.exec();
 
@@ -84,7 +82,7 @@ void MainWindow::on_btn_konfig_clicked()
 
 void MainWindow::on_btn_history_clicked()
 {
-    dialog_historik historik;
+    dialog_historik historik(refs_);
     historik.setModal(true);
     historik.exec();
 }
@@ -99,30 +97,30 @@ void MainWindow::on_btn_systemlog_clicked()
 void MainWindow::on_btn_monitor_clicked()
 {
 
-    if( !indstillinger.getRegulering() )
+    if( !refs_.indstillinger->getRegulering() )
     {
-        if( indstillinger.getMonitorering()  ) //Toggle
+        if( refs_.indstillinger->getMonitorering()  ) //Toggle
         {
             //red
             ui->btn_monitor->setStyleSheet("background-color: rgb(255, 0, 0)");
-            indstillinger.SetMonitorering(false);
+            refs_.indstillinger->SetMonitorering(false);
 
         } else
         {
             //green
             ui->btn_monitor->setStyleSheet("background-color: rgb(0, 255, 0)");
-            indstillinger.SetMonitorering(true);
+            refs_.indstillinger->SetMonitorering(true);
         }
     }
     else
     {
-        if( indstillinger.getMonitorering()  ) //Toggle
+        if( refs_.indstillinger->getMonitorering()  ) //Toggle
         {
             //red
             ui->btn_monitor->setStyleSheet("background-color: rgb(255, 0, 0)");
             ui->btn_reguler->setStyleSheet("background-color: rgb(255, 0, 0)");
-            indstillinger.SetMonitorering(false);
-            indstillinger.SetRegulering(false);
+            refs_.indstillinger->SetMonitorering(false);
+            refs_.indstillinger->SetRegulering(false);
 
         }
     }
@@ -130,19 +128,19 @@ void MainWindow::on_btn_monitor_clicked()
 
 void MainWindow::on_btn_reguler_clicked()
 {
-    if( indstillinger.getMonitorering() )
+    if( refs_.indstillinger->getMonitorering() )
     {
-        if( indstillinger.getRegulering()  ) //Toggle
+        if( refs_.indstillinger->getRegulering()  ) //Toggle
         {
             //red
             ui->btn_reguler->setStyleSheet("background-color: rgb(255, 0, 0)");
-            indstillinger.SetRegulering(false);
+            refs_.indstillinger->SetRegulering(false);
 
         } else
         {
             //green
             ui->btn_reguler->setStyleSheet("background-color: rgb(0, 255, 0)");
-            indstillinger.SetRegulering(true);
+            refs_.indstillinger->SetRegulering(true);
         }
     }
 }

@@ -2,7 +2,7 @@
 #define DIALOGE_SYSTEMCONFIGURATION_H
 
 #include <QDialog>
-#include "lala.hpp"
+#include "ReferenceStruct.hpp"
 
 namespace Ui {
 class dialoge_systemconfiguration;
@@ -13,7 +13,7 @@ class dialoge_systemconfiguration : public QDialog
     Q_OBJECT
 
 public:
-    explicit dialoge_systemconfiguration(dump d,QWidget *parent = 0);
+    explicit dialoge_systemconfiguration(ReferenceStruct refs,QWidget *parent = 0);
     ~dialoge_systemconfiguration();
 
 private slots:
@@ -28,7 +28,7 @@ private slots:
     void on_btn_Back_clicked();
 
 private:
-    dump d_;
+    ReferenceStruct refs_;
 
     Ui::dialoge_systemconfiguration *ui;
 };

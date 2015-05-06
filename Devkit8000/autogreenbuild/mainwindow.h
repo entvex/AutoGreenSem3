@@ -9,15 +9,8 @@
 #include "Message.hpp"
 #include "UART.h"
 #include "Monitor.hpp"
-#include "lala.hpp"
+#include "ReferenceStruct.hpp"
 #include <QtGui/QMainWindow>
-
-
-static Indstillinger indstillinger;
-static DataLog datalog;
-static SystemLog systemlog;
-static UART uart(&systemlog);
-//static Monitor monitor(uart, datalog, indstillinger, systemlog);
 
 namespace Ui {
     class MainWindow;
@@ -34,7 +27,7 @@ public:
         ScreenOrientationAuto
     };
 
-    explicit MainWindow(dump p, QWidget *parent = 0);
+    explicit MainWindow(ReferenceStruct refs, QWidget *parent = 0);
     virtual ~MainWindow();
 
     // Note that this will only have an effect on Symbian and Fremantle.
@@ -56,7 +49,7 @@ private slots:
 
 private:
     Ui::MainWindow *ui;
-    dump d_;
+    ReferenceStruct refs_;
 
 };
 

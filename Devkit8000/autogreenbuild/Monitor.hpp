@@ -16,37 +16,37 @@ using namespace std;
 class Monitor
 {
 public:
-  Monitor(/*UART &uart, DataLog &data, Indstillinger &ind, SystemLog &syslog*/)
+  Monitor(UART &uart, DataLog &data, Indstillinger &ind /*SystemLog &syslog*/)
   {
-    //uart_ = uart;
-    //datalog_ = &data;
-    //ind_ = &ind;
+    uart_ = &uart;
+    datalog_ = &data;
+    ind_ = &ind;
     //syslog_ = &syslog;
   }
 
   void compareData()
   {
-    ofstream outfile("test.txt");
-    
-    outfile << "my text" << endl;
-    
-    /*
-    
-    int sensor = uart_->getSensor();
-    
+
+    uart_->connect();
+
+    while(1) {
+    cout << "Run while" << endl;
+
+
     if(ind_->getMonitorering()){
       
       // update local values to newest settings.
       //date_ = ind_->getDate();
       //ind_->GetNotifications(daily_, warning_);
-     // ind_->GetPlants(virtuel_);
+      //ind_->GetPlants(virtuel_);
 
       
       // check for sensors
-      int sensor = uart_->getSensor();
-      //sensordata_ = uart_->getSensorData();
-      //datalog_->InsertSensorData(sensordata_);
-    
+      //int sensor = uart_->getSensor();
+      sensordata_ = uart_->getSensorData();
+
+      datalog_->InsertSensorData(sensordata_);
+      cout << sensordata_.temp << endl;
     /* // compare sensor with virtual plants settings
       bool status; int i;
       while(i < sensor)
@@ -56,11 +56,12 @@ public:
 	    status = true;
 	  //send message to systemlog
 	}
-	
-    } else {
-      usleep(100);
-    }
     */
+    }
+
+    usleep(1000000);
+    cout << "Run end" << endl;
+    }
   }
  
   ~Monitor(){
@@ -82,15 +83,15 @@ private:
     return true;
   }
 */
- // Plant virtuel_[6];
- // Date date_;
- // bool daily_;
- // bool warning_;
- // Indstillinger* ind_;
+  Plant virtuel_[6];
+  Date date_;
+  bool daily_;
+  bool warning_;
+  Indstillinger* ind_;
   //SystemLog* syslog_;
-  //DataLog* datalog_;
-  //UART uart_;
-  //SensorData sensordata_;
+  DataLog* datalog_;
+  UART* uart_;
+  SensorData sensordata_;
 };
 
 #endif
