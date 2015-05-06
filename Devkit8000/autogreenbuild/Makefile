@@ -14,7 +14,7 @@ CC            = $(OE_QMAKE_CC)
 CXX           = $(OE_QMAKE_CXX)
 DEFINES       = -DQT_NO_DEBUG -DQT_GUI_LIB -DQT_CORE_LIB
 CFLAGS        = -pipe -pipe $(OE_QMAKE_CFLAGS) -O2 -Wall -W -Wall -W -D_REENTRANT $(DEFINES)
-CXXFLAGS      = -pipe -pipe -pipe $(OE_QMAKE_CFLAGS) $(OE_QMAKE_CXXFLAGS) -std=c++0x -O2 -O2 -Wall -W -Wall -W -Wall -W -D_REENTRANT $(DEFINES)
+CXXFLAGS      = -pipe -pipe -pipe $(OE_QMAKE_CFLAGS) $(OE_QMAKE_CXXFLAGS) -std=c++0x -lpthread -O2 -O2 -Wall -W -Wall -W -Wall -W -D_REENTRANT $(DEFINES)
 INCPATH       = -I../../../setup-scripts/build/tmp-angstrom_2010_x-eglibc/sysroots/i686-linux/usr/share/qt4/mkspecs/linux-g++ -I. -I$(OE_QMAKE_INCDIR_QT)/QtCore -I$(OE_QMAKE_INCDIR_QT)/QtGui -I$(OE_QMAKE_INCDIR_QT) -I. -I. -I.
 LINK          = $(OE_QMAKE_LINK)
 LFLAGS        = $(OE_QMAKE_LDFLAGS) -Wl,-rpath-link,$(OE_QMAKE_LIBDIR_QT)

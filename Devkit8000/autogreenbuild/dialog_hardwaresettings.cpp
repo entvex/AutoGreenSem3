@@ -5,13 +5,15 @@
 bool bloeserne = false;
 bool varmelegeme = false;
 
-dialog_hardwaresettings::dialog_hardwaresettings(QWidget *parent) :
+dialog_hardwaresettings::dialog_hardwaresettings(dump d,QWidget *parent) :
     QDialog(parent),
     ui(new Ui::dialog_hardwaresettings)
 {
     ui->setupUi(this);
 
-    indstillinger.GetHardware(varmelegeme,bloeserne);
+    d_ = d;
+
+    d_.ind_->GetHardware(varmelegeme,bloeserne);
 
     if( bloeserne  )
     {
@@ -81,6 +83,6 @@ void dialog_hardwaresettings::on_btn_bloeser_clicked()
 
 void dialog_hardwaresettings::on_btn_ok_clicked()
 {
-    indstillinger.SetHardware(varmelegeme,bloeserne);
+    d_.ind_->SetHardware(varmelegeme,bloeserne);
     this->close();
 }

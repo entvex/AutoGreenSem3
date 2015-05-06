@@ -2,7 +2,7 @@
 #define SYSTEMLOG_HPP_
 
 #include <iostream>
-#include <vector>
+#include "DoublyLinkedList.hpp"
 
 using namespace std;
 
@@ -14,22 +14,21 @@ public:
 
   void addMessage(string msg)
   {
-    system_.push_back(msg);
+    syslog.headInsert(msg);
   }
 
-  void printSystemLog()
+  string printSystemLog()
   {
-    for(int i = 0; i < 6; i++)
-      {
-	cout << system_[system_.size() - i] << endl;
-      }
+    string out;
+    syslog.PeekHead(out);
+    return out;
   }
  
   ~SystemLog(){
   }
 
 private:
-  vector<string> system_;
+  DoublyLinkedList<string> syslog;
 };
 
 #endif

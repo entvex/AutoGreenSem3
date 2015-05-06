@@ -4,15 +4,17 @@
 #include "QTime"
 #include "QDate"
 
-dialog_datetime::dialog_datetime(QWidget *parent) :
+dialog_datetime::dialog_datetime(dump d ,QWidget *parent) :
     QDialog(parent),
     ui(new Ui::dialog_datetime)
 {
     ui->setupUi(this);
 
+    d_ = d;
+
     //Set boxes to show current time.
     Date timenow;
-    timenow = indstillinger.getDate();
+    timenow = d_.ind_->getDate();
     ui->lineEdit_year->setText(QString::number(timenow.Year));
     ui->lineEdit_month->setText(QString::number(timenow.Month));
     ui->lineEdit_day->setText(QString::number(timenow.Day));
@@ -40,6 +42,6 @@ void dialog_datetime::on_btn_ok_clicked()
     timeset.Hour = ui->lineEdit_hour->text().toInt();
     timeset.Min = ui->lineEdit_min->text().toInt();
 
-indstillinger.setDate(timeset);
+    d_.ind_->setDate(timeset);
     this->close();
 }

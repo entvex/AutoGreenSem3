@@ -5,10 +5,13 @@
 #include "dialoge_systemlog.h"
 #include <QtCore/QCoreApplication>
 
-MainWindow::MainWindow(QWidget *parent)
+
+MainWindow::MainWindow(dump d, QWidget *parent)
     : QMainWindow(parent), ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+
+    d_ = d;
 
 }
 
@@ -73,7 +76,7 @@ void MainWindow::showExpanded()
 
 void MainWindow::on_btn_konfig_clicked()
 {
-    dialoge_systemconfiguration systemconfiguration;
+    dialoge_systemconfiguration systemconfiguration(d_);
     systemconfiguration.setModal(true);
     systemconfiguration.exec();
 
@@ -98,7 +101,6 @@ void MainWindow::on_btn_monitor_clicked()
 
     if( !indstillinger.getRegulering() )
     {
-
         if( indstillinger.getMonitorering()  ) //Toggle
         {
             //red

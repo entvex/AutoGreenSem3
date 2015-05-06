@@ -1,4 +1,4 @@
-SRC= TestSystemLog.cpp SystemLog.hpp
+SRC= TestSystemLog.cpp SystemLog.hpp DoublyLinkedList.hpp Node.h
 OBJ= TestSystemLog.o 
 EXE= SystemLog
 CXX= g++

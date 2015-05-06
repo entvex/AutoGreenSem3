@@ -1,13 +1,23 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
-#include <QtGui/QMainWindow>
 #include "Indstillinger.hpp"
 #include "Date.hpp"
 #include "DataLog.hpp"
+#include "SystemLog.hpp"
+#include "MsgQueue.hpp"
+#include "Message.hpp"
+#include "UART.h"
+#include "Monitor.hpp"
+#include "lala.hpp"
+#include <QtGui/QMainWindow>
+
 
 static Indstillinger indstillinger;
 static DataLog datalog;
+static SystemLog systemlog;
+static UART uart(&systemlog);
+//static Monitor monitor(uart, datalog, indstillinger, systemlog);
 
 namespace Ui {
     class MainWindow;
@@ -17,13 +27,14 @@ class MainWindow : public QMainWindow
 {
     Q_OBJECT
 public:
+
     enum ScreenOrientation {
         ScreenOrientationLockPortrait,
         ScreenOrientationLockLandscape,
         ScreenOrientationAuto
     };
 
-    explicit MainWindow(QWidget *parent = 0);
+    explicit MainWindow(dump p, QWidget *parent = 0);
     virtual ~MainWindow();
 
     // Note that this will only have an effect on Symbian and Fremantle.
@@ -45,6 +56,8 @@ private slots:
 
 private:
     Ui::MainWindow *ui;
+    dump d_;
+
 };
 
 #endif // MAINWINDOW_

@@ -8,47 +8,49 @@
 #include "Plant.hpp"
 #include "SensorData.hpp"
 #include "Indstillinger.hpp"
+#include "SystemLog.hpp"
 
 using namespace std;
 
 class Monitor
 {
 public:
-  Monitor(){}
-
-  void setInd(UART &uart, DataLog &data)
+  Monitor(UART &uart, DataLog &data, Indstillinger &ind, SystemLog &syslog)
   {
-    uart_ =  uart;
-    datalog_ = data;
+    uart_ =  &uart;
+    datalog_ = &data;
+    ind_ = &ind;
+    syslog_ = &syslog;
   }
 
   void compareData()
   {
-
-    if(ind.getMonitorering){
-      /*
+    if(ind_->getMonitorering()){
+      
       // update local values to newest settings.
-      ind_.GetDate(date_);
-      ind_.GetNotifications(daily_, warning_);
-      ind_.GetPlants(virtuel_);
-      */
+      date_ = ind_->getDate();
+      ind_->GetNotifications(daily_, warning_);
+      ind_->GetPlants(virtuel_);
 
+      
       // check for sensors
-      int s = uart_.getSensor();
-      sensordata_ = uart_.getSensorData();
-      datalog_.InsertSensorData(sensordata_);
+      int sensor = uart_->getSensor();
+      sensordata_ = uart_->getSensorData();
+      datalog_->InsertSensorData(sensordata_);
     
       // compare sensor with virtual plants settings
       bool status; int i;
-      while(i < s)
+      while(i < sensor)
 	{
 	  status = compareSet(sensordata_, virtuel_[i], 2);
 	  if(!status)
-	    status = true; //send message to systemlog
+	    status = true;
+	  //send message to systemlog
 	}
     } else {
       usleep(100);
-    }
+    }    
+
   }
  
   ~Monitor(){
@@ -74,9 +76,10 @@ private:
   Date date_;
   bool daily_;
   bool warning_;
-  Indstillinger ind_;
-  DataLog datalog_;
-  UART uart_;
+  Indstillinger* ind_;
+  SystemLog* syslog_;
+  DataLog* datalog_;
+  UART* uart_;
   SensorData sensordata_;
 };
 

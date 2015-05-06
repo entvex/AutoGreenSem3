@@ -4,13 +4,14 @@
 #include "dialoge_mailconfig.h"
 #include "dialog_noteifictions.h"
 #include "dialog_datetime.h"
+#include "lala.hpp"
 
-
-dialoge_systemconfiguration::dialoge_systemconfiguration(QWidget *parent) :
+dialoge_systemconfiguration::dialoge_systemconfiguration(dump d,QWidget *parent) :
     QDialog(parent),
     ui(new Ui::dialoge_systemconfiguration)
 {
     ui->setupUi(this);
+    d_ = d;
 }
 
 dialoge_systemconfiguration::~dialoge_systemconfiguration()
@@ -20,7 +21,7 @@ dialoge_systemconfiguration::~dialoge_systemconfiguration()
 
 void dialoge_systemconfiguration::on_btn_Hardware_clicked()
 {
-    dialog_hardwaresettings hardwaresettings;
+    dialog_hardwaresettings hardwaresettings(d_);
     hardwaresettings.setModal(true);
     hardwaresettings.exec();
 }
@@ -41,7 +42,7 @@ void dialoge_systemconfiguration::on_btn_Notefication_clicked()
 
 void dialoge_systemconfiguration::on_btn_Time_clicked()
 {
-    dialog_datetime datetime;
+    dialog_datetime datetime(d_);
     datetime.setModal(true);
     datetime.exec();
 }
