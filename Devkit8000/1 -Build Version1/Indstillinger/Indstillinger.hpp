@@ -52,25 +52,6 @@ public:
     return monitor;
   }
 
-  //id mellem 1 og 6
-  //Plant plantToPlace
-  void SetVirtualPlant(int id, Plant plantToPlace)
-  {
-    if (id > 0 && id < 7)
-      {
-	this->virtuallePlants[id - 1] = plantToPlace;
-	this->virtuallePlants[id - 1].Enable = true;
-      }
-  }
-
-  void DelVirtualPlant(int id)
-  {
-    if (id > 0 && id < 7)
-      {
-	this->virtuallePlants[id - 1].Enable = false;
-      }
-  }
-
   void GetEmails(string &mail1, string &mail2, string &mail3)
   {
     mail1 = E_mails[0];
@@ -153,17 +134,30 @@ public:
 
   // returns 1 If the selected plant is active
   // returns -1 If the selected plant is not active and the ref is edited.
-  int GetData(int plantId, Plant &plantToedit)
+  Plant Getplant(int plantId)
   {
     if (plantId > 0 && plantId < 7)
       {
-	if ( this->virtuallePlants[plantId - 1].Enable == true )
-	  {
-	    plantToedit = virtuallePlants[plantId - 1];
-	    return 1;
-	  }
+		  return virtuallePlants[plantId - 1];
       }
-    return -1;
+  }
+
+  //id mellem 1 og 6
+  //Plant plantToPlace
+  void SetVirtualPlant(int id, Plant plantToPlace)
+  {
+	  if (id > 0 && id < 7)
+	  {
+		  this->virtuallePlants[id - 1] = plantToPlace;
+	  }
+  }
+
+  void DelVirtualPlant(int id)
+  {
+	  if (id > 0 && id < 7)
+	  {
+		  virtuallePlants[id - 1];
+	  }
   }
 
 private:
