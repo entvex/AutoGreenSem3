@@ -12,7 +12,6 @@ struct Plant
   int light;
   int hum;
   int water;
-  bool Enable;
 };
 
 #endif
