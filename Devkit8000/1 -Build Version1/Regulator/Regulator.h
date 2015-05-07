@@ -126,6 +126,30 @@ while(1) {
 
 		/* check waterstatus for plant 1-6*/
 
+			if(drivhus_data.grund[1] < plant1.water)
+			{
+				//plant1 need water
+			}
+			if(drivhus_data.grund[2] < plant2.water)
+			{
+				//plant1 need water
+			}
+			if(drivhus_data.grund[3] < plant3.water)
+			{
+				//plant1 need water
+			}
+			if(drivhus_data.grund[4] < plant4.water)
+			{
+				//plant1 need water
+			}
+			if(drivhus_data.grund[5] < plant5.water)
+			{
+				//plant1 need water
+			}
+			if(drivhus_data.grund[6] < plant6.water)
+			{
+				//plant1 need water
+			}
 			//added later if needed
 
 
