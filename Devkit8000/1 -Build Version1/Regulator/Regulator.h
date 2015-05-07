@@ -46,12 +46,7 @@ while(1) {
 		else 
 		{
 		//load data into plants from Settings (indstillinger)
-		loadData(plant1);
-		loadData(plant2);
-		loadData(plant3);
-		loadData(plant4);
-		loadData(plant5);
-		loadData(plant6);
+		loadData();
 		SensorData loadeddata = datalog->GetNewestData();
 		ControlData(loadeddata);
 
@@ -68,7 +63,8 @@ while(1) {
 		/*lets make some control checks*/
 		
 		/*Get newestSensorData*/
-		double temp_drivhus = 0;// settings->get_temp();
+	
+		double temp_drivhus = drivhus_data.temp;
 
 		/* Compare average temperature for plants to Actual temps*/
 		double avg_temp_drivhus = (plant1.temp + plant2.temp + plant3.temp + plant4.temp + plant5.temp + plant6.temp) / 6;
@@ -83,15 +79,16 @@ while(1) {
 			systemlog->addMessage("slukker alle aktuatorer");
 			uart->activateSensor("ventoff");
 			usleep(100);
-			uart->activateSensor("heatoff");
-			usleep(100);
+				uart->activateSensor("heatoff");
+				usleep(100);
 			uart->activateSensor("windowoff");
-			usleep(100);			
+			usleep(100);
+	
 		}
 		else if (temp_drivhus > avg_temp_drivhus && (temp_drivhus + 3) < (avg_temp_drivhus))
 		{
 			//OPEN WinDOW
-				systemlog->addMessage("Window åbnes");
+			systemlog->addMessage("Window åbnes");
 			uart->activateSensor("windowon");
 			usleep(100);
 		}
@@ -99,8 +96,11 @@ while(1) {
 		{
 			systemlog->addMessage("vent tændes, window åbnes");
 			//start vent
-			uart->activateSensor("venton");
-			usleep(100);
+			if(use_vents)
+				{
+				uart->activateSensor("venton");
+				usleep(100);
+				}
 	//open window
 			uart->activateSensor("windowon");
 			usleep(100);
@@ -111,8 +111,11 @@ while(1) {
 			//close Window
 			//vent off
 			systemlog->addMessage(" heater tændes, vent slukkes, Window lukkes");
-			uart->activateSensor("heaton");
-			usleep(100);
+			if(use_heater)
+				{
+				uart->activateSensor("heaton");
+				usleep(100);
+				}
 			uart->activateSensor("ventoff");
 			usleep(100);
 			uart->activateSensor("windowoff");
@@ -129,10 +132,15 @@ while(1) {
 
 	}
 
-	void loadData(Plant loadplant)
+	void loadData()
 	{
 		// go to indstillinger
-		
+		plant1 = settings->getPlant(1);
+		plant2 = settings->getPlant(2);
+		plant3 = settings->getPlant(3);
+		plant4 = settings->getPlant(4);
+		plant5 = settings->getPlant(5);
+		plant6 = settings->getPlant(6);
 
 		//loadplant = settings->GetPlant()
 		//mangler funktionalitet til at hente plante
