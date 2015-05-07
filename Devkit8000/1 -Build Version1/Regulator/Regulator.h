@@ -79,8 +79,8 @@ while(1) {
 			systemlog->addMessage("slukker alle aktuatorer");
 			uart->activateSensor("ventoff");
 			usleep(100);
-				uart->activateSensor("heatoff");
-				usleep(100);
+			uart->activateSensor("heatoff");
+			usleep(100);
 			uart->activateSensor("windowoff");
 			usleep(100);
 	
