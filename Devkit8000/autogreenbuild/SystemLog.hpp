@@ -2,6 +2,8 @@
 #define SYSTEMLOG_HPP_
 
 #include <iostream>
+#include "MsgQueue.hpp"
+#include "SysMsg.hpp"
 #include "DoublyLinkedList.hpp"
 
 using namespace std;
@@ -9,7 +11,18 @@ using namespace std;
 class SystemLog
 {
 public:
-  SystemLog(){
+  SystemLog(MsgQueue &msgs){
+    msgs_ = &msgs;
+  }
+
+  void checkMsg(){
+    while(true){
+      unsigned long id;
+      SysMsg* logentry = static_cast<SysMsg*>(msgs_->receive(id));
+      addMessage(logentry->msg_);
+      delete logentry;
+      usleep(10000000);
+    }
   }
 
   void addMessage(string msg)
@@ -29,7 +42,7 @@ public:
 
 private:
   DoublyLinkedList<string> syslog;
-  //MsgQueue* message_;
+  MsgQueue* msgs_;
 };
 
 #endif

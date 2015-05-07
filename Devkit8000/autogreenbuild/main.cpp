@@ -9,8 +9,15 @@
 
 void* MonitorTrd(void *ptr)
 {
-    Monitor* monitor = static_cast<Monitor*>(ptr);
-    monitor->compareData();
+    ReferenceStruct* ref = static_cast<ReferenceStruct*>(ptr);
+    ref->monitor->compareData();
+    return NULL;
+}
+
+void* SystemLogTrd(void *ptr)
+{
+    SystemLog* syslog = static_cast<SystemLog*>(ptr);
+    syslog->checkMsg();
     return NULL;
 }
 
@@ -23,18 +30,19 @@ int main(int argc, char *argv[])
 
     Indstillinger indstillinger;
     DataLog datalog;
-    //SystemLog systemlog;
+    SystemLog systemlog(mq);
     UART uart;
-    Monitor monitor(uart, datalog, indstillinger);
+    Monitor monitor(uart, datalog, indstillinger, mq);
 
     referenceStruct.indstillinger = &indstillinger;
     referenceStruct.dataLog = &datalog;
 
     QApplication app(argc, argv);
 
-        // Start af monitor
-    pthread_t thread;
-    pthread_create(&thread, NULL, &MonitorTrd, &monitor);
+     // Start af monitor
+    pthread_t montrd, systrd;
+    pthread_create(&montrd, NULL, &MonitorTrd, &referenceStruct);
+    pthread_create(&systrd, NULL, &SystemLogTrd, &systemlog);
 
     MainWindow mainWindow(referenceStruct);
     mainWindow.setOrientation(MainWindow::ScreenOrientationAuto);
