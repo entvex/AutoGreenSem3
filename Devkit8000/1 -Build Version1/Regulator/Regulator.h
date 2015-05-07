@@ -122,7 +122,7 @@ while(1) {
 			usleep(100);
 			
 		}
-																																													
+	
 
 		/* check waterstatus for plant 1-6*/
 
@@ -185,12 +185,8 @@ private:
 
 
 
-	Plant plant1;
-	Plant plant2;
-	Plant plant3;
-	Plant plant4;
-	Plant plant5;
-	Plant plant6;
+	Plant plant1, plant2, plant3, plant4, plant5, plant6;
+
 
 	UART * uart;
 	Indstillinger * settings;
