@@ -98,8 +98,12 @@ while(1) {
 			//start vent
 			if(use_vents)
 				{
-				uart->activateSensor("venton");
-				usleep(100);
+					uart->activateSensor("venton");
+					usleep(100);
+				}
+				else
+				{
+					systemlog->addMessage("Vent kan ikke bruges");
 				}
 	//open window
 			uart->activateSensor("windowon");
@@ -116,6 +120,10 @@ while(1) {
 				uart->activateSensor("heaton");
 				usleep(100);
 				}
+				else
+				{
+						systemlog->addMessage("Heater kan ikke bruges");
+				}
 			uart->activateSensor("ventoff");
 			usleep(100);
 			uart->activateSensor("windowoff");
@@ -128,31 +136,37 @@ while(1) {
 
 			if(drivhus_data.grund[1] < plant1.water)
 			{
+				systemlog->addMessage("plante 1 mangler vand");
 				//uart->activateSensor("water1");
 				//plant1 need water
 			}
 			if(drivhus_data.grund[2] < plant2.water)
 			{
+				systemlog->addMessage("plante 2 mangler vand");
 				//uart->activateSensor("water1");
 				//plant1 need water
 			}
 			if(drivhus_data.grund[3] < plant3.water)
 			{
+				systemlog->addMessage("plante 3 mangler vand");
 				//uart->activateSensor("water1");
 				//plant1 need water
 			}
 			if(drivhus_data.grund[4] < plant4.water)
 			{
+				systemlog->addMessage("plante 4 mangler vand");
 				//uart->activateSensor("water1");
 				//plant1 need water
 			}
 			if(drivhus_data.grund[5] < plant5.water)
 			{
+				systemlog->addMessage("plante 5 mangler vand");
 				//uart->activateSensor("water1");
 				//plant1 need water
 			}
 			if(drivhus_data.grund[6] < plant6.water)
 			{
+				systemlog->addMessage("plante 6 mangler vand");
 				//uart->activateSensor("water1");
 				//plant1 need water
 			}
