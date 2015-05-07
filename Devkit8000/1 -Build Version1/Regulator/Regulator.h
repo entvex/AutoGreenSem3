@@ -128,26 +128,32 @@ while(1) {
 
 			if(drivhus_data.grund[1] < plant1.water)
 			{
+				//uart->activateSensor("water1");
 				//plant1 need water
 			}
 			if(drivhus_data.grund[2] < plant2.water)
 			{
+				//uart->activateSensor("water1");
 				//plant1 need water
 			}
 			if(drivhus_data.grund[3] < plant3.water)
 			{
+				//uart->activateSensor("water1");
 				//plant1 need water
 			}
 			if(drivhus_data.grund[4] < plant4.water)
 			{
+				//uart->activateSensor("water1");
 				//plant1 need water
 			}
 			if(drivhus_data.grund[5] < plant5.water)
 			{
+				//uart->activateSensor("water1");
 				//plant1 need water
 			}
 			if(drivhus_data.grund[6] < plant6.water)
 			{
+				//uart->activateSensor("water1");
 				//plant1 need water
 			}
 			//added later if needed

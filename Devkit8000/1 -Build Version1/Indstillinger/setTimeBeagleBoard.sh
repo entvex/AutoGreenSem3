@@ -5,8 +5,6 @@ echo $2
 echo $3
 echo $4
 
-echo 1 > kate.sh
-
 # for goldenImage
 #date -s "2 OCT 2006 18:00:00"
 #date -s "$1 $2 $3 $4:$5:00"
