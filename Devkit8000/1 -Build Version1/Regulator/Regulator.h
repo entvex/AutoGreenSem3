@@ -7,6 +7,7 @@
 #include "UART.h"
 #include "SystemLog.hpp"
 #include "Indstillinger.hpp"
+#include "SysMsg.hpp"
 
 
 using namespace std;
@@ -76,7 +77,11 @@ while(1) {
 		if (temp_drivhus == avg_temp_drivhus || (temp_drivhus - 1) == avg_temp_drivhus || (temp_drivhus + 1) == avg_temp_drivhus)
 		{
 			//temp is OK, close and shut everything off
-			systemlog->addMessage("slukker alle aktuatorer");
+		
+			SysMsg* monmsg = new SysMsg;
+          monmsg->msg_ = "slukker alle aktuatorer";
+          syslog_->send(1, monmsg);
+
 			uart->activateSensor("ventoff");
 			usleep(100);
 			uart->activateSensor("heatoff");
@@ -88,13 +93,19 @@ while(1) {
 		else if (temp_drivhus > avg_temp_drivhus && (temp_drivhus + 3) < (avg_temp_drivhus))
 		{
 			//OPEN WinDOW
-			systemlog->addMessage("Window åbnes");
+			
+				SysMsg* monmsg = new SysMsg;
+          monmsg->msg_ = "Window åbnes";
+          syslog_->send(1, monmsg);
 			uart->activateSensor("windowon");
 			usleep(100);
 		}
 		else if ((temp_drivhus - 6) > avg_temp_drivhus)
 		{
-			systemlog->addMessage("vent tændes, window åbnes");
+	
+		  SysMsg* monmsg = new SysMsg;
+          monmsg->msg_ = "vent tændes, window åbnes";
+          syslog_->send(1, monmsg);
 			//start vent
 			if(use_vents)
 				{
@@ -103,7 +114,9 @@ while(1) {
 				}
 				else
 				{
-					systemlog->addMessage("Vent kan ikke bruges");
+					SysMsg* monmsg = new SysMsg;
+          monmsg->msg_ = "vent kan ikke åbnes";
+          syslog_->send(1, monmsg);
 				}
 	//open window
 			uart->activateSensor("windowon");
@@ -114,7 +127,10 @@ while(1) {
 			//heater on
 			//close Window
 			//vent off
-			systemlog->addMessage(" heater tændes, vent slukkes, Window lukkes");
+			
+			SysMsg* monmsg = new SysMsg;
+          monmsg->msg_ = "heater tændes, vent slukkes, Window lukkes";
+          syslog_->send(1, monmsg);
 			if(use_heater)
 				{
 				uart->activateSensor("heaton");
@@ -122,8 +138,12 @@ while(1) {
 				}
 				else
 				{
-						systemlog->addMessage("Heater kan ikke bruges");
+						
+					SysMsg* monmsg = new SysMsg;
+					monmsg->msg_ = "Heater kan ikke bruges";
+					syslog_->send(1, monmsg);
 				}
+				
 			uart->activateSensor("ventoff");
 			usleep(100);
 			uart->activateSensor("windowoff");
@@ -136,37 +156,50 @@ while(1) {
 
 			if(drivhus_data.grund[1] < plant1.water)
 			{
-				systemlog->addMessage("plante 1 mangler vand");
+			
+					SysMsg* monmsg = new SysMsg;
+					monmsg->msg_ = "Plante 1 mangler vand";
+					syslog_->send(1, monmsg);
 				//uart->activateSensor("water1");
 				//plant1 need water
 			}
 			if(drivhus_data.grund[2] < plant2.water)
 			{
-				systemlog->addMessage("plante 2 mangler vand");
+			SysMsg* monmsg = new SysMsg;
+					monmsg->msg_ = "Plante 2 mangler vand";
+					syslog_->send(1, monmsg);
 				//uart->activateSensor("water1");
 				//plant1 need water
 			}
 			if(drivhus_data.grund[3] < plant3.water)
 			{
-				systemlog->addMessage("plante 3 mangler vand");
+			SysMsg* monmsg = new SysMsg;
+					monmsg->msg_ = "Plante 3 mangler vand";
+					syslog_->send(1, monmsg);
 				//uart->activateSensor("water1");
 				//plant1 need water
 			}
 			if(drivhus_data.grund[4] < plant4.water)
 			{
-				systemlog->addMessage("plante 4 mangler vand");
+			SysMsg* monmsg = new SysMsg;
+					monmsg->msg_ = "Plante 4 mangler vand";
+					syslog_->send(1, monmsg);
 				//uart->activateSensor("water1");
 				//plant1 need water
 			}
 			if(drivhus_data.grund[5] < plant5.water)
 			{
-				systemlog->addMessage("plante 5 mangler vand");
+				SysMsg* monmsg = new SysMsg;
+					monmsg->msg_ = "Plante 5 mangler vand";
+					syslog_->send(1, monmsg);
 				//uart->activateSensor("water1");
 				//plant1 need water
 			}
 			if(drivhus_data.grund[6] < plant6.water)
 			{
-				systemlog->addMessage("plante 6 mangler vand");
+				SysMsg* monmsg = new SysMsg;
+					monmsg->msg_ = "Plante 6 mangler vand";
+					syslog_->send(1, monmsg);
 				//uart->activateSensor("water1");
 				//plant1 need water
 			}
