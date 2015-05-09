@@ -77,17 +77,66 @@ class UART
   {
     SensorData newdata;
     //void ændres til Sensordata
-    while (newdata.temp <= 0)
+    while (newdata.temp <= -20)
       {
 		
 	senddata("temp");
 	int data = recievedata();
-	if (data != -1)
+	if (data != -99)
 	  {
 		
 	    newdata.temp = (data/2)-20;
 	  }
-      }
+	  
+	  {
+			senddata("ground1");
+			int data = recievedata();
+			if(data != 99)
+			{
+				newdata.grund[1] = data;
+			}		
+	  }
+	  	  {
+			senddata("ground2");
+			int data = recievedata();
+			if(data != 99)
+			{
+				newdata.grund[2] = data;
+			}		
+	  }
+	  	  {
+			senddata("ground3");
+			int data = recievedata();
+			if(data != 99)
+			{
+				newdata.grund[3] = data;
+			}		
+	  }
+	  	  {
+			senddata("ground4");
+			int data = recievedata();
+			if(data != 99)
+			{
+				newdata.grund[4] = data;
+			}		
+	  }
+	  	  {
+			senddata("ground5");
+			int data = recievedata();
+			if(data != 99)
+			{
+				newdata.grund[5] = data;
+			}		
+	  }
+	  	  {
+			senddata("ground6");
+			int data = recievedata();
+			if(data != 99)
+			{
+				newdata.grund[6] = data;
+			}	
+	  }
+     /* }
     while (newdata.humidity <= 0)
       {
 
@@ -111,7 +160,7 @@ class UART
 	    newdata.light = data;
 	  }
       }
-
+		*/
 
 
     return newdata;
@@ -121,7 +170,7 @@ class UART
 
   int cport_nr;
   int bdrate;
-  unsigned char buf[2];
+  unsigned char buf[3];
   SystemLog * systemlog;
 
 
@@ -142,7 +191,7 @@ class UART
 	  }
 	else if (buf[0] == 'X' && buf[1] == 'T')
 	  {
-	    return -1;
+	    return -99;
 	  }
 	else if (buf[0] == 'L')
 	  {
@@ -151,7 +200,7 @@ class UART
 	  }
 	else if (buf[0] == 'X' && buf[1] == 'L')
 	  {
-	    return -2;
+	    return -99;
 	  }
 	else if (buf[0] == 'A')
 	  {
@@ -160,7 +209,15 @@ class UART
 	  }
 	else if (buf[0] == 'X' && buf[1] == 'A')
 	  {
-	    return -3;
+	    return -99;
+	  }
+	else if (buf[0] == 'X' && buf[1] == 'S')
+	  {
+	    return -99;
+	  }
+	  	else if (buf[0] == 'S')
+	  {
+	    return (int)buf[2];
 	  }
 
 	cout << buf[0] << " " << buf[1] << endl;
