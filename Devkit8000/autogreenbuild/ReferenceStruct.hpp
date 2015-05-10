@@ -6,7 +6,7 @@
 
 struct ReferenceStruct
 {
-    Indstillinger* indstillinger;
-    DataLog* dataLog;
+  Indstillinger* indstillinger;
+  DataLog* dataLog;
 };
 #endif
