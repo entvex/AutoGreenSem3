@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'dialoge_systemlog.ui'
 **
-** Created: Wed May 6 14:13:11 2015
+** Created: Sun May 10 13:47:48 2015
 **      by: Qt User Interface Compiler version 4.8.0
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -17,8 +17,8 @@
 #include <QtGui/QDialog>
 #include <QtGui/QHeaderView>
 #include <QtGui/QLabel>
-#include <QtGui/QPlainTextEdit>
 #include <QtGui/QPushButton>
+#include <QtGui/QTextEdit>
 
 QT_BEGIN_NAMESPACE
 
@@ -26,8 +26,8 @@ class Ui_dialoge_systemlog
 {
 public:
     QPushButton *btn_back;
-    QPlainTextEdit *plainTextEdit;
     QLabel *label_3;
+    QTextEdit *textEdit;
 
     void setupUi(QDialog *dialoge_systemlog)
     {
@@ -37,10 +37,7 @@ public:
         dialoge_systemlog->setMaximumSize(QSize(480, 257));
         btn_back = new QPushButton(dialoge_systemlog);
         btn_back->setObjectName(QString::fromUtf8("btn_back"));
-        btn_back->setGeometry(QRect(10, 220, 81, 23));
-        plainTextEdit = new QPlainTextEdit(dialoge_systemlog);
-        plainTextEdit->setObjectName(QString::fromUtf8("plainTextEdit"));
-        plainTextEdit->setGeometry(QRect(20, 40, 431, 171));
+        btn_back->setGeometry(QRect(10, 210, 81, 23));
         label_3 = new QLabel(dialoge_systemlog);
         label_3->setObjectName(QString::fromUtf8("label_3"));
         label_3->setGeometry(QRect(180, 10, 111, 21));
@@ -49,6 +46,9 @@ public:
         font.setBold(true);
         font.setWeight(75);
         label_3->setFont(font);
+        textEdit = new QTextEdit(dialoge_systemlog);
+        textEdit->setObjectName(QString::fromUtf8("textEdit"));
+        textEdit->setGeometry(QRect(10, 40, 461, 161));
 
         retranslateUi(dialoge_systemlog);
 

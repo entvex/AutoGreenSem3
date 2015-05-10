@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'dialog_historik.ui'
 **
-** Created: Wed May 6 14:13:11 2015
+** Created: Sun May 10 13:47:48 2015
 **      by: Qt User Interface Compiler version 4.8.0
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -89,7 +89,7 @@ public:
         checkBox_3->setGeometry(QRect(180, 190, 81, 21));
         btn_newData = new QPushButton(dialog_historik);
         btn_newData->setObjectName(QString::fromUtf8("btn_newData"));
-        btn_newData->setGeometry(QRect(410, 120, 51, 23));
+        btn_newData->setGeometry(QRect(400, 60, 61, 23));
 
         retranslateUi(dialog_historik);
 

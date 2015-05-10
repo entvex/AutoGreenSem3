@@ -43,7 +43,12 @@ public:
 	sensordata_ = uart_->getSensorData();
 	datalog_->InsertSensorData(sensordata_);
 
-	// compare sensor with virtual plants settings
+	
+	SysMsg* monmsg = new SysMsg;
+	monmsg->msg_ = "Dårligt klima";
+	syslog_->send(1, monmsg);
+	
+	/*// compare sensor with virtual plants settings
 	bool status; int i;
 	while(i < sensor)
 	  {
@@ -55,6 +60,7 @@ public:
 	      syslog_->send(1, monmsg);
 	    }
 	  }
+	  */
 	
       }
 

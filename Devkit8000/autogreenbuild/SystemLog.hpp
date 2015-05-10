@@ -33,6 +33,7 @@ public:
   string printSystemLog()
   {
     string out;
+
     syslog.PeekHead(out);
     return out;
   }

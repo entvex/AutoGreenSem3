@@ -89,7 +89,7 @@ void MainWindow::on_btn_history_clicked()
 
 void MainWindow::on_btn_systemlog_clicked()
 {
-    dialoge_systemlog systemlog;
+    dialoge_systemlog systemlog(refs_);
     systemlog.setModal(true);
     systemlog.exec();
 }

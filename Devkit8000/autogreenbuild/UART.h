@@ -1,5 +1,5 @@
-#ifndef MONITOR_H_
-#define MONITOR_H_
+#ifndef UART_H_
+#define UART_H_
 
 #include "rs232.h"
 #include "SensorData.hpp"
@@ -14,9 +14,9 @@ using namespace std;
 class UART
 {
  public:
-  UART(MsgQueue &mq)
+  UART(MsgQueue* log)
     {
-      systemlog = &mq;
+      systemlog = log;
       cport_nr = 0;
       bdrate = 9600;
     }
@@ -33,10 +33,11 @@ class UART
 
   }
 
+
   int getSensor()
   { 
     // later inplementation
-    return 0;
+  return 0;
   }
 	
   void activateSensor(string command_)
@@ -77,72 +78,87 @@ class UART
   {
     SensorData newdata;
     //void ændres til Sensordata
-    buf[0] = 0;
-    buf[1] = 0;
-    newdata.temp = 0;
-    while (newdata.temp <= 0)
+    newdata.temp = -21;
+    while (newdata.temp <= -20)
       {
 		
 	senddata("temp");
 	int data = recievedata();
-	if (data != -1)
+	if (data != -99)
 	  {
 		
 	    newdata.temp = (data/2)-20;
 	  }
+	  
       }
-    /*
-      while (newdata.humidity <= 0)
-      {
-
-      senddata("airhum");
-      int data = recievedata();
-      if (data != -2)
-      {
-
-      newdata.humidity = data;
-      }
-      }
-
-      while (newdata.light <= 0)
-      {
-
-      senddata("light");
-      int data = recievedata();
-      if (data != -3)
-      {
-
-      newdata.light = data;
-      }
-      }
-    */
-
+      int data;
+			senddata("ground1");
+			data = recievedata();
+			if(data != -99)
+			{
+				newdata.grund[1] = data;
+			}		
+	  
+	  	  
+			senddata("ground2");
+			data = recievedata();
+			if(data != -99)
+			{
+				newdata.grund[2] = data;
+			}		
+	  
+	  	  
+			senddata("ground3");
+			data = recievedata();
+			if(data != -99)
+			{
+				newdata.grund[3] = data;
+			}		
+	  
+	  	  
+			senddata("ground4");
+			data = recievedata();
+			if(data != -99)
+			{
+				newdata.grund[4] = data;
+			}		
+	  
+	  	  
+			senddata("ground5");
+			data = recievedata();
+			if(data != -99)
+			{
+				newdata.grund[5] = data;
+			}		
+	  
+			senddata("ground6");
+			 data = recievedata();
+			if(data != -99)
+			{
+				newdata.grund[6] = data;
+			}	
+	  
 
     return newdata;
   }
 
- private:
 
-  int cport_nr;
-  int bdrate;
-  unsigned char buf[2];
-  MsgQueue * systemlog;
 
-  void addMessage(string umsg){
-    SysMsg* uartmsg = new SysMsg;
-    uartmsg->msg_ = umsg;
-    systemlog->send(1, uartmsg);
+  void addMessage(string m)
+  {
+     SysMsg* uartmsg = new SysMsg;
+     uartmsg->msg_ = m;
+     systemlog->send(1, uartmsg);
   }
-
 
   int recievedata()
   {
 
     while (1)
       {
-
+	buf[0] = 0; buf[1] = 0; buf[2] = 0;
 	usleep(1000000);
-	int n = RS232_PollComport(cport_nr, buf, 2);
+	RS232_PollComport(cport_nr, buf, 2);
 			
 
 	if (buf[0] == 'T')
@@ -152,23 +168,33 @@ class UART
 	  }
 	else if (buf[0] == 'X' && buf[1] == 'T')
 	  {
-	    return -1;
+	    return -99;
 	  }
 	else if (buf[0] == 'L')
 	  {
+
 	    return (int)buf[1];
 	  }
 	else if (buf[0] == 'X' && buf[1] == 'L')
 	  {
-	    return -2;
+	    return -99;
 	  }
 	else if (buf[0] == 'A')
 	  {
+
 	    return (int)buf[1];
 	  }
 	else if (buf[0] == 'X' && buf[1] == 'A')
 	  {
-	    return -3;
+	    return -99;
+	  }
+	else if (buf[0] == 'X' && buf[1] == 'S')
+	  {
+	    return -99;
+	  }
+	else if (buf[0] == 'S')
+	  {
+	    return (int)buf[2];
 	  }
 
 	cout << buf[0] << " " << buf[1] << endl;
@@ -209,11 +235,16 @@ class UART
       strcpy(command[1], "V1");
     else if (command_ == "ventoff")
       strcpy(command[1], "V0");
-
-
     RS232_cputs(cport_nr, command[1]);
     cout << command[1] << endl;
   }
+  
+   private:
+
+  int cport_nr;
+  int bdrate;
+  unsigned char buf[3];
+  MsgQueue * systemlog;
 };
 
 #endif

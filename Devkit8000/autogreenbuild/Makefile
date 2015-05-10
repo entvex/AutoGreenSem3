@@ -202,7 +202,7 @@ qmake_all: FORCE
 
 dist: 
 	@test -d .tmp/autogreenbuild1.0.0 || mkdir -p .tmp/autogreenbuild1.0.0
-	$(COPY_FILE) --parents $(SOURCES) $(DIST) .tmp/autogreenbuild1.0.0/ && $(COPY_FILE) --parents DataLog.hpp Date.hpp DateStruct.hpp dialog_datetime.h dialog_hardwaresettings.h dialog_historik.h dialog_noteifictions.h dialoge_mailconfig.h dialoge_systemconfiguration.h dialoge_systemlog.h DoublyLinkedList.hpp Indstillinger.hpp mainwindow.h Message.hpp Monitor.hpp MsgQueue.hpp Node.h Plant.hpp ReferenceStruct.hpp rs232.h SensorData.hpp SystemLog.hpp UART.h ui_dialog_datetime.h ui_dialog_hardwaresettings.h ui_dialog_historik.h ui_dialog_noteifictions.h ui_dialoge_mailconfig.h ui_dialoge_systemconfiguration.h ui_dialoge_systemlog.h ui_mainwindow.h .tmp/autogreenbuild1.0.0/ && $(COPY_FILE) --parents dialog_datetime.cpp dialog_hardwaresettings.cpp dialog_historik.cpp dialog_noteifictions.cpp dialoge_mailconfig.cpp dialoge_systemconfiguration.cpp dialoge_systemlog.cpp main.cpp mainwindow.cpp rs232.c .tmp/autogreenbuild1.0.0/ && $(COPY_FILE) --parents dialog_datetime.ui dialog_hardwaresettings.ui dialog_historik.ui dialog_noteifictions.ui dialoge_mailconfig.ui dialoge_systemconfiguration.ui dialoge_systemlog.ui mainwindow.ui .tmp/autogreenbuild1.0.0/ && (cd `dirname .tmp/autogreenbuild1.0.0` && $(TAR) autogreenbuild1.0.0.tar autogreenbuild1.0.0 && $(COMPRESS) autogreenbuild1.0.0.tar) && $(MOVE) `dirname .tmp/autogreenbuild1.0.0`/autogreenbuild1.0.0.tar.gz . && $(DEL_FILE) -r .tmp/autogreenbuild1.0.0
+	$(COPY_FILE) --parents $(SOURCES) $(DIST) .tmp/autogreenbuild1.0.0/ && $(COPY_FILE) --parents DataLog.hpp Date.hpp DateStruct.hpp dialog_datetime.h dialog_hardwaresettings.h dialog_historik.h dialog_noteifictions.h dialoge_mailconfig.h dialoge_systemconfiguration.h dialoge_systemlog.h DoublyLinkedList.hpp Indstillinger.hpp mainwindow.h Message.hpp Monitor.hpp MsgQueue.hpp Node.h Plant.hpp ReferenceStruct.hpp rs232.h SensorData.hpp SysMsg.hpp SystemLog.hpp UART.h ui_dialog_datetime.h ui_dialog_hardwaresettings.h ui_dialog_historik.h ui_dialog_noteifictions.h ui_dialoge_mailconfig.h ui_dialoge_systemconfiguration.h ui_dialoge_systemlog.h ui_mainwindow.h .tmp/autogreenbuild1.0.0/ && $(COPY_FILE) --parents dialog_datetime.cpp dialog_hardwaresettings.cpp dialog_historik.cpp dialog_noteifictions.cpp dialoge_mailconfig.cpp dialoge_systemconfiguration.cpp dialoge_systemlog.cpp main.cpp mainwindow.cpp rs232.c .tmp/autogreenbuild1.0.0/ && $(COPY_FILE) --parents dialog_datetime.ui dialog_hardwaresettings.ui dialog_historik.ui dialog_noteifictions.ui dialoge_mailconfig.ui dialoge_systemconfiguration.ui dialoge_systemlog.ui mainwindow.ui .tmp/autogreenbuild1.0.0/ && (cd `dirname .tmp/autogreenbuild1.0.0` && $(TAR) autogreenbuild1.0.0.tar autogreenbuild1.0.0 && $(COMPRESS) autogreenbuild1.0.0.tar) && $(MOVE) `dirname .tmp/autogreenbuild1.0.0`/autogreenbuild1.0.0.tar.gz . && $(DEL_FILE) -r .tmp/autogreenbuild1.0.0
 
 
 clean:compiler_clean 
@@ -233,6 +233,10 @@ moc_dialog_datetime.cpp: ReferenceStruct.hpp \
 		Indstillinger.hpp \
 		Date.hpp \
 		Plant.hpp \
+		DataLog.hpp \
+		DoublyLinkedList.hpp \
+		Node.h \
+		SensorData.hpp \
 		dialog_datetime.h \
 		$(OE_QMAKE_MOC)
 	$(OE_QMAKE_MOC) $(DEFINES) $(INCPATH) dialog_datetime.h -o moc_dialog_datetime.cpp
@@ -241,11 +245,23 @@ moc_dialog_hardwaresettings.cpp: ReferenceStruct.hpp \
 		Indstillinger.hpp \
 		Date.hpp \
 		Plant.hpp \
+		DataLog.hpp \
+		DoublyLinkedList.hpp \
+		Node.h \
+		SensorData.hpp \
 		dialog_hardwaresettings.h \
 		$(OE_QMAKE_MOC)
 	$(OE_QMAKE_MOC) $(DEFINES) $(INCPATH) dialog_hardwaresettings.h -o moc_dialog_hardwaresettings.cpp
 
-moc_dialog_historik.cpp: dialog_historik.h \
+moc_dialog_historik.cpp: ReferenceStruct.hpp \
+		Indstillinger.hpp \
+		Date.hpp \
+		Plant.hpp \
+		DataLog.hpp \
+		DoublyLinkedList.hpp \
+		Node.h \
+		SensorData.hpp \
+		dialog_historik.h \
 		$(OE_QMAKE_MOC)
 	$(OE_QMAKE_MOC) $(DEFINES) $(INCPATH) dialog_historik.h -o moc_dialog_historik.cpp
 
@@ -253,6 +269,10 @@ moc_dialog_noteifictions.cpp: ReferenceStruct.hpp \
 		Indstillinger.hpp \
 		Date.hpp \
 		Plant.hpp \
+		DataLog.hpp \
+		DoublyLinkedList.hpp \
+		Node.h \
+		SensorData.hpp \
 		dialog_noteifictions.h \
 		$(OE_QMAKE_MOC)
 	$(OE_QMAKE_MOC) $(DEFINES) $(INCPATH) dialog_noteifictions.h -o moc_dialog_noteifictions.cpp
@@ -261,6 +281,10 @@ moc_dialoge_mailconfig.cpp: ReferenceStruct.hpp \
 		Indstillinger.hpp \
 		Date.hpp \
 		Plant.hpp \
+		DataLog.hpp \
+		DoublyLinkedList.hpp \
+		Node.h \
+		SensorData.hpp \
 		dialoge_mailconfig.h \
 		$(OE_QMAKE_MOC)
 	$(OE_QMAKE_MOC) $(DEFINES) $(INCPATH) dialoge_mailconfig.h -o moc_dialoge_mailconfig.cpp
@@ -269,6 +293,10 @@ moc_dialoge_systemconfiguration.cpp: ReferenceStruct.hpp \
 		Indstillinger.hpp \
 		Date.hpp \
 		Plant.hpp \
+		DataLog.hpp \
+		DoublyLinkedList.hpp \
+		Node.h \
+		SensorData.hpp \
 		dialoge_systemconfiguration.h \
 		$(OE_QMAKE_MOC)
 	$(OE_QMAKE_MOC) $(DEFINES) $(INCPATH) dialoge_systemconfiguration.h -o moc_dialoge_systemconfiguration.cpp
@@ -287,6 +315,7 @@ moc_mainwindow.cpp: Indstillinger.hpp \
 		SystemLog.hpp \
 		MsgQueue.hpp \
 		Message.hpp \
+		SysMsg.hpp \
 		UART.h \
 		rs232.h \
 		Monitor.hpp \
@@ -344,15 +373,16 @@ dialog_datetime.o: dialog_datetime.cpp dialog_datetime.h \
 		Indstillinger.hpp \
 		Date.hpp \
 		Plant.hpp \
-		ui_dialog_datetime.h \
-		mainwindow.h \
 		DataLog.hpp \
 		DoublyLinkedList.hpp \
 		Node.h \
 		SensorData.hpp \
+		ui_dialog_datetime.h \
+		mainwindow.h \
 		SystemLog.hpp \
 		MsgQueue.hpp \
 		Message.hpp \
+		SysMsg.hpp \
 		UART.h \
 		rs232.h \
 		Monitor.hpp
@@ -363,23 +393,23 @@ dialog_hardwaresettings.o: dialog_hardwaresettings.cpp dialog_hardwaresettings.h
 		Indstillinger.hpp \
 		Date.hpp \
 		Plant.hpp \
-		ui_dialog_hardwaresettings.h \
-		mainwindow.h \
 		DataLog.hpp \
 		DoublyLinkedList.hpp \
 		Node.h \
 		SensorData.hpp \
+		ui_dialog_hardwaresettings.h \
+		mainwindow.h \
 		SystemLog.hpp \
 		MsgQueue.hpp \
 		Message.hpp \
+		SysMsg.hpp \
 		UART.h \
 		rs232.h \
 		Monitor.hpp
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o dialog_hardwaresettings.o dialog_hardwaresettings.cpp
 
 dialog_historik.o: dialog_historik.cpp dialog_historik.h \
-		ui_dialog_historik.h \
-		mainwindow.h \
+		ReferenceStruct.hpp \
 		Indstillinger.hpp \
 		Date.hpp \
 		Plant.hpp \
@@ -387,13 +417,15 @@ dialog_historik.o: dialog_historik.cpp dialog_historik.h \
 		DoublyLinkedList.hpp \
 		Node.h \
 		SensorData.hpp \
+		ui_dialog_historik.h \
+		mainwindow.h \
 		SystemLog.hpp \
 		MsgQueue.hpp \
 		Message.hpp \
+		SysMsg.hpp \
 		UART.h \
 		rs232.h \
-		Monitor.hpp \
-		ReferenceStruct.hpp
+		Monitor.hpp
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o dialog_historik.o dialog_historik.cpp
 
 dialog_noteifictions.o: dialog_noteifictions.cpp dialog_noteifictions.h \
@@ -401,15 +433,16 @@ dialog_noteifictions.o: dialog_noteifictions.cpp dialog_noteifictions.h \
 		Indstillinger.hpp \
 		Date.hpp \
 		Plant.hpp \
-		ui_dialog_noteifictions.h \
-		mainwindow.h \
 		DataLog.hpp \
 		DoublyLinkedList.hpp \
 		Node.h \
 		SensorData.hpp \
+		ui_dialog_noteifictions.h \
+		mainwindow.h \
 		SystemLog.hpp \
 		MsgQueue.hpp \
 		Message.hpp \
+		SysMsg.hpp \
 		UART.h \
 		rs232.h \
 		Monitor.hpp
@@ -420,15 +453,16 @@ dialoge_mailconfig.o: dialoge_mailconfig.cpp dialoge_mailconfig.h \
 		Indstillinger.hpp \
 		Date.hpp \
 		Plant.hpp \
-		ui_dialoge_mailconfig.h \
-		mainwindow.h \
 		DataLog.hpp \
 		DoublyLinkedList.hpp \
 		Node.h \
 		SensorData.hpp \
+		ui_dialoge_mailconfig.h \
+		mainwindow.h \
 		SystemLog.hpp \
 		MsgQueue.hpp \
 		Message.hpp \
+		SysMsg.hpp \
 		UART.h \
 		rs232.h \
 		Monitor.hpp
@@ -439,6 +473,10 @@ dialoge_systemconfiguration.o: dialoge_systemconfiguration.cpp dialoge_systemcon
 		Indstillinger.hpp \
 		Date.hpp \
 		Plant.hpp \
+		DataLog.hpp \
+		DoublyLinkedList.hpp \
+		Node.h \
+		SensorData.hpp \
 		ui_dialoge_systemconfiguration.h \
 		dialog_hardwaresettings.h \
 		dialoge_mailconfig.h \
@@ -461,6 +499,7 @@ main.o: main.cpp mainwindow.h \
 		SystemLog.hpp \
 		MsgQueue.hpp \
 		Message.hpp \
+		SysMsg.hpp \
 		UART.h \
 		rs232.h \
 		Monitor.hpp \
@@ -478,6 +517,7 @@ mainwindow.o: mainwindow.cpp mainwindow.h \
 		SystemLog.hpp \
 		MsgQueue.hpp \
 		Message.hpp \
+		SysMsg.hpp \
 		UART.h \
 		rs232.h \
 		Monitor.hpp \
