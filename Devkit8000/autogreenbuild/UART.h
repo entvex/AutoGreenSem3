@@ -157,8 +157,8 @@ class UART
     while (1)
       {
 	buf[0] = 0; buf[1] = 0; buf[2] = 0;
-	usleep(1000000);
-	RS232_PollComport(cport_nr, buf, 2);
+	usleep(10000);
+	RS232_PollComport(cport_nr, buf, 4);
 			
 
 	if (buf[0] == 'T')
@@ -188,14 +188,15 @@ class UART
 	  {
 	    return -99;
 	  }
-	else if (buf[0] == 'X' && buf[1] == 'S')
-	  {
-	    return -99;
-	  }
 	else if (buf[0] == 'S')
 	  {
 	    return (int)buf[2];
 	  }
+	else if (buf[0] == 'X' && buf[1] == 'S')
+	  {
+	    return -99;
+	  }
+
 
 	cout << buf[0] << " " << buf[1] << endl;
       }
@@ -243,7 +244,7 @@ class UART
 
   int cport_nr;
   int bdrate;
-  unsigned char buf[3];
+  unsigned char buf[4];
   MsgQueue * systemlog;
 };
 
