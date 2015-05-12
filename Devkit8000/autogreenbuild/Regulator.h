@@ -109,6 +109,7 @@ class Regulator
 	  }
 	else
 	  {
+		uart->activateSensor("ventoff");
 	    SysMsg* monmsg = new SysMsg;
 	    monmsg->msg_ = "vent kan ikke åbnes";
         systemlog->send(1, monmsg);
@@ -133,7 +134,7 @@ class Regulator
 	  }
 	else
 	  {
-						
+		uart->activateSensor("heatoff");	
 	    SysMsg* monmsg = new SysMsg;
 	    monmsg->msg_ = "Heater kan ikke bruges";
         systemlog->send(1, monmsg);
