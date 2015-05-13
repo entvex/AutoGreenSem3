@@ -4,24 +4,9 @@
 struct GUIStruct
 {
   double temp;
-  bool statusOne;
-  int realHumOne;
-  int virtualHumOne;
-  bool statusTwo;
-  int realHumTwo;
-  int virtualHumTwo;
-  bool statusThree;
-  int realHumThree;
-  int virtualHumThree;
-  bool statusFour;
-  int realHumFour;
-  int virtualHumFour;
-  bool statusFive;
-  int realHumFive;
-  int virtualHumFive;
-  bool statusSix;
-  int realHumSix;
-  int virtualHumSix;
+  int status[6];
+  int realHum[6];
+  int virtualHum[6];
 };
 
 #endif

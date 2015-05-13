@@ -15,7 +15,7 @@ CXX           = $(OE_QMAKE_CXX)
 DEFINES       = -DQT_NO_DEBUG -DQT_GUI_LIB -DQT_CORE_LIB
 CFLAGS        = -pipe -pipe $(OE_QMAKE_CFLAGS) -std=c++0x -Wextra -O -O2 -Wall -W -Wall -W -D_REENTRANT $(DEFINES)
 CXXFLAGS      = -pipe -pipe -pipe $(OE_QMAKE_CFLAGS) $(OE_QMAKE_CXXFLAGS) -std=c++0x -Wextra -O -O2 -O2 -Wall -W -Wall -W -Wall -W -D_REENTRANT $(DEFINES)
-INCPATH       = -I../setup-scripts/build/tmp-angstrom_2010_x-eglibc/sysroots/i686-linux/usr/share/qt4/mkspecs/linux-g++ -I. -I$(OE_QMAKE_INCDIR_QT)/QtCore -I$(OE_QMAKE_INCDIR_QT)/QtGui -I$(OE_QMAKE_INCDIR_QT) -I. -I. -I.
+INCPATH       = -I../../../setup-scripts/build/tmp-angstrom_2010_x-eglibc/sysroots/i686-linux/usr/share/qt4/mkspecs/linux-g++ -I. -I$(OE_QMAKE_INCDIR_QT)/QtCore -I$(OE_QMAKE_INCDIR_QT)/QtGui -I$(OE_QMAKE_INCDIR_QT) -I. -I. -I.
 LINK          = $(OE_QMAKE_LINK)
 LFLAGS        = $(OE_QMAKE_LDFLAGS) -Wl,-rpath-link,$(OE_QMAKE_LIBDIR_QT)
 LIBS          = $(SUBLIBS) -L$(OE_QMAKE_LIBDIR_QT) -lQtGui -lQtNetwork -lQtCore -lpthread 
@@ -85,29 +85,29 @@ OBJECTS       = dialog_datetime.o \
 		moc_dialoge_systemlog.o \
 		moc_mainwindow.o
 DIST          = /usr/lib/i386-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
-		../setup-scripts/build/tmp-angstrom_2010_x-eglibc/sysroots/i686-linux/usr/share/qt4/mkspecs/common/unix.conf \
-		../setup-scripts/build/tmp-angstrom_2010_x-eglibc/sysroots/i686-linux/usr/share/qt4/mkspecs/common/linux.conf \
-		../setup-scripts/build/tmp-angstrom_2010_x-eglibc/sysroots/i686-linux/usr/share/qt4/mkspecs/common/gcc-base.conf \
-		../setup-scripts/build/tmp-angstrom_2010_x-eglibc/sysroots/i686-linux/usr/share/qt4/mkspecs/common/gcc-base-unix.conf \
-		../setup-scripts/build/tmp-angstrom_2010_x-eglibc/sysroots/i686-linux/usr/share/qt4/mkspecs/common/g++-unix.conf \
-		../setup-scripts/build/tmp-angstrom_2010_x-eglibc/sysroots/i686-linux/usr/share/qt4/mkspecs/features/qt_functions.prf \
-		../setup-scripts/build/tmp-angstrom_2010_x-eglibc/sysroots/i686-linux/usr/share/qt4/mkspecs/features/qt_config.prf \
-		../setup-scripts/build/tmp-angstrom_2010_x-eglibc/sysroots/i686-linux/usr/share/qt4/mkspecs/linux-g++/qmake.conf \
+		../../../setup-scripts/build/tmp-angstrom_2010_x-eglibc/sysroots/i686-linux/usr/share/qt4/mkspecs/common/unix.conf \
+		../../../setup-scripts/build/tmp-angstrom_2010_x-eglibc/sysroots/i686-linux/usr/share/qt4/mkspecs/common/linux.conf \
+		../../../setup-scripts/build/tmp-angstrom_2010_x-eglibc/sysroots/i686-linux/usr/share/qt4/mkspecs/common/gcc-base.conf \
+		../../../setup-scripts/build/tmp-angstrom_2010_x-eglibc/sysroots/i686-linux/usr/share/qt4/mkspecs/common/gcc-base-unix.conf \
+		../../../setup-scripts/build/tmp-angstrom_2010_x-eglibc/sysroots/i686-linux/usr/share/qt4/mkspecs/common/g++-unix.conf \
+		../../../setup-scripts/build/tmp-angstrom_2010_x-eglibc/sysroots/i686-linux/usr/share/qt4/mkspecs/features/qt_functions.prf \
+		../../../setup-scripts/build/tmp-angstrom_2010_x-eglibc/sysroots/i686-linux/usr/share/qt4/mkspecs/features/qt_config.prf \
+		../../../setup-scripts/build/tmp-angstrom_2010_x-eglibc/sysroots/i686-linux/usr/share/qt4/mkspecs/linux-g++/qmake.conf \
 		/usr/lib/i386-linux-gnu/qt5/mkspecs/features/spec_post.prf \
-		../setup-scripts/build/tmp-angstrom_2010_x-eglibc/sysroots/i686-linux/usr/share/qt4/mkspecs/features/exclusive_builds.prf \
-		../setup-scripts/build/tmp-angstrom_2010_x-eglibc/sysroots/i686-linux/usr/share/qt4/mkspecs/features/default_pre.prf \
-		../setup-scripts/build/tmp-angstrom_2010_x-eglibc/sysroots/i686-linux/usr/share/qt4/mkspecs/features/release.prf \
-		../setup-scripts/build/tmp-angstrom_2010_x-eglibc/sysroots/i686-linux/usr/share/qt4/mkspecs/features/default_post.prf \
-		../setup-scripts/build/tmp-angstrom_2010_x-eglibc/sysroots/i686-linux/usr/share/qt4/mkspecs/features/unix/gdb_dwarf_index.prf \
-		../setup-scripts/build/tmp-angstrom_2010_x-eglibc/sysroots/i686-linux/usr/share/qt4/mkspecs/features/warn_on.prf \
-		../setup-scripts/build/tmp-angstrom_2010_x-eglibc/sysroots/i686-linux/usr/share/qt4/mkspecs/features/qt.prf \
-		../setup-scripts/build/tmp-angstrom_2010_x-eglibc/sysroots/i686-linux/usr/share/qt4/mkspecs/features/unix/thread.prf \
-		../setup-scripts/build/tmp-angstrom_2010_x-eglibc/sysroots/i686-linux/usr/share/qt4/mkspecs/features/moc.prf \
-		../setup-scripts/build/tmp-angstrom_2010_x-eglibc/sysroots/i686-linux/usr/share/qt4/mkspecs/features/resources.prf \
-		../setup-scripts/build/tmp-angstrom_2010_x-eglibc/sysroots/i686-linux/usr/share/qt4/mkspecs/features/uic.prf \
-		../setup-scripts/build/tmp-angstrom_2010_x-eglibc/sysroots/i686-linux/usr/share/qt4/mkspecs/features/yacc.prf \
-		../setup-scripts/build/tmp-angstrom_2010_x-eglibc/sysroots/i686-linux/usr/share/qt4/mkspecs/features/lex.prf \
-		../setup-scripts/build/tmp-angstrom_2010_x-eglibc/sysroots/i686-linux/usr/share/qt4/mkspecs/features/include_source_dir.prf \
+		../../../setup-scripts/build/tmp-angstrom_2010_x-eglibc/sysroots/i686-linux/usr/share/qt4/mkspecs/features/exclusive_builds.prf \
+		../../../setup-scripts/build/tmp-angstrom_2010_x-eglibc/sysroots/i686-linux/usr/share/qt4/mkspecs/features/default_pre.prf \
+		../../../setup-scripts/build/tmp-angstrom_2010_x-eglibc/sysroots/i686-linux/usr/share/qt4/mkspecs/features/release.prf \
+		../../../setup-scripts/build/tmp-angstrom_2010_x-eglibc/sysroots/i686-linux/usr/share/qt4/mkspecs/features/default_post.prf \
+		../../../setup-scripts/build/tmp-angstrom_2010_x-eglibc/sysroots/i686-linux/usr/share/qt4/mkspecs/features/unix/gdb_dwarf_index.prf \
+		../../../setup-scripts/build/tmp-angstrom_2010_x-eglibc/sysroots/i686-linux/usr/share/qt4/mkspecs/features/warn_on.prf \
+		../../../setup-scripts/build/tmp-angstrom_2010_x-eglibc/sysroots/i686-linux/usr/share/qt4/mkspecs/features/qt.prf \
+		../../../setup-scripts/build/tmp-angstrom_2010_x-eglibc/sysroots/i686-linux/usr/share/qt4/mkspecs/features/unix/thread.prf \
+		../../../setup-scripts/build/tmp-angstrom_2010_x-eglibc/sysroots/i686-linux/usr/share/qt4/mkspecs/features/moc.prf \
+		../../../setup-scripts/build/tmp-angstrom_2010_x-eglibc/sysroots/i686-linux/usr/share/qt4/mkspecs/features/resources.prf \
+		../../../setup-scripts/build/tmp-angstrom_2010_x-eglibc/sysroots/i686-linux/usr/share/qt4/mkspecs/features/uic.prf \
+		../../../setup-scripts/build/tmp-angstrom_2010_x-eglibc/sysroots/i686-linux/usr/share/qt4/mkspecs/features/yacc.prf \
+		../../../setup-scripts/build/tmp-angstrom_2010_x-eglibc/sysroots/i686-linux/usr/share/qt4/mkspecs/features/lex.prf \
+		../../../setup-scripts/build/tmp-angstrom_2010_x-eglibc/sysroots/i686-linux/usr/share/qt4/mkspecs/features/include_source_dir.prf \
 		autogreenbuild.pro \
 		autogreenbuild.pro
 QMAKE_TARGET  = autogreenbuild
@@ -142,59 +142,59 @@ all: Makefile $(TARGET)
 $(TARGET): ui_dialog_datetime.h ui_dialog_drivhus.h ui_dialog_hardwaresettings.h ui_dialog_historik.h ui_dialog_noteifictions.h ui_dialoge_mailconfig.h ui_dialoge_systemconfiguration.h ui_dialoge_systemlog.h ui_mainwindow.h $(OBJECTS)  
 	$(LINK) $(LFLAGS) -o $(TARGET) $(OBJECTS) $(OBJCOMP) $(LIBS)
 
-Makefile: autogreenbuild.pro ../setup-scripts/build/tmp-angstrom_2010_x-eglibc/sysroots/i686-linux/usr/share/qt4/mkspecs/linux-g++/qmake.conf /usr/lib/i386-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
-		../setup-scripts/build/tmp-angstrom_2010_x-eglibc/sysroots/i686-linux/usr/share/qt4/mkspecs/common/unix.conf \
-		../setup-scripts/build/tmp-angstrom_2010_x-eglibc/sysroots/i686-linux/usr/share/qt4/mkspecs/common/linux.conf \
-		../setup-scripts/build/tmp-angstrom_2010_x-eglibc/sysroots/i686-linux/usr/share/qt4/mkspecs/common/gcc-base.conf \
-		../setup-scripts/build/tmp-angstrom_2010_x-eglibc/sysroots/i686-linux/usr/share/qt4/mkspecs/common/gcc-base-unix.conf \
-		../setup-scripts/build/tmp-angstrom_2010_x-eglibc/sysroots/i686-linux/usr/share/qt4/mkspecs/common/g++-unix.conf \
-		../setup-scripts/build/tmp-angstrom_2010_x-eglibc/sysroots/i686-linux/usr/share/qt4/mkspecs/features/qt_functions.prf \
-		../setup-scripts/build/tmp-angstrom_2010_x-eglibc/sysroots/i686-linux/usr/share/qt4/mkspecs/features/qt_config.prf \
-		../setup-scripts/build/tmp-angstrom_2010_x-eglibc/sysroots/i686-linux/usr/share/qt4/mkspecs/linux-g++/qmake.conf \
+Makefile: autogreenbuild.pro ../../../setup-scripts/build/tmp-angstrom_2010_x-eglibc/sysroots/i686-linux/usr/share/qt4/mkspecs/linux-g++/qmake.conf /usr/lib/i386-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
+		../../../setup-scripts/build/tmp-angstrom_2010_x-eglibc/sysroots/i686-linux/usr/share/qt4/mkspecs/common/unix.conf \
+		../../../setup-scripts/build/tmp-angstrom_2010_x-eglibc/sysroots/i686-linux/usr/share/qt4/mkspecs/common/linux.conf \
+		../../../setup-scripts/build/tmp-angstrom_2010_x-eglibc/sysroots/i686-linux/usr/share/qt4/mkspecs/common/gcc-base.conf \
+		../../../setup-scripts/build/tmp-angstrom_2010_x-eglibc/sysroots/i686-linux/usr/share/qt4/mkspecs/common/gcc-base-unix.conf \
+		../../../setup-scripts/build/tmp-angstrom_2010_x-eglibc/sysroots/i686-linux/usr/share/qt4/mkspecs/common/g++-unix.conf \
+		../../../setup-scripts/build/tmp-angstrom_2010_x-eglibc/sysroots/i686-linux/usr/share/qt4/mkspecs/features/qt_functions.prf \
+		../../../setup-scripts/build/tmp-angstrom_2010_x-eglibc/sysroots/i686-linux/usr/share/qt4/mkspecs/features/qt_config.prf \
+		../../../setup-scripts/build/tmp-angstrom_2010_x-eglibc/sysroots/i686-linux/usr/share/qt4/mkspecs/linux-g++/qmake.conf \
 		/usr/lib/i386-linux-gnu/qt5/mkspecs/features/spec_post.prf \
-		../setup-scripts/build/tmp-angstrom_2010_x-eglibc/sysroots/i686-linux/usr/share/qt4/mkspecs/features/exclusive_builds.prf \
-		../setup-scripts/build/tmp-angstrom_2010_x-eglibc/sysroots/i686-linux/usr/share/qt4/mkspecs/features/default_pre.prf \
-		../setup-scripts/build/tmp-angstrom_2010_x-eglibc/sysroots/i686-linux/usr/share/qt4/mkspecs/features/release.prf \
-		../setup-scripts/build/tmp-angstrom_2010_x-eglibc/sysroots/i686-linux/usr/share/qt4/mkspecs/features/default_post.prf \
-		../setup-scripts/build/tmp-angstrom_2010_x-eglibc/sysroots/i686-linux/usr/share/qt4/mkspecs/features/unix/gdb_dwarf_index.prf \
-		../setup-scripts/build/tmp-angstrom_2010_x-eglibc/sysroots/i686-linux/usr/share/qt4/mkspecs/features/warn_on.prf \
-		../setup-scripts/build/tmp-angstrom_2010_x-eglibc/sysroots/i686-linux/usr/share/qt4/mkspecs/features/qt.prf \
-		../setup-scripts/build/tmp-angstrom_2010_x-eglibc/sysroots/i686-linux/usr/share/qt4/mkspecs/features/unix/thread.prf \
-		../setup-scripts/build/tmp-angstrom_2010_x-eglibc/sysroots/i686-linux/usr/share/qt4/mkspecs/features/moc.prf \
-		../setup-scripts/build/tmp-angstrom_2010_x-eglibc/sysroots/i686-linux/usr/share/qt4/mkspecs/features/resources.prf \
-		../setup-scripts/build/tmp-angstrom_2010_x-eglibc/sysroots/i686-linux/usr/share/qt4/mkspecs/features/uic.prf \
-		../setup-scripts/build/tmp-angstrom_2010_x-eglibc/sysroots/i686-linux/usr/share/qt4/mkspecs/features/yacc.prf \
-		../setup-scripts/build/tmp-angstrom_2010_x-eglibc/sysroots/i686-linux/usr/share/qt4/mkspecs/features/lex.prf \
-		../setup-scripts/build/tmp-angstrom_2010_x-eglibc/sysroots/i686-linux/usr/share/qt4/mkspecs/features/include_source_dir.prf \
+		../../../setup-scripts/build/tmp-angstrom_2010_x-eglibc/sysroots/i686-linux/usr/share/qt4/mkspecs/features/exclusive_builds.prf \
+		../../../setup-scripts/build/tmp-angstrom_2010_x-eglibc/sysroots/i686-linux/usr/share/qt4/mkspecs/features/default_pre.prf \
+		../../../setup-scripts/build/tmp-angstrom_2010_x-eglibc/sysroots/i686-linux/usr/share/qt4/mkspecs/features/release.prf \
+		../../../setup-scripts/build/tmp-angstrom_2010_x-eglibc/sysroots/i686-linux/usr/share/qt4/mkspecs/features/default_post.prf \
+		../../../setup-scripts/build/tmp-angstrom_2010_x-eglibc/sysroots/i686-linux/usr/share/qt4/mkspecs/features/unix/gdb_dwarf_index.prf \
+		../../../setup-scripts/build/tmp-angstrom_2010_x-eglibc/sysroots/i686-linux/usr/share/qt4/mkspecs/features/warn_on.prf \
+		../../../setup-scripts/build/tmp-angstrom_2010_x-eglibc/sysroots/i686-linux/usr/share/qt4/mkspecs/features/qt.prf \
+		../../../setup-scripts/build/tmp-angstrom_2010_x-eglibc/sysroots/i686-linux/usr/share/qt4/mkspecs/features/unix/thread.prf \
+		../../../setup-scripts/build/tmp-angstrom_2010_x-eglibc/sysroots/i686-linux/usr/share/qt4/mkspecs/features/moc.prf \
+		../../../setup-scripts/build/tmp-angstrom_2010_x-eglibc/sysroots/i686-linux/usr/share/qt4/mkspecs/features/resources.prf \
+		../../../setup-scripts/build/tmp-angstrom_2010_x-eglibc/sysroots/i686-linux/usr/share/qt4/mkspecs/features/uic.prf \
+		../../../setup-scripts/build/tmp-angstrom_2010_x-eglibc/sysroots/i686-linux/usr/share/qt4/mkspecs/features/yacc.prf \
+		../../../setup-scripts/build/tmp-angstrom_2010_x-eglibc/sysroots/i686-linux/usr/share/qt4/mkspecs/features/lex.prf \
+		../../../setup-scripts/build/tmp-angstrom_2010_x-eglibc/sysroots/i686-linux/usr/share/qt4/mkspecs/features/include_source_dir.prf \
 		autogreenbuild.pro \
 		/home/stud/setup-scripts/build/tmp-angstrom_2010_x-eglibc/sysroots/beagleboard/usr/lib/libQtGui.prl \
 		/home/stud/setup-scripts/build/tmp-angstrom_2010_x-eglibc/sysroots/beagleboard/usr/lib/libQtNetwork.prl \
 		/home/stud/setup-scripts/build/tmp-angstrom_2010_x-eglibc/sysroots/beagleboard/usr/lib/libQtCore.prl
 	$(QMAKE) -o Makefile autogreenbuild.pro
 /usr/lib/i386-linux-gnu/qt5/mkspecs/features/spec_pre.prf:
-../setup-scripts/build/tmp-angstrom_2010_x-eglibc/sysroots/i686-linux/usr/share/qt4/mkspecs/common/unix.conf:
-../setup-scripts/build/tmp-angstrom_2010_x-eglibc/sysroots/i686-linux/usr/share/qt4/mkspecs/common/linux.conf:
-../setup-scripts/build/tmp-angstrom_2010_x-eglibc/sysroots/i686-linux/usr/share/qt4/mkspecs/common/gcc-base.conf:
-../setup-scripts/build/tmp-angstrom_2010_x-eglibc/sysroots/i686-linux/usr/share/qt4/mkspecs/common/gcc-base-unix.conf:
-../setup-scripts/build/tmp-angstrom_2010_x-eglibc/sysroots/i686-linux/usr/share/qt4/mkspecs/common/g++-unix.conf:
-../setup-scripts/build/tmp-angstrom_2010_x-eglibc/sysroots/i686-linux/usr/share/qt4/mkspecs/features/qt_functions.prf:
-../setup-scripts/build/tmp-angstrom_2010_x-eglibc/sysroots/i686-linux/usr/share/qt4/mkspecs/features/qt_config.prf:
-../setup-scripts/build/tmp-angstrom_2010_x-eglibc/sysroots/i686-linux/usr/share/qt4/mkspecs/linux-g++/qmake.conf:
+../../../setup-scripts/build/tmp-angstrom_2010_x-eglibc/sysroots/i686-linux/usr/share/qt4/mkspecs/common/unix.conf:
+../../../setup-scripts/build/tmp-angstrom_2010_x-eglibc/sysroots/i686-linux/usr/share/qt4/mkspecs/common/linux.conf:
+../../../setup-scripts/build/tmp-angstrom_2010_x-eglibc/sysroots/i686-linux/usr/share/qt4/mkspecs/common/gcc-base.conf:
+../../../setup-scripts/build/tmp-angstrom_2010_x-eglibc/sysroots/i686-linux/usr/share/qt4/mkspecs/common/gcc-base-unix.conf:
+../../../setup-scripts/build/tmp-angstrom_2010_x-eglibc/sysroots/i686-linux/usr/share/qt4/mkspecs/common/g++-unix.conf:
+../../../setup-scripts/build/tmp-angstrom_2010_x-eglibc/sysroots/i686-linux/usr/share/qt4/mkspecs/features/qt_functions.prf:
+../../../setup-scripts/build/tmp-angstrom_2010_x-eglibc/sysroots/i686-linux/usr/share/qt4/mkspecs/features/qt_config.prf:
+../../../setup-scripts/build/tmp-angstrom_2010_x-eglibc/sysroots/i686-linux/usr/share/qt4/mkspecs/linux-g++/qmake.conf:
 /usr/lib/i386-linux-gnu/qt5/mkspecs/features/spec_post.prf:
-../setup-scripts/build/tmp-angstrom_2010_x-eglibc/sysroots/i686-linux/usr/share/qt4/mkspecs/features/exclusive_builds.prf:
-../setup-scripts/build/tmp-angstrom_2010_x-eglibc/sysroots/i686-linux/usr/share/qt4/mkspecs/features/default_pre.prf:
-../setup-scripts/build/tmp-angstrom_2010_x-eglibc/sysroots/i686-linux/usr/share/qt4/mkspecs/features/release.prf:
-../setup-scripts/build/tmp-angstrom_2010_x-eglibc/sysroots/i686-linux/usr/share/qt4/mkspecs/features/default_post.prf:
-../setup-scripts/build/tmp-angstrom_2010_x-eglibc/sysroots/i686-linux/usr/share/qt4/mkspecs/features/unix/gdb_dwarf_index.prf:
-../setup-scripts/build/tmp-angstrom_2010_x-eglibc/sysroots/i686-linux/usr/share/qt4/mkspecs/features/warn_on.prf:
-../setup-scripts/build/tmp-angstrom_2010_x-eglibc/sysroots/i686-linux/usr/share/qt4/mkspecs/features/qt.prf:
-../setup-scripts/build/tmp-angstrom_2010_x-eglibc/sysroots/i686-linux/usr/share/qt4/mkspecs/features/unix/thread.prf:
-../setup-scripts/build/tmp-angstrom_2010_x-eglibc/sysroots/i686-linux/usr/share/qt4/mkspecs/features/moc.prf:
-../setup-scripts/build/tmp-angstrom_2010_x-eglibc/sysroots/i686-linux/usr/share/qt4/mkspecs/features/resources.prf:
-../setup-scripts/build/tmp-angstrom_2010_x-eglibc/sysroots/i686-linux/usr/share/qt4/mkspecs/features/uic.prf:
-../setup-scripts/build/tmp-angstrom_2010_x-eglibc/sysroots/i686-linux/usr/share/qt4/mkspecs/features/yacc.prf:
-../setup-scripts/build/tmp-angstrom_2010_x-eglibc/sysroots/i686-linux/usr/share/qt4/mkspecs/features/lex.prf:
-../setup-scripts/build/tmp-angstrom_2010_x-eglibc/sysroots/i686-linux/usr/share/qt4/mkspecs/features/include_source_dir.prf:
+../../../setup-scripts/build/tmp-angstrom_2010_x-eglibc/sysroots/i686-linux/usr/share/qt4/mkspecs/features/exclusive_builds.prf:
+../../../setup-scripts/build/tmp-angstrom_2010_x-eglibc/sysroots/i686-linux/usr/share/qt4/mkspecs/features/default_pre.prf:
+../../../setup-scripts/build/tmp-angstrom_2010_x-eglibc/sysroots/i686-linux/usr/share/qt4/mkspecs/features/release.prf:
+../../../setup-scripts/build/tmp-angstrom_2010_x-eglibc/sysroots/i686-linux/usr/share/qt4/mkspecs/features/default_post.prf:
+../../../setup-scripts/build/tmp-angstrom_2010_x-eglibc/sysroots/i686-linux/usr/share/qt4/mkspecs/features/unix/gdb_dwarf_index.prf:
+../../../setup-scripts/build/tmp-angstrom_2010_x-eglibc/sysroots/i686-linux/usr/share/qt4/mkspecs/features/warn_on.prf:
+../../../setup-scripts/build/tmp-angstrom_2010_x-eglibc/sysroots/i686-linux/usr/share/qt4/mkspecs/features/qt.prf:
+../../../setup-scripts/build/tmp-angstrom_2010_x-eglibc/sysroots/i686-linux/usr/share/qt4/mkspecs/features/unix/thread.prf:
+../../../setup-scripts/build/tmp-angstrom_2010_x-eglibc/sysroots/i686-linux/usr/share/qt4/mkspecs/features/moc.prf:
+../../../setup-scripts/build/tmp-angstrom_2010_x-eglibc/sysroots/i686-linux/usr/share/qt4/mkspecs/features/resources.prf:
+../../../setup-scripts/build/tmp-angstrom_2010_x-eglibc/sysroots/i686-linux/usr/share/qt4/mkspecs/features/uic.prf:
+../../../setup-scripts/build/tmp-angstrom_2010_x-eglibc/sysroots/i686-linux/usr/share/qt4/mkspecs/features/yacc.prf:
+../../../setup-scripts/build/tmp-angstrom_2010_x-eglibc/sysroots/i686-linux/usr/share/qt4/mkspecs/features/lex.prf:
+../../../setup-scripts/build/tmp-angstrom_2010_x-eglibc/sysroots/i686-linux/usr/share/qt4/mkspecs/features/include_source_dir.prf:
 autogreenbuild.pro:
 /home/stud/setup-scripts/build/tmp-angstrom_2010_x-eglibc/sysroots/beagleboard/usr/lib/libQtGui.prl:
 /home/stud/setup-scripts/build/tmp-angstrom_2010_x-eglibc/sysroots/beagleboard/usr/lib/libQtNetwork.prl:
@@ -247,6 +247,7 @@ moc_dialog_datetime.cpp: ReferenceStruct.hpp \
 		MsgQueue.hpp \
 		Message.hpp \
 		SysMsg.hpp \
+		GUIStruct.hpp \
 		SystemLog.hpp \
 		dialog_datetime.h \
 		$(OE_QMAKE_MOC)
@@ -266,6 +267,7 @@ moc_dialog_drivhus.cpp: ReferenceStruct.hpp \
 		MsgQueue.hpp \
 		Message.hpp \
 		SysMsg.hpp \
+		GUIStruct.hpp \
 		SystemLog.hpp \
 		dialog_drivhus.h \
 		$(OE_QMAKE_MOC)
@@ -285,6 +287,7 @@ moc_dialog_hardwaresettings.cpp: ReferenceStruct.hpp \
 		MsgQueue.hpp \
 		Message.hpp \
 		SysMsg.hpp \
+		GUIStruct.hpp \
 		SystemLog.hpp \
 		dialog_hardwaresettings.h \
 		$(OE_QMAKE_MOC)
@@ -304,6 +307,7 @@ moc_dialog_historik.cpp: ReferenceStruct.hpp \
 		MsgQueue.hpp \
 		Message.hpp \
 		SysMsg.hpp \
+		GUIStruct.hpp \
 		SystemLog.hpp \
 		dialog_historik.h \
 		$(OE_QMAKE_MOC)
@@ -323,6 +327,7 @@ moc_dialog_noteifictions.cpp: ReferenceStruct.hpp \
 		MsgQueue.hpp \
 		Message.hpp \
 		SysMsg.hpp \
+		GUIStruct.hpp \
 		SystemLog.hpp \
 		dialog_noteifictions.h \
 		$(OE_QMAKE_MOC)
@@ -342,6 +347,7 @@ moc_dialoge_mailconfig.cpp: ReferenceStruct.hpp \
 		MsgQueue.hpp \
 		Message.hpp \
 		SysMsg.hpp \
+		GUIStruct.hpp \
 		SystemLog.hpp \
 		dialoge_mailconfig.h \
 		$(OE_QMAKE_MOC)
@@ -361,6 +367,7 @@ moc_dialoge_systemconfiguration.cpp: ReferenceStruct.hpp \
 		MsgQueue.hpp \
 		Message.hpp \
 		SysMsg.hpp \
+		GUIStruct.hpp \
 		SystemLog.hpp \
 		dialoge_systemconfiguration.h \
 		$(OE_QMAKE_MOC)
@@ -380,6 +387,7 @@ moc_dialoge_systemlog.cpp: ReferenceStruct.hpp \
 		MsgQueue.hpp \
 		Message.hpp \
 		SysMsg.hpp \
+		GUIStruct.hpp \
 		SystemLog.hpp \
 		dialoge_systemlog.h \
 		$(OE_QMAKE_MOC)
@@ -399,6 +407,7 @@ moc_mainwindow.cpp: Indstillinger.hpp \
 		UART.h \
 		rs232.h \
 		Monitor.hpp \
+		GUIStruct.hpp \
 		ReferenceStruct.hpp \
 		mainwindow.h \
 		$(OE_QMAKE_MOC)
@@ -466,6 +475,7 @@ dialog_datetime.o: dialog_datetime.cpp dialog_datetime.h \
 		MsgQueue.hpp \
 		Message.hpp \
 		SysMsg.hpp \
+		GUIStruct.hpp \
 		SystemLog.hpp \
 		ui_dialog_datetime.h \
 		mainwindow.h
@@ -486,6 +496,7 @@ dialog_drivhus.o: dialog_drivhus.cpp dialog_drivhus.h \
 		MsgQueue.hpp \
 		Message.hpp \
 		SysMsg.hpp \
+		GUIStruct.hpp \
 		SystemLog.hpp \
 		ui_dialog_drivhus.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o dialog_drivhus.o dialog_drivhus.cpp
@@ -505,6 +516,7 @@ dialog_hardwaresettings.o: dialog_hardwaresettings.cpp dialog_hardwaresettings.h
 		MsgQueue.hpp \
 		Message.hpp \
 		SysMsg.hpp \
+		GUIStruct.hpp \
 		SystemLog.hpp \
 		ui_dialog_hardwaresettings.h \
 		mainwindow.h
@@ -525,6 +537,7 @@ dialog_historik.o: dialog_historik.cpp dialog_historik.h \
 		MsgQueue.hpp \
 		Message.hpp \
 		SysMsg.hpp \
+		GUIStruct.hpp \
 		SystemLog.hpp \
 		ui_dialog_historik.h \
 		mainwindow.h
@@ -545,6 +558,7 @@ dialog_noteifictions.o: dialog_noteifictions.cpp dialog_noteifictions.h \
 		MsgQueue.hpp \
 		Message.hpp \
 		SysMsg.hpp \
+		GUIStruct.hpp \
 		SystemLog.hpp \
 		ui_dialog_noteifictions.h \
 		mainwindow.h
@@ -565,6 +579,7 @@ dialoge_mailconfig.o: dialoge_mailconfig.cpp dialoge_mailconfig.h \
 		MsgQueue.hpp \
 		Message.hpp \
 		SysMsg.hpp \
+		GUIStruct.hpp \
 		SystemLog.hpp \
 		ui_dialoge_mailconfig.h \
 		mainwindow.h
@@ -585,6 +600,7 @@ dialoge_systemconfiguration.o: dialoge_systemconfiguration.cpp dialoge_systemcon
 		MsgQueue.hpp \
 		Message.hpp \
 		SysMsg.hpp \
+		GUIStruct.hpp \
 		SystemLog.hpp \
 		ui_dialoge_systemconfiguration.h \
 		dialog_hardwaresettings.h \
@@ -608,6 +624,7 @@ dialoge_systemlog.o: dialoge_systemlog.cpp dialoge_systemlog.h \
 		MsgQueue.hpp \
 		Message.hpp \
 		SysMsg.hpp \
+		GUIStruct.hpp \
 		SystemLog.hpp \
 		ui_dialoge_systemlog.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o dialoge_systemlog.o dialoge_systemlog.cpp
@@ -627,6 +644,7 @@ main.o: main.cpp mainwindow.h \
 		UART.h \
 		rs232.h \
 		Monitor.hpp \
+		GUIStruct.hpp \
 		ReferenceStruct.hpp \
 		Regulator.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o main.cpp
@@ -646,6 +664,7 @@ mainwindow.o: mainwindow.cpp mainwindow.h \
 		UART.h \
 		rs232.h \
 		Monitor.hpp \
+		GUIStruct.hpp \
 		ReferenceStruct.hpp \
 		ui_mainwindow.h \
 		dialoge_systemconfiguration.h \

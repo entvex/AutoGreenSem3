@@ -66,7 +66,7 @@ void MainWindow::setOrientation(ScreenOrientation orientation)
     break;
 #endif // QT_VERSION < 0x040702
   };
- setAttribute(attribute, true);
+  setAttribute(attribute, true);
 }
 
 void MainWindow::showExpanded()
@@ -96,91 +96,127 @@ void MainWindow::updateBtn()
     ui->pte_livestatus->setPlainText(text);
   }
 
-  // btn one
-  if(gui.statusOne){
-    ui->status1->setStyleSheet("background-color: rgb(0, 255, 0)");
-  }
-  else {
-    ui->status1->setStyleSheet("background-color: rgb(255, 0, 0)");
-  }
+  for(int i = 0; i < 6; i++){
 
-  text = "";
-  text.append(QString::number(gui.realHumOne));
-  text.append("/");
-  text.append(QString::number(gui.virtualHumOne));
+    text = "";
+    text.append(QString::number(gui.realHum[i]));
+    text.append("/");
+    text.append(QString::number(gui.virtualHum[i]));
 
-
-  ui->status1->setText(text);
-  
-  // btn two
-  if(gui.statusTwo){
-    ui->status2->setStyleSheet("background-color: rgb(0, 255, 0)");
+    switch (i)
+      {
+      case 0:
+	switch (gui.status[i])
+	  {
+	  case 1:
+	    ui->status1->setStyleSheet("background-color: rgb(204, 204, 204)");
+	    break;
+	  case 2:
+	    ui->status1->setStyleSheet("background-color: rgb(255, 0, 0)");
+	    break;
+	  case 3:
+	    ui->status1->setStyleSheet("background-color: rgb(0, 255, 0)");
+	    break;
+	  default:
+	    ui->status1->setStyleSheet("background-color: rgb(204, 204, 204)");
+	    break;
+	  }
+	ui->status1->setText(text);
+	break;
+      case 1:
+	switch (gui.status[i])
+	  {
+	  case 1:
+	    ui->status2->setStyleSheet("background-color: rgb(204, 204, 204)");
+	    break;
+	  case 2:
+	    ui->status2->setStyleSheet("background-color: rgb(255, 0, 0)");
+	    break;
+	  case 3:
+	    ui->status2->setStyleSheet("background-color: rgb(0, 255, 0)");
+	    break;
+	  default:
+	    ui->status2->setStyleSheet("background-color: rgb(204, 204, 204)");
+	    break;
+	  }
+	ui->status2->setText(text);
+	break;
+      case 2:
+	switch (gui.status[i])
+	  {
+	  case 1:
+	    ui->status3->setStyleSheet("background-color: rgb(204, 204, 204)");
+	    break;
+	  case 2:
+	    ui->status3->setStyleSheet("background-color: rgb(255, 0, 0)");
+	    break;
+	  case 3:
+	    ui->status3->setStyleSheet("background-color: rgb(0, 255, 0)");
+	    break;
+	  default:
+	    ui->status3->setStyleSheet("background-color: rgb(204, 204, 204)");
+	    break;
+	  }
+	ui->status3->setText(text);
+	break;
+      case 3:
+	switch (gui.status[i])
+	  {
+	  case 1:
+	    ui->status4->setStyleSheet("background-color: rgb(204, 204, 204)");
+	    break;
+	  case 2:
+	    ui->status4->setStyleSheet("background-color: rgb(255, 0, 0)");
+	    break;
+	  case 3:
+	    ui->status4->setStyleSheet("background-color: rgb(0, 255, 0)");
+	    break;
+	  default:
+	    ui->status4->setStyleSheet("background-color: rgb(204, 204, 204)");
+	    break;
+	  }
+	ui->status4->setText(text);
+	break;
+      case 4:
+	switch (gui.status[i])
+	  {
+	  case 1:
+	    ui->status5->setStyleSheet("background-color: rgb(204, 204, 204)");
+	    break;
+	  case 2:
+	    ui->status5->setStyleSheet("background-color: rgb(255, 0, 0)");
+	    break;
+	  case 3:
+	    ui->status5->setStyleSheet("background-color: rgb(0, 255, 0)");
+	    break;
+	  default:
+	    ui->status5->setStyleSheet("background-color: rgb(204, 204, 204)");
+	    break;
+	  }
+	ui->status5->setText(text);
+	break;
+      case 5:
+	switch (gui.status[i])
+	  {
+	  case 1:
+	    ui->status6->setStyleSheet("background-color: rgb(204, 204, 204)");
+	    break;
+	  case 2:
+	    ui->status6->setStyleSheet("background-color: rgb(255, 0, 0)");
+	    break;
+	  case 3:
+	    ui->status6->setStyleSheet("background-color: rgb(0, 255, 0)");
+	    break;
+	  default:
+	    ui->status6->setStyleSheet("background-color: rgb(204, 204, 204)");
+	    break;
+	  }
+	ui->status6->setText(text);
+	break;
+      default:
+	break;
+      }
   }
-  else {
-    ui->status2->setStyleSheet("background-color: rgb(255, 0, 0)");
-  }
-
-  text = "";
-  text.append(QString::number(gui.realHumTwo));
-  text.append("/");
-  text.append(QString::number(gui.virtualHumTwo));
-  ui->status2->setText(text);
-
-  // btn three
-  if(gui.statusThree){
-    ui->status3->setStyleSheet("background-color: rgb(0, 255, 0)");
-  }
-  else {
-    ui->status3->setStyleSheet("background-color: rgb(255, 0, 0)");
-  }
-
-  text = "";
-  text.append(QString::number(gui.realHumThree));
-  text.append("/");
-  text.append(QString::number(gui.virtualHumThree));
-  ui->status3->setText(text);
-
-  // btn four
-  if(gui.statusFour){
-    ui->status4->setStyleSheet("background-color: rgb(0, 255, 0)");
-  }
-  else {
-    ui->status4->setStyleSheet("background-color: rgb(255, 0, 0)");
-  }
-
-  text = "";
-  text.append(QString::number(gui.realHumFour));
-  text.append("/");
-  text.append(QString::number(gui.virtualHumFour));
-  ui->status4->setText(text);
-
-  // btn five
-  if(gui.statusFive){
-    ui->status5->setStyleSheet("background-color: rgb(0, 255, 0)");
-  }
-  else {
-    ui->status5->setStyleSheet("background-color: rgb(255, 0, 0)");
-  }
-
-  text = "";
-  text.append(QString::number(gui.realHumFive));
-  text.append("/");
-  text.append(QString::number(gui.virtualHumFive));
-  ui->status5->setText(text);
-
-  // btn six
-  if(gui.statusSix){
-    ui->status6->setStyleSheet("background-color: rgb(0, 255, 0)");
-  }
-  else {
-    ui->status6->setStyleSheet("background-color: rgb(255, 0, 0)");
-  }
-
-  text = "";
-  text.append(QString::number(gui.realHumSix));
-  text.append("/");
-  text.append(QString::number(gui.virtualHumSix));
-  ui->status6->setText(text);
   
 }
 

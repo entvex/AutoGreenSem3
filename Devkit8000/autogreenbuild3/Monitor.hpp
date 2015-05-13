@@ -28,24 +28,13 @@ public:
     syslog_ = &syslog;
     mtx = PTHREAD_MUTEX_INITIALIZER;
     gui.temp = 25;
-    gui.statusOne = true;
-    gui.realHumOne = 5;
-    gui.virtualHumOne = 5;
-    gui.statusTwo = true;
-    gui.realHumTwo = 5;
-    gui.virtualHumTwo = 5;
-    gui.statusThree = true;
-    gui.realHumThree = 5;
-    gui.virtualHumThree = 5;
-    gui.statusFour = true;
-    gui.realHumFour = 5;
-    gui.virtualHumFour = 5;
-    gui.statusFive = true;
-    gui.realHumFive = 5;
-    gui.virtualHumFive = 5;
-    gui.statusSix = true;
-    gui.realHumSix = 5;
-    gui.virtualHumSix = 5;
+
+    for(int i = 0; i < 6; i++)
+      {
+	gui.status[i] = 1;
+	gui.realHum[i] = 0;
+	gui.virtualHum[i] = 0;
+      }
   }
 
   ~Monitor(){
@@ -59,9 +48,7 @@ public:
 
     while(1) {
 
-      if(ind_->getMonitorering() && uiStatus){
-      
-    //pthread_mutex_lock(&mtx);
+      if(ind_->getMonitorering()){
 
 	// update local values to newest settings.
 	date_ = ind_->getDate();
@@ -78,81 +65,16 @@ public:
 	  monmsg->msg_ = "Dårligt klima";
 	  syslog_->send(1, monmsg);
 	*/
-	
-	
-    // update live Gui temperature
-    gui.temp = sensordata_.temp;
-	
-    // set gui data for plant one
-    if(compareSet(sensordata_, virtuel_[0], 0, 0)){
-      gui.statusOne = false;
-    }
-    else {
-      gui.statusOne = true;
-    }
-	
-    gui.realHumOne = sensordata_.grund[0];
-    gui.virtualHumOne = virtuel_[0].hum;
-	
-    // set gui data for plant two
-    if(compareSet(sensordata_, virtuel_[1], 0, 1)){
-      gui.statusTwo = false;
-    }
-    else {
-      gui.statusTwo = true;
-    }
-	
-    gui.realHumTwo = sensordata_.grund[1];
-    gui.virtualHumTwo = virtuel_[1].hum;
-	
+       
+	// update live Gui temperature
+	gui.temp = sensordata_.temp;
 
-    // set gui data for plant three
-    if(compareSet(sensordata_, virtuel_[2], 0, 2)){
-      gui.statusThree = false;
-    }
-    else {
-      gui.statusThree = true;
-    }
-	
-    gui.realHumThree = sensordata_.grund[2];
-    gui.virtualHumThree = virtuel_[2].hum;
-	
-    // set gui data for plant four
-    if(compareSet(sensordata_, virtuel_[3], 0, 3)){
-      gui.statusFour = false;
-    }
-    else {
-      gui.statusFour = true;
-    }
-	
-    gui.realHumFour = sensordata_.grund[3];
-    gui.virtualHumFour = virtuel_[3].hum;
-	  
-    // set gui data for plant five
-    if(compareSet(sensordata_, virtuel_[4], 0, 4)){
-      gui.statusFive = false;
-    }
-    else {
-      gui.statusFive = true;
-    }
-	
-    gui.realHumFive = sensordata_.grund[4];
-    gui.virtualHumFive = virtuel_[4].hum;
-	
-
-    // set gui data for plant six
-    if(compareSet(sensordata_, virtuel_[5], 0, 5)){
-      gui.statusSix = false;
-    }
-    else {
-      gui.statusSix = true;
-    }
-	
-    gui.realHumSix = sensordata_.grund[5];
-    gui.virtualHumSix = virtuel_[5].hum;
-	
-    //pthread_mutex_unlock(&mtx);
-
+	for(int i = 0; i < 6; i++)
+	  {
+	    gui.status[i] = compareSet(sensordata_, virtuel_[i], 0, i);
+	    gui.realHum[i] = sensordata_.grund[i];
+	    gui.virtualHum[i] = virtuel_[i].hum;
+	  }
 
 	usleep(10000000);
       }
@@ -162,18 +84,19 @@ public:
   }
 
   GUIStruct getGuiData(){
-   // pthread_mutex_lock(&mtx);
     return gui;
-   // pthread_mutex_unlock(&mtx);
   }
 
 private:
-  bool compareSet(SensorData data, Plant plant, int offset, int i)
+  int compareSet(SensorData data, Plant plant, int offset, int i)
   {
-    if(data.grund[i] >= plant.hum + offset)
-      return false;
+    if(plant.hum == 0)
+      return 1;
 
-    return true;
+    if(data.grund[i] >= plant.hum + offset)
+      return 2;
+
+    return 3;
   }
 
   GUIStruct gui;
