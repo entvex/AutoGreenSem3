@@ -70,7 +70,7 @@ public:
        
 	// update live Gui temperature
 	gui.temp = sensordata_.temp;
-    gui.avgtemp = virtuel_[0].temp;
+	gui.avgtemp = virtuel_[0].temp;
 
 	for(int i = 0; i < 6; i++)
 	  {
@@ -79,7 +79,7 @@ public:
 	    gui.virtualHum[i] = virtuel_[i].hum;
 	  }
 
-    usleep(300000);
+	usleep(1000000);
       }
       usleep(1000000);
     }

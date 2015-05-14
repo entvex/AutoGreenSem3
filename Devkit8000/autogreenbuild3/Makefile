@@ -669,7 +669,8 @@ mainwindow.o: mainwindow.cpp mainwindow.h \
 		ui_mainwindow.h \
 		dialoge_systemconfiguration.h \
 		dialog_historik.h \
-		dialoge_systemlog.h
+		dialoge_systemlog.h \
+		dialog_drivehusadministration.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o mainwindow.o mainwindow.cpp
 
 rs232.o: rs232.c rs232.h

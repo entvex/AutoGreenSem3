@@ -13,7 +13,8 @@ using namespace std;
 class Regulator
 {
  public:
-  Regulator(UART * uart_, Indstillinger * settings_, MsgQueue* systemlog_, DataLog *datalog_)
+  Regulator(UART * uart_, Indstillinger * settings_,
+	    MsgQueue* systemlog_, DataLog *datalog_)
     {
       //* set pointers
       uart = uart_;
@@ -32,21 +33,21 @@ class Regulator
     //run is running at all times
     while(1) {
       if(!settings->getRegulering())
-    {
-       //   cout << "regulator is not active\n";
-      usleep(600000);
-    }
+	{
+	  //   cout << "regulator is not active\n";
+	  usleep(100000);
+	}
       else
-    {
+	{
           cout << "regulator is active\n";
-      //load data into plants from Settings (indstillinger)
-      loadData();
-      SensorData loadeddata = datalog->GetNewestData();
-      ControlData(loadeddata);
+	  //load data into plants from Settings (indstillinger)
+	  loadData();
+	  SensorData loadeddata = datalog->GetNewestData();
+	  ControlData(loadeddata);
 
-      //linux
-      usleep(600000);
-    }
+	  //linux
+	  usleep(100000);
+	}
     }
   }
 
@@ -66,139 +67,143 @@ class Regulator
     bool use_vents = false;
     settings->GetHardware(use_heater,use_vents);
 
-    if (temp_drivhus == avg_temp_drivhus ||
-    (temp_drivhus - 1) == avg_temp_drivhus ||
-    (temp_drivhus + 1) == avg_temp_drivhus)
+    if (temp_drivhus <= avg_temp_drivhus + 0.5 &&
+	temp_drivhus >= avg_temp_drivhus - 0.5)
       {
-    //temp is OK, close and shut everything off
+	cout << "temp ok \n";
+	//temp is OK, close and shut everything off
 
-//    SysMsg* monmsg = new SysMsg;
-//    monmsg->msg_ = "slukker alle aktuatorer";
-//    systemlog->send(1, monmsg);
+	//    SysMsg* monmsg = new SysMsg;
+	//    monmsg->msg_ = "slukker alle aktuatorer";
+	//    systemlog->send(1, monmsg);
 
-    uart->activateSensor("ventoff");
-    usleep(100);
-    uart->activateSensor("heatoff");
-    usleep(100);
-    uart->activateSensor("windowoff");
-    usleep(100);
+	uart->activateSensor("ventoff");
+	usleep(100);
+	uart->activateSensor("heatoff");
+	usleep(100);
+	uart->activateSensor("windowoff");
+	usleep(100);
+
 
       }
-    else if (temp_drivhus > avg_temp_drivhus &&
-         (temp_drivhus + 3) < (avg_temp_drivhus))
+    else if (temp_drivhus > avg_temp_drivhus + 0.5)
       {
-    //OPEN WinDOW
-
-//    SysMsg* monmsg = new SysMsg;
-//    monmsg->msg_ = "Window åbnes";
-//    systemlog->send(1, monmsg);
-//    uart->activateSensor("windowon");
-      usleep(100);
+	cout << "temp meget varm\n";
+	//    SysMsg* monmsg = new SysMsg;
+	//    monmsg->msg_ = "vent tændes, window åbnes";
+	//    systemlog->send(1, monmsg);
+	//start vent
+	if(use_vents)
+	  {
+	    uart->activateSensor("venton");
+	    usleep(100);
+	  }
+	else
+	  {
+	    //        SysMsg* monmsg = new SysMsg;
+	    //        monmsg->msg_ = "vent kan ikke åbnes";
+	    //        systemlog->send(1, monmsg);
+	  }
+	//open window
+	uart->activateSensor("windowon");
+	usleep(100);
       }
-    else if ((temp_drivhus - 6) > avg_temp_drivhus)
-      {
-
-//    SysMsg* monmsg = new SysMsg;
-//    monmsg->msg_ = "vent tændes, window åbnes";
-//    systemlog->send(1, monmsg);
-    //start vent
-    if(use_vents)
-      {
-        uart->activateSensor("venton");
-        usleep(100);
-      }
-    else
-      {
-//        SysMsg* monmsg = new SysMsg;
-//        monmsg->msg_ = "vent kan ikke åbnes";
-//        systemlog->send(1, monmsg);
-      }
-    //open window
-    uart->activateSensor("windowon");
-    usleep(100);
-      }
-    else if ((temp_drivhus + 2) < avg_temp_drivhus)
-      {
-    //heater on
-    //close Window
-    //vent off
-
-//    SysMsg* monmsg = new SysMsg;
-//    monmsg->msg_ = "heater tændes, vent slukkes, Window lukkes";
-//    systemlog->send(1, monmsg);
-    if(use_heater)
-      {
-        uart->activateSensor("heaton");
-        usleep(100);
-      }
-    else
+    else if (temp_drivhus >= avg_temp_drivhus + 0.5)
       {
 
-//        SysMsg* monmsg = new SysMsg;
-//        monmsg->msg_ = "Heater kan ikke bruges";
-//        systemlog->send(1, monmsg);
-      }
+	cout << "temp lidt varm\n";
+	//OPEN WinDOW
 
-    uart->activateSensor("ventoff");
-    usleep(100);
-    uart->activateSensor("windowoff");
-    usleep(100);
+	//    SysMsg* monmsg = new SysMsg;
+	//    monmsg->msg_ = "Window åbnes";
+	//    systemlog->send(1, monmsg);
+	      uart->activateSensor("windowon");
+	      usleep(100);
+	      uart->activateSensor("ventoff");
+      }
+    else if (temp_drivhus < avg_temp_drivhus - 0.0)
+      {
+	cout << "Der er for koldt i drivhuset\n";
+	//heater on
+	//close Window
+	//vent off
+
+	//    SysMsg* monmsg = new SysMsg;
+	//    monmsg->msg_ = "heater tændes, vent slukkes, Window lukkes";
+	//    systemlog->send(1, monmsg);
+	if(use_heater)
+	  {
+	    uart->activateSensor("heaton");
+	    usleep(100);
+	  }
+	else
+	  {
+
+	    //        SysMsg* monmsg = new SysMsg;
+	    //        monmsg->msg_ = "Heater kan ikke bruges";
+	    //        systemlog->send(1, monmsg);
+	  }
+
+	uart->activateSensor("ventoff");
+	usleep(100);
+	uart->activateSensor("windowoff");
+	usleep(100);
 
       }
 
     /* check waterstatus for plant 1-6*/
-/*
-    if(drivhus_data.grund[0] < plant1.water)
+    /*
+      if(drivhus_data.grund[0] < plant1.water)
       {
 
-//    SysMsg* monmsg = new SysMsg;
-//    monmsg->msg_ = "Plante 1 mangler vand";
-//    systemlog->send(1, monmsg);
-    //uart->activateSensor("water1");
-    //plant1 need water
+      //    SysMsg* monmsg = new SysMsg;
+      //    monmsg->msg_ = "Plante 1 mangler vand";
+      //    systemlog->send(1, monmsg);
+      //uart->activateSensor("water1");
+      //plant1 need water
       }
-    if(drivhus_data.grund[1] < plant2.water)
+      if(drivhus_data.grund[1] < plant2.water)
       {
-    SysMsg* monmsg = new SysMsg;
-    monmsg->msg_ = "Plante 2 mangler vand";
-    systemlog->send(1, monmsg);
-    //uart->activateSensor("water1");
-    //plant1 need water
+      SysMsg* monmsg = new SysMsg;
+      monmsg->msg_ = "Plante 2 mangler vand";
+      systemlog->send(1, monmsg);
+      //uart->activateSensor("water1");
+      //plant1 need water
       }
-    if(drivhus_data.grund[2] < plant3.water)
+      if(drivhus_data.grund[2] < plant3.water)
       {
-//    SysMsg* monmsg = new SysMsg;
-//    monmsg->msg_ = "Plante 3 mangler vand";
-//    systemlog->send(1, monmsg);
-    //uart->activateSensor("water1");
-    //plant1 need water
+      //    SysMsg* monmsg = new SysMsg;
+      //    monmsg->msg_ = "Plante 3 mangler vand";
+      //    systemlog->send(1, monmsg);
+      //uart->activateSensor("water1");
+      //plant1 need water
       }
-    if(drivhus_data.grund[3] < plant4.water)
+      if(drivhus_data.grund[3] < plant4.water)
       {
-//    SysMsg* monmsg = new SysMsg;
-//    monmsg->msg_ = "Plante 4 mangler vand";
-//    systemlog->send(1, monmsg);
-    //uart->activateSensor("water1");
-    //plant1 need water
+      //    SysMsg* monmsg = new SysMsg;
+      //    monmsg->msg_ = "Plante 4 mangler vand";
+      //    systemlog->send(1, monmsg);
+      //uart->activateSensor("water1");
+      //plant1 need water
       }
-    if(drivhus_data.grund[4] < plant5.water)
+      if(drivhus_data.grund[4] < plant5.water)
       {
-//    SysMsg* monmsg = new SysMsg;
-//    monmsg->msg_ = "Plante 5 mangler vand";
-//    systemlog->send(1, monmsg);
-    //uart->activateSensor("water1");
-    //plant1 need water
+      //    SysMsg* monmsg = new SysMsg;
+      //    monmsg->msg_ = "Plante 5 mangler vand";
+      //    systemlog->send(1, monmsg);
+      //uart->activateSensor("water1");
+      //plant1 need water
       }
-    if(drivhus_data.grund[5] < plant6.water)
+      if(drivhus_data.grund[5] < plant6.water)
       {
-//    SysMsg* monmsg = new SysMsg;
-//    monmsg->msg_ = "Plante 6 mangler vand";
-//    systemlog->send(1, monmsg);
-    //uart->activateSensor("water1");
-    //plant1 need water
+      //    SysMsg* monmsg = new SysMsg;
+      //    monmsg->msg_ = "Plante 6 mangler vand";
+      //    systemlog->send(1, monmsg);
+      //uart->activateSensor("water1");
+      //plant1 need water
       }
-    //added later if needed
-*/
+      //added later if needed
+      */
 
 
   }

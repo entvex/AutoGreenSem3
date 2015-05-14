@@ -182,21 +182,22 @@ class UART
 
   void addMessage(string m)
   {
-    SysMsg* uartmsg = new SysMsg;
-    uartmsg->msg_ = m;
-    systemlog->send(1, uartmsg);
+    //    SysMsg* uartmsg = new SysMsg;
+    //    uartmsg->msg_ = m;
+    //    systemlog->send(1, uartmsg);
   }
 
   int recievedata()
   {
 int testcount;
+//nødvendigt??
     for(testcount = 0; testcount <=10; testcount++)
       {
 	buf[0] = 0; buf[1] = 0; buf[2] = 0;
-	usleep(150000);
+	usleep(250000);
 	RS232_PollComport(cport_nr, buf, 4);
 	
-    // cout << buf[0] << " " << buf[1] << buf[2] <<  endl;
+	cout << buf[0] << " " << buf[1] << buf[2] <<  endl;
 
 	if (buf[0] == 'T')
 	  {
