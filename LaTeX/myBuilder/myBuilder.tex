@@ -1,12 +1,20 @@
 \makeatletter
-\def\input@path{{C:/Users/Lasse/Dropbox/PRJ3/LaTeX/Projektdokumentation/}} %Ændr den her sti til din egen DB mappe
+%Ændr den her sti til din egen DB mappe
+\def\input@path{{C:/Users/Philip/Dropbox/PRJ3/LaTeX/Projektdokumentation/}}
 \makeatother
 
 \input{../preamble/preamble}
 
+\fancyhf{}
+\fancyhead[LO,RE]{Gruppe 9 - ''AutoGreen''}
+\fancyhead[CE,CO]{Projektdokumentation}
+\fancyhead[RO,LE]{IHA, AU}
+\fancyfoot[CO,CE]{\nouppercase{\leftmark}}
+\fancyfoot[RE,LO]{\thepage}
+
 \begin{document}
 
-\input{projektdokumenation}
-%\input{Litteraturliste/litteraturliste}
+% Ændr denne til den tex fil der skal bygges
+\input{HardwareImplementering/MasterImplementering/MasterImplementering.tex}
 
 \end{document}

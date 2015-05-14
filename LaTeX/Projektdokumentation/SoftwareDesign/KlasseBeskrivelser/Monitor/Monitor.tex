@@ -1,0 +1,34 @@
+\subsection{DoublyLinkedList}
+
+Monitor er tråd styret, hvilket betyder den kan arbejde samtidigt med fra andre software dele i AutoGreen systemet. Tråden virker som en grænseflade mellem DevKit8000 og sensorer fra drivhus klimaet. 
+Dens primære opgave er at finde ud af, hvilke sensorer er tilkoblet og udvinde data fra dem mindst 1 gang i minuttet og derefter sende det indhentede data til dataloggen.
+På grund af Monitor konstant anmoder om data, skal Monitor loope uendeligt fra DevKit8000 starter tråden indtil DevKit8000 afslutter tråden, dog kan monitor klassen sættes til at sove, ved styring af hovedmenuen.\\
+
+
+\textbf{Attributter}
+
+\begin{table}[h]
+\begin{tabularx}{\textwidth}{| >{\raggedright\arraybackslash}X | >{\raggedright\arraybackslash}X | >{\raggedright\arraybackslash}p{10 cm} |} \hline
+\texttt{CurrentTime} & \texttt{Date} & Indeholder sidste tidpunkt modtaget fra Indstillinger. \\\hline
+\texttt{Email} & \texttt{Notification} & Indeholder status for rapportering. \\\hline
+\texttt{Virtuel} & \texttt{Plant[]} & Indeholder array af virtuelle planteparametre. \\\hline
+\texttt{Real} & \texttt{Plant[]} & Indeholder array af faktiske planteparametre. \\\hline
+\end{tabularx}
+\caption{Attributter for klassen Monitor}
+\label{table:Monitor_attributter}
+\end{table}
+
+\textbf{Metoder}
+
+\begin{table}[h]
+\begin{tabularx}{\textwidth}{| >{\raggedright\arraybackslash}p{2.5 cm} | >{\raggedright\arraybackslash}X |} \hline
+Prototype & \texttt{void CompareData()} \\\hline
+Parametre & \texttt{-} \\\hline
+Returværdi & \texttt{-} \\\hline
+Beskrivelse & CompareDatas opgave er en live opdatering af plante sundhedstegn på baggrund af en sammenligningen mellem hvad brugeren har angivet som de ideelle værdier i den virtuelle plantedatabase og de faktiske værdier indsamlet fra sensorer. Hvis de faktiske værdier ligger inden for tolerancen vil Monitor farve plantefelterne i hovedmenuen grønne og hvis de ligger udenfor skal plantefelterne være røde. I tilfælde af en sensor ikke er tilkoblet, så skal plantefeltet for den pågældende sensor være grå.
+Hver gang en tolerance overskides skal Monitor angive hændelsen til systemloggen og signaler rapportering for aktivering.
+ \\\hline
+\end{tabularx}
+\caption{CompareData}
+\label{table:CompareData}
+\end{table}

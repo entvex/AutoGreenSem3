@@ -1,0 +1,10 @@
+# Overfør kildekode til denne mappe fra github
+cd /Users/Philip/Dropbox/PRJ3/LaTeX/src/
+
+git clone https://github.com/PhKP/PSoC_Master.git
+
+
+# For at opdatere
+cd PSoC_Master
+
+git pull

@@ -1,0 +1,73 @@
+\section{GUI - QT }
+Til at lave den grafiske brugerflade på Devkit8000 er brugt QT. QT bliver en let måde at skabe brugerflader på, og skabe forbindelser mellem denne brugerflade og det baglæggende system. 
+
+
+\subsubsection{ QT .ui filer}
+Til at designe menuer i softwaren, giver QTcreator(1) mulighed for at designe menuer, blot ved brug af drag and drop teknikker. Til design af vores menuer, tilpasser vi et canvas til størrelsen 480x256 pixels, som passer til til at dække hele skærmen på Devkittet. De mest anvendte funktionaliteter der er brugt til at designe den grafiske brugerflade, er knapper. Knapperne kan trækkes ind på det ønskede sted på canvaset, og teksten samt farven på knappen kan ændres. Ændring af farve på knapper kan f.eks. ses på hovedmenuen ved tryk på Monitorer og reguler. Knapper og objekter der bliver sat ind navngives. Dette navn er det der kan bruges til at lave signaler med, til at kommunikere rundt i systemet.
+
+\subsubsection{QT event driven programming}
+QT standarden, og den metode vi også bruger til at kode og designe brugerfladen i er event driven programming.(2) Når en knap trykkes, fortages der en række funktionaliter, som både kan have indflydelse på brugerfladen, men i de fleste tilfælde vil ændre noget bag facaden i grundsystemet.
+En af disse event der påvirker både brugerfladen og grundsystemet er når 'monitorer' tændes på hovedmenuen. Dette kald leder til et kald til indstillinger hvor monitor booleanen bliver sat til true. Dette vil sætte system igang med at monitorer drivhuset, og samtidig skifte knappens farve til grøn, svarende til at den er aktiv.
+
+\clearpage %TODO Lav noget lækker lstinputlisting her?
+\begin{lstlisting}
+void MainWindow::on_btn_monitor_clicked()
+{
+
+    if( !indstillinger.getRegulering() )
+    {
+        if( indstillinger.getMonitorering()  ) //Toggle
+        {
+            //red
+            ui->btn_monitor->setStyleSheet("background-color: rgb(255, 0, 0)");
+            indstillinger.SetMonitorering(false);
+
+        } else
+        {
+            //green
+            ui->btn_monitor->setStyleSheet("background-color: rgb(0, 255, 0)");
+            indstillinger.SetMonitorering(true);
+        }
+    }
+    else
+    {
+        if( indstillinger.getMonitorering()  ) //Toggle
+        {
+            //red
+            ui->btn_monitor->setStyleSheet("background-color: rgb(255, 0, 0)");
+            ui->btn_reguler->setStyleSheet("background-color: rgb(255, 0, 0)");
+            indstillinger.SetMonitorering(false);
+            indstillinger.SetRegulering(false);
+
+        }
+    }
+}
+
+\end{lstlisting}
+
+Koden viser brugen af monitorer knappen på hovedmenuen. Når knappen trykkes køres koden vist.
+Der laves tjek med if statement på regulering fra indstillings-klassen, og hvis reguleringen er tændt, tjekkes der på monitorering fra indstillings-klassen. Hvis monitorering er tændt, sættes måde regulering og monitorering til false i indstillings-klassen, og farven på knapperne sættes til rød, svarende til værende slukket. Hvis regulering er slukket, tjekkes der også på monitorering. monitoereringen toggles, ved at tjekke om den er true eller false, hvis den er true (tændt), slukkes den ved brug af setMonitorering metoden fra indstillingsklassen, og farven på knappen skiftes til rød. Omvendt hvis den er slukket, sættes monitorering til true, og farven på knappen sættes til grøn. 
+Farveskift fortages ved brug af QT-funktionalitet.
+\begin{lstlisting}
+ui->btn_monitor->setStyleSheet("background-color: rgb(255, 0, 0)");
+\end{lstlisting}
+Der tilgåes UI'en og tilgår knappen btn\_monitor og kalder methode setStyleSheet() på den for at skifte farve.
+
+\clearpage
+\subsubsection{ Menuhåndtering og menublokering }
+Der ønskes i brugerfladen at brugeren kan skift imellem flere menu, istedet for at skulle vise og gemme knapper væk. Dette gøres ved at lave flere .ui filer, som også har tilsvarende .cpp og .h filer, og kører eksekvere dem, som en menu ovenpå den forhenværende menu.
+\begin{lstlisting}
+void MainWindow::on_btn_systemlog_clicked()
+{
+    dialoge_systemlog systemlog;
+    systemlog.setModal(true);
+    systemlog.exec();
+}
+\end{lstlisting}
+I kode-snippet ovenfor ses hvordan der oprettes et object af dialoge\_systemlog, ved klik på systemlog knappen på hovedmenuen. Der sikres herefter af de forhenværende menuer ikke kan bruges før systemlog menuen igen er lukket ned. Dette gøres ved brug af setModal. setModal blokkere alt input til andre menuer end den aktive menu. Herefter eksekveres menues ved brug af exec metoden.
+
+\subsubsection{Trådhåndtering i QT}
+%TODO Mere om tråde her?
+
+\subsubsection{Message handling}
+%TODO Ved ikke hvad dette er, skriv det :)

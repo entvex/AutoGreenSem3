@@ -1,0 +1,76 @@
+\subsection{Datalog}
+
+Dataloggen er en klasse som anvendes til at gemme data omkring klimaet i drivhuset i. Dataloggen består af en linked DoublyLinkedList[ref], som indeholder data over hver parameter i drivhuset, der bliver logget hvert minut.\\
+
+
+\textbf{Attributter}
+
+\begin{table}[h]
+\begin{tabularx}{\textwidth}{| >{\raggedright\arraybackslash}X | >{\raggedright\arraybackslash}X | >{\raggedright\arraybackslash}p{10 cm} |} \hline
+\texttt{DatalogList} & \texttt{datalog} & datalogList er en nedarvning af doublylinkedlist, med extra variabler til lagring af tid, temperatur, lysintensitet, luftfugtighed, og 6 jordfugtigheder. \\\hline
+\end{tabularx}
+\caption{Attributter for klassen Datalog}
+\label{table:Datalog_attributter}
+\end{table}
+
+\textbf{Metoder}
+
+\begin{table}[h]
+\begin{tabularx}{\textwidth}{| >{\raggedright\arraybackslash}p{2.5 cm} | >{\raggedright\arraybackslash}X |} \hline
+Prototype & \texttt{void InsertSensorData(SensorData sensorData)} \\\hline
+Parametre & \texttt{SensorData SensorData} \newline 
+Indeholder det sensordata som du gerne vil indsætte i dataloggen. \\\hline
+Returværdi & \texttt{-} \\\hline
+Beskrivelse & Bruges til at indsætte sensorData i dataloggen. \\\hline
+\end{tabularx}
+\caption{InsertSensorData}
+\label{table:InsertSensorData}
+\end{table}
+
+
+\begin{table}[h]
+\begin{tabularx}{\textwidth}{| >{\raggedright\arraybackslash}p{2.5 cm} | >{\raggedright\arraybackslash}X |} \hline
+Prototype & \texttt{SensorData GetNewestData()} \\\hline
+Parametre & \texttt{-}\\\hline
+Returværdi & Det nyste SensorData som  ligger gemt indeholder. \\\hline
+Beskrivelse & Metoden har til fordel at hente de seneste indsatte data i linked listen og returnere dem ved brug af referencer. \\\hline
+\end{tabularx}
+\caption{GetNewestData}
+\label{table:GetNewestData}
+\end{table}
+
+
+\begin{table}[h]
+\begin{tabularx}{\textwidth}{| >{\raggedright\arraybackslash}p{2.5 cm} | >{\raggedright\arraybackslash}X |} \hline
+Prototype & \texttt{void Sortday()} \\\hline
+Parametre & \texttt{-}\\\hline
+Returværdi & \texttt{-} \\\hline
+Beskrivelse & Metoden går ind i link listen fra nyeste data og går tilbage indtil at tiden passer med 24 timer før den nuværende tid, herefter tages data, 24 timer længere tilbage, og regnes sammen til en gennemsnitlig temperatur, luftfugtighed, lysintensitet og for op til 6 jordfugtigheder. De data der udtages af link listen slettes, og en ny Node oprettes på den først udtages plads. \\\hline
+\end{tabularx}
+\caption{Sortday}
+\label{table:Sortday}
+\end{table}
+
+
+\begin{table}[h]
+\begin{tabularx}{\textwidth}{| >{\raggedright\arraybackslash}p{2.5 cm} | >{\raggedright\arraybackslash}X |} \hline
+Prototype & \texttt{void Sortweek()} \\\hline
+Parametre & \texttt{-}\\\hline
+Returværdi & \texttt{-} \\\hline
+Beskrivelse & Metoden går ind i link listen fra nyeste data og går tilbage indtil at tiden passer med 2 dage før den nuværende tid, herefter tages data, 7 dage længere tilbage, og regnes sammen til en gennemsnitlig temperatur, luftfugtighed, lysintensitet og for op til 6 jordfugtigheder. De data der udtages af link listen slettes, og en ny Node oprettes på den først udtages plads. \\\hline
+\end{tabularx}
+\caption{Sortweek}
+\label{table:Sortweek}
+\end{table}
+
+
+\begin{table}[h]
+\begin{tabularx}{\textwidth}{| >{\raggedright\arraybackslash}p{2.5 cm} | >{\raggedright\arraybackslash}X |} \hline
+Prototype & \texttt{void Sortmonth()} \\\hline
+Parametre & \texttt{-}\\\hline
+Returværdi & \texttt{-} \\\hline
+Beskrivelse & Metoden går ind i link listen fra nyeste data og går tilbage indtil at tiden passer med 8 dage før den nuværende tid, herefter tages data, 30 dage længere tilbage, og regnes sammen til en gennemsnitlig temperatur, luftfugtighed, lysintensitet og for op til 6 jordfugtigheder. De data der udtages af link listen slettes, og en ny Node oprettes på den først udtages plads. \\\hline
+\end{tabularx}
+\caption{Sortmonth}
+\label{table:Sortmonth}
+\end{table}

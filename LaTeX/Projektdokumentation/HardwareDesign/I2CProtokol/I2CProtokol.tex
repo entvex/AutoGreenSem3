@@ -1,35 +1,35 @@
 \section{\IIC Protokol} \label{sec:I2C_protokol}
 Dette afsnit omhandler kommunikationen mellem alle \IIC kommunikerende komponenter i projektet.
 
-\subsection{Temp-/Luftfugtighedssensor} %TODO Make this right yo
-Information om Temperatur- og Luftfugtighedssensor er fundet under komponentens datasheet. Bilag 004 \cite{lib:TempHum_I2C}.
+\subsection{Temperatursensor}
+Temperatursensoren er valgt til at være LM75 \cite{lib:LM75}. Informationer til protokollen er fundet i databladet.
 
-%Slave Temp-/Luftfugtihed
+%Slave Temperatursensor
 \begin{table}[h]
 \centering
 \begin{tabularx}{0.6\textwidth}{| X | X |} 			\hline
-\textbf{Slave:} 		& Temp-/Luftfugtighed		\\ \hline
-\textbf{Adresse:}		& 0x27						\\ \hline
-\textbf{Bemærkninger:}	& scl: 100-400 kHz			\\ \hline
+\textbf{Slave:} 		& Temperatursensor			\\ \hline
+\textbf{Adresse:}		& 0x48						\\ \hline
+\textbf{Bemærkninger:}	& scl: min 400kHz			\\ \hline
 \end{tabularx}
-\caption{\IIC Oplysninger for Temp-/Luftfugtigedhedssensor}
+\caption{\IIC Oplysninger for temperatursensor}
 \label{tbl:I2CTempLuftOplysninger}
 \end{table}
 
-
-Når der skal læses data fra sensoren, sker det jf. Figur \ref{fig:I2CTempLuftProtokol}, fundet under Bilag 004 side 2 \cite{lib:TempHum_I2C}.
-
+Når der skal læses data fra sensoren, sker det jf. Figur \ref{fig:I2CTempProtokol}, fundet i det respektive datablad \cite{lib:LM75}.
 
 \begin{figure}[h]
 \centering
-\includegraphics[width=\textwidth - 1 cm, clip=true, trim=48 319 55 471]{../fig/I2CTempLuftProtokol.pdf}
-\caption{\IIC protokol for Temp-/Luftfugtighedssensor}
-\label{fig:I2CTempLuftProtokol}
+\includegraphics[width=\textwidth - 1 cm]{../fig/LM75Bitsekvens.png}
+\caption{\IIC read protokol for temperatursensor}
+\label{fig:I2CTempProtokol}
 \end{figure}
 
 \clearpage
 
 \subsection{Slave Aktuator}
+Formålet med Slave Aktuatoren er at udføre forskellige opgaver, via et varmelegeme, blæsere, en motor og seks vandings bools. Disse opgaver bliver anmodet af Master PSoC. Under dette afsnit vil protokolen mellem Slave Aktuator og Master PSoC blive gennemgået.
+
 %Slave Aktuator
 \begin{table}[h]
 \centering
@@ -66,7 +66,7 @@ W7 & W6 & W5 & W4 & W3 & W2 & W1 & W0				\\ \hline
 \label{tbl:I2CAktuatorKommandoWriteAdjustWindow}
 \end{table}
 
-
+For at gøre systemet opgraderbar er der valgt at klargøre fire bits til position af vindue. Systemet som det er skal kun have mulighed for enten at åbne eller lukke vinduet. Det er dog mulighed for at give vinduet flere positioner mellem fuld åben og lukket.
 
 %WriteAdjustHeat
 \begin{table}[h]
@@ -89,6 +89,8 @@ H7 & H6 & H5 & H4 & H3 & H2 & H1 & H0				\\ \hline
 \caption{\IIC Kommando WriteAdjustHeat}
 \label{tbl:I2CAktuatorKommandoWriteAdjustHeat}
 \end{table}
+
+På samme måde som vinduet har systemet kun mulighed for enten at tænde eller slukke for varmelegemet. Der er der klargjort tre bits for at gøre det muligt at opgradere denne funktionalitet til et PWM signal, således at dette kan reguleres til trin mellem tændt og slukket.
 
 \clearpage
 
@@ -114,7 +116,7 @@ V7 & V6 & V5 & V4 & V3 & V2 & V1 & V0				\\ \hline
 \label{tbl:I2CAktuatorKommandoWriteAdjustVentilation}
 \end{table}
 
-
+Til regulering af blæsere er der klargjort tre bits. Systemet skal blot kunne regulere blæserne mellem tændt og slukket. Dermed er der mulighed for at udvide funktionaliteten af reguleringen til trin mellem tændt og slukket.
 
 %WriteAdjustIrrigation
 \begin{table}[h]
@@ -135,7 +137,7 @@ I7 & I6 & I5 & I4 & I3 & I2 & I1 & I0				\\ \hline
 \label{tbl:I2CAktuatorKommandoWriteAdjustIrrigation}
 \end{table}
 
-
+Til regulering af de seks vandingsbools er der klargjort seks bits. Da disse er bools, altså tændt/slukket signaler, er der ikke nogen grund til at klargøre mere plads til fremtidig opgraderinger.
 
 %ReadStatus
 \begin{table}[!h]
@@ -166,9 +168,13 @@ W3 & W2 & W1 & W0 & H2 & H1 & H0 & V2 & V1 & V0 & I5 & I4 & I3 & I2 & I1 & I0			
 \label{tbl:I2CAktuatorKommandoReadStatus}
 \end{table}
 
+ReadStatus gør det muligt for Master PSoC at spørge hvilken status de forskellige aktuatorer har. Dette passer overens med de klargjorte bits til de forskellige reguleringer for at simplificere processen.
+
 \clearpage
 
 \subsection{Slave Jordfugt}
+
+Formålet med Slave Jordfugt er at måle og bearbejde værdier læst fra op til seks jordfugt sensorer. Disse data bliver anmodet af Master PSoC og herefter spurgt efter. Under dette afsnit vil protokolen mellem Slave Jordfugt og Master PSoC blive gennemgået.
 
 %Slave Jordfugt
 \begin{table}[h]
@@ -213,7 +219,7 @@ S7 & S6 & S5 & S4 & S3 & S2 & S1 & S0				\\ \hline
 \label{tbl:I2CJordfugtKommandoWriteDesiredSensor}
 \end{table}
 
-
+Master PSoC har via denne kommando mulighed for, at fortælle Slave Jordfugt hvilken sensor der ønskes data fra ved næste læsning. Da der er seks sensorer er der klargjort tre bits til værdi af sensor nummer.
 
 %ReadStatus
 \begin{table}[h]
@@ -221,7 +227,7 @@ S7 & S6 & S5 & S4 & S3 & S2 & S1 & S0				\\ \hline
 \begin{tabularx}{0.6\textwidth}{| >{\centering\arraybackslash}X | >{\centering\arraybackslash}X | >{\centering\arraybackslash}X | >{\centering\arraybackslash}X | >{\centering\arraybackslash}X | >{\centering\arraybackslash}X | >{\centering\arraybackslash}X | >{\centering\arraybackslash}X |}	\hline
 S7 & S6 & S5 & S4 & S3 & S2 & S1 & S0				\\ \hline
 \multicolumn{1}{ | l | }{Sensor status,}			&
-\multicolumn{7}{  l | }{Sensor værdi, 0x0 - 0x64}
+\multicolumn{7}{  l | }{Sensor værdi, 0x1 - 0x64 (1 - 100)}
 \\
 \multicolumn{1}{ | l | }{0x1 = deaktive,} 			&
 \multicolumn{7}{  l | }{}
@@ -233,3 +239,7 @@ S7 & S6 & S5 & S4 & S3 & S2 & S1 & S0				\\ \hline
 \caption{\IIC Kommando ReadDesiredSensor}
 \label{tbl:I2CJordfugtKommandoReadDesiredSensor}
 \end{table}
+
+Ved læsning vil Slave Jordfugt besvare Master PSoC med en værdi, mellem 1 og 100, fra den sensor Master PSoC'en har bedt om data fra via WriteDesiredSensor. I tilfælde af at der er opstået en fejl vil MSB være høj.
+
+\clearpage

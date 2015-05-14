@@ -1,0 +1,5 @@
+# Indsæt kode i latex med denne syntaks
+\lstinputlisting[linerange=keyword0-keyword1, label=lst:labelname, caption=Description]{../src/foo/bar.c}
+
+# Eksempel
+\lstinputlisting[linerange=getTemp0-getTemp1, label=lst:I2C_Class_getTemp(), caption=Implementering af getTemp()]{../src/PSoC_Master/PSoC_Master.cydsn/I2C_Class.c}

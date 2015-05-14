@@ -1,6 +1,4 @@
-\clearpage
-
-\subsection{Klassebeskrivelser}
+\section{Klassebeskrivelser}
 
 \subsection{Domainklasse Datalog}
 
@@ -90,38 +88,9 @@ Beskrivelse & Metoden går ind i link listen fra nyeste data og går tilbage ind
 
 \clearpage
 
-\subsection{Domainklasse Indstillinger}
 
-\textbf{Attributter}
-
-\begin{table}[h]
-\begin{tabularx}{\textwidth}{| >{\raggedright\arraybackslash}X | >{\raggedright\arraybackslash}X | >{\raggedright\arraybackslash}p{10 cm} |} \hline
-\texttt{virtuallePlants} & \texttt{Plant} & Indeholder 6 structs af typen plant \\\hline
-\texttt{Email} & \texttt{String} & Indeholder 3 e-mails \\\hline
-\texttt{Warning} & \texttt{bool} & En bool som fortæller om advarsels e-mails er slået til eller fra.\\\hline
-\texttt{daily} & \texttt{bool} & En bool som fortæller om daglige e-mails er slået til eller fra. \\\hline
-\texttt{Varmelegeme} & \texttt{bool} & En bool som fortæller om Varmelegemet er slået til eller fra.\\\hline
-\texttt{blæserne} & \texttt{bool} & En bool som fortæller om blæserne er slået til eller fra. \\\hline
-\texttt{monitor} & \texttt{bool} & En bool som fortæller om monitor er slået til eller fra. \\\hline
-\texttt{regulering} & \texttt{bool} & En bool som fortæller om regulering er slået til eller fra. \\\hline
-\end{tabularx}
-\caption{Attributter for klassen Indstillinger}
-\label{table:Indstillinger_attributter}
-\end{table}
-
-\textbf{Metoder}
-
-\begin{table}[h]
-\begin{tabularx}{\textwidth}{| >{\raggedright\arraybackslash}p{2.5 cm} | >{\raggedright\arraybackslash}X |} \hline
-Prototype & \texttt{void SetMonitorering(bool active)} \\\hline
-Parametre & \texttt{bool active} \newline
-True hvis den skal kører ellers false. \\\hline
-Returværdi & - \\\hline
-Beskrivelse & Anvendes til sætte monitorering til at kører eller ikke kører. \\hline
-\end{tabularx}
-\caption{SetMonitorering}
-\label{table:SetMonitorering}
-\end{table}
+%TODO Læg dette ind i samme dok?
+\input{SoftwareDesign/KlasseBeskrivelser/Indstillinger}
 
 \clearpage
 
@@ -389,3 +358,4 @@ Beskrivelse & metoden sender via UART protokollen en anmodning til PSoC masteren
 \label{table:GetSensorData}
 \end{table}
 
+\clearpage

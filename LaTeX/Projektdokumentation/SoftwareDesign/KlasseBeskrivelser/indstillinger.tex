@@ -1,0 +1,240 @@
+\subsection{Domainklasse Indstillinger}
+
+\textbf{Private Attributter}
+
+\begin{table}[h]
+\begin{tabularx}{\textwidth}{| >{\raggedright\arraybackslash}X | >{\raggedright\arraybackslash}X | >{\raggedright\arraybackslash}p{10 cm} |} \hline
+\texttt{virtuallePlants} & \texttt{Plant[6]} & Indeholder 6 structs af typen Plant \\\hline
+\texttt{Email} & \texttt{String[3]} & Indeholder 3 e-mails \\\hline
+\texttt{Warning} & \texttt{bool} & En bool som fortæller om advarsels e-mails er slået til eller fra.\\\hline
+\texttt{daily} & \texttt{bool} & En bool som fortæller om daglige e-mails er slået til eller fra. \\\hline
+\texttt{Varmelegeme} & \texttt{bool} & En bool som fortæller om Varmelegemet er slået til eller fra.\\\hline
+\texttt{blæserne} & \texttt{bool} & En bool som fortæller om blæserne er slået til eller fra. \\\hline
+\texttt{monitor} & \texttt{bool} & En bool som fortæller om monitor er slået til eller fra. \\\hline
+\texttt{regulering} & \texttt{bool} & En bool som fortæller om regulering er slået til eller fra. \\\hline
+\end{tabularx}
+\caption{Attributter for klassen Indstillinger}
+\label{table:Indstillinger_attributter}
+\end{table}
+
+\textbf{Private metoder}
+
+\begin{table}[h]
+\begin{tabularx}{\textwidth}{| >{\raggedright\arraybackslash}p{2.5 cm} | >{\raggedright\arraybackslash}X |} \hline
+Prototype & \texttt{string exec(const char* cmd)} \\\hline
+Parametre & en string med den shell kommando der skal eksekveres på systemet. \\\hline
+Returværdi & \texttt{Plant} \newline
+En string som indeholder outputtet fra den kørte shell kommando \\\hline
+Beskrivelse & Kan kørere kommandoer på et Linux system via en pipe til systemet. \\\hline
+\end{tabularx}
+\caption{exec}
+\label{table:exec}
+\end{table}
+
+\textbf{Public Metoder}
+
+\begin{table}[h]
+\begin{tabularx}{\textwidth}{| >{\raggedright\arraybackslash}p{2.5 cm} | >{\raggedright\arraybackslash}X |} \hline
+Prototype & \texttt{void SetMonitorering(bool active)} \\\hline
+Parametre & \texttt{bool active} \newline
+True hvis den skal kører ellers false. \\\hline
+Returværdi & - \\\hline
+Beskrivelse & Anvendes til sætte monitorering til at kører eller ikke kører. \\\hline
+\end{tabularx}
+\caption{SetMonitorering}
+\label{table:SetMonitorering}
+\end{table}
+
+\begin{table}[h]
+\begin{tabularx}{\textwidth}{| >{\raggedright\arraybackslash}p{2.5 cm} | >{\raggedright\arraybackslash}X |} \hline
+Prototype & \texttt{void SetRegulering(bool active)} \\\hline
+Parametre & \texttt{bool active} \newline
+True hvis den skal kører ellers false. \\\hline
+Returværdi & - \\\hline
+Beskrivelse & Anvendes til sætte regulering til at kører eller ikke kører. \\\hline
+\end{tabularx}
+\caption{SetRegulering}
+\label{table:SetRegulering}
+\end{table}
+
+\begin{table}[h]
+\begin{tabularx}{\textwidth}{| >{\raggedright\arraybackslash}p{2.5 cm} | >{\raggedright\arraybackslash}X |} \hline
+Prototype & \texttt{bool getRegulering()} \\\hline
+Parametre & \texttt{-} \newline
+ \\\hline
+Returværdi & True hvis den skal kører ellers false. \\\hline
+Beskrivelse & Anvendes tjekke status på regulering, så man kan se om den kører eller ej. \\\hline
+\end{tabularx}
+\caption{getRegulering}
+\label{table:getRegulering}
+\end{table}
+
+\begin{table}[h]
+\begin{tabularx}{\textwidth}{| >{\raggedright\arraybackslash}p{2.5 cm} | >{\raggedright\arraybackslash}X |} \hline
+Prototype & \texttt{bool getMonitorering()} \\\hline
+Parametre & \texttt{-} \newline
+ \\\hline
+Returværdi & True hvis den skal kører ellers false. \\\hline
+Beskrivelse & Anvendes tjekke status på monitorering, så man kan se om den kører eller ej. \\\hline
+\end{tabularx}
+\caption{getMonitorering}
+\label{table:getMonitorering}
+\end{table}
+
+\begin{table}[h]
+\begin{tabularx}{\textwidth}{| >{\raggedright\arraybackslash}p{2.5 cm} | >{\raggedright\arraybackslash}X |} \hline
+Prototype & \texttt{void SetVirtualPlant(int id, Plant plantToPlace)} \\\hline
+Parametre & \texttt{bool active} \newline et id som er mellem 1 og 6 som svare til hvor planeten er i det Virtual drivhus. \newline
+\texttt{Plant plantToPlace} \newline Her er den plante som skal sættes ind i det virtual drivhus. \\\hline
+Returværdi & True hvis den skal kører ellers false. \\\hline
+Beskrivelse & Bruges til at indsætte en plante i det virtual drivhus. \\\hline
+\end{tabularx}
+\caption{SetVirtualPlant}
+\label{table:SetVirtualPlant}
+\end{table}
+
+\begin{table}[h]
+\begin{tabularx}{\textwidth}{| >{\raggedright\arraybackslash}p{2.5 cm} | >{\raggedright\arraybackslash}X |} \hline
+Prototype & \texttt{void DelVirtualPlant(int id)} \\\hline
+Parametre & \texttt{int id} \newline et id som er mellem 1 og 6 som svare til hvor planeten er i det Virtual drivhus. \\\hline
+Returværdi & True hvis den skal kører ellers false. \\\hline
+Beskrivelse & Anvendes det at slette en virtual plante i det virtual drivhus. \\\hline
+\end{tabularx}
+\caption{DelVirtualPlant}
+\label{table:DelVirtualPlant}
+\end{table}
+
+\begin{table}[h]
+\begin{tabularx}{\textwidth}{| >{\raggedright\arraybackslash}p{2.5 cm} | >{\raggedright\arraybackslash}X |} \hline
+Prototype & \texttt{void GetEmails(string \&mail1, string \&mail2, string \&mail3)} \\\hline
+Parametre & \texttt{string \&mail1} \newline E-mail et som der kan sendes notifications til. \newline
+\texttt{string \&mail2} \newline E-mail to som der kan sendes notifications til.
+\newline
+\texttt{string \&mail3} \newline E-mail tre som der kan sendes notifications til.
+ \\\hline
+Returværdi & - \\\hline
+Beskrivelse & Bruges til at hente de tre e-mail adresser som systemet har gemt. \\\hline
+\end{tabularx}
+\caption{GetEmails}
+\label{table:GetEmails}
+\end{table}
+
+\begin{table}[h]
+\begin{tabularx}{\textwidth}{| >{\raggedright\arraybackslash}p{2.5 cm} | >{\raggedright\arraybackslash}X |} \hline
+Prototype & \texttt{void SetEmails(string \&mail1, string \&mail2, string \&mail3)} \\\hline
+Parametre & \texttt{string \&mail1} \newline E-mail et som der kan sendes notifications til. \newline
+\texttt{string \&mail2} \newline E-mail to som der kan sendes notifications til.
+\newline
+\texttt{string \&mail3} \newline E-mail tre som der kan sendes notifications til.
+ \\\hline
+Returværdi & - \\\hline
+Beskrivelse & Bruges til at sætte de tre e-mail adresser som systemet har gemt. \\\hline
+\end{tabularx}
+\caption{SetEmails}
+\label{table:SetEmails}
+\end{table}
+
+\begin{table}[h]
+\begin{tabularx}{\textwidth}{| >{\raggedright\arraybackslash}p{2.5 cm} | >{\raggedright\arraybackslash}X |} \hline
+Prototype & \texttt{void GetHardware(bool \&Varmelegeme, bool \&bloeserne)} \\\hline
+Parametre & \texttt{bool \&Varmelegeme} \newline En reference til en bool, son ændres til den aktuelle status på Varmelegemet.
+\newline
+\texttt{bool \&bloeserne} \newline En reference til en bool, son ændres til den aktuelle status på blæserne.
+ \\\hline
+Returværdi & - \\\hline
+Beskrivelse & Anvendes til at se om varmelegemet og/eller blæserne kører, hvis værdien for et givet stykke er true kører det stykke hardware, men hvis false kører det ikke. \\\hline
+\end{tabularx}
+\caption{GetHardware}
+\label{table:GetHardware}
+\end{table}
+
+\begin{table}[h]
+\begin{tabularx}{\textwidth}{| >{\raggedright\arraybackslash}p{2.5 cm} | >{\raggedright\arraybackslash}X |} \hline
+Prototype & \texttt{void SetHardware(const bool Varmelegeme, const bool bloeserne)} \\\hline
+Parametre & \texttt{const bool Varmelegeme} \newline Sættes true hvis varmelegemet skal kører ellers false
+\newline
+\texttt{const bool bloeserne} \newline Sættes true hvis blæserne skal kører ellers false
+ \\\hline
+Returværdi & - \\\hline
+Beskrivelse & Anvendes at sætte om Varmelegemet og/eller blæserne skal må bruges til regulering i drivhuset. \\\hline
+\end{tabularx}
+\caption{SetHardware}
+\label{table:SetHardware}
+\end{table}
+
+\begin{table}[h]
+\begin{tabularx}{\textwidth}{| >{\raggedright\arraybackslash}p{2.5 cm} | >{\raggedright\arraybackslash}X |} \hline
+Prototype & \texttt{void setDate(Date time)} \\\hline
+Parametre & \texttt{Date time} \newline En struct af type Date som beskriver den tid som det ønskes at system skal indstille sig efter. \\\hline
+Returværdi & - \\\hline
+Beskrivelse & Anvendes at sætte tiden på systemet, dette sker ved at eksekvere et script bash script på systemet via en shell som smider de rette parameter ind. Systemet kan sættes til en tid mellem år 2000 og 2050. \\\hline
+\end{tabularx}
+\caption{setDate}
+\label{table:setDate}
+\end{table}
+
+\begin{table}[h]
+\begin{tabularx}{\textwidth}{| >{\raggedright\arraybackslash}p{2.5 cm} | >{\raggedright\arraybackslash}X |} \hline
+Prototype & \texttt{Date getDate()} \\\hline
+Parametre & \texttt{-} \newline \\\hline
+Returværdi & En struct af type Date som beskriver den aktuelle tid som på systemet. \\\hline
+Beskrivelse & Anvendes henter den aktuelle tid på systemet.\\\hline
+\end{tabularx}
+\caption{getDate}
+\label{table:getDate}
+\end{table}
+
+\begin{table}[h]
+\begin{tabularx}{\textwidth}{| >{\raggedright\arraybackslash}p{2.5 cm} | >{\raggedright\arraybackslash}X |} \hline
+Prototype & \texttt{void GetNotifications(bool \&daily, bool \&Warning)} \\\hline
+Parametre & \texttt{bool \&daily} \newline En reference til en bool, son ændres til den aktuelle status på daily notifications, hvis den ændres til true er daily slået til, men hvis den er false er daily ikke slået til.
+\newline
+\texttt{bool \&Warning} \newline En reference til en bool, son ændres til den aktuelle status på warning notifications, hvis den ændres til true er warning slået til, men hvis den er false er warning ikke slået til.
+ \\\hline
+Returværdi & - \\\hline
+Beskrivelse & Anvendes til at se om daily og/eller Warning er slået til, hvis værdien for er true sendes notifications for den, men hvis false sendes den ikke.\\\hline
+\end{tabularx}
+\caption{GetNotifications}
+\label{table:GetNotifications}
+\end{table}
+
+\begin{table}[h]
+\begin{tabularx}{\textwidth}{| >{\raggedright\arraybackslash}p{2.5 cm} | >{\raggedright\arraybackslash}X |} \hline
+Prototype & \texttt{void SetNotifications(const bool \&daily, const bool \&Warning)} \\\hline
+Parametre & \texttt{bool \&daily} \newline En reference til en bool, son ændres til den aktuelle status på daily notifications, hvis den ændres til true er daily slået til, men hvis den er false er daily ikke slået til.
+\newline
+\texttt{bool \&Warning} \newline En reference til en bool, son ændres til den aktuelle status på warning notifications, hvis den ændres til true er warning slået til, men hvis den er false er warning ikke slået til.
+ \\\hline
+Returværdi & - \\\hline
+Beskrivelse & Anvendes til at se om daily og/eller Warning er slået til, hvis værdien for er true sendes notifications for den, men hvis false sendes den ikke.\\\hline
+\end{tabularx}
+\caption{SetNotifications}
+\label{table:SetNotifications}
+\end{table}
+
+\begin{table}[h]
+\begin{tabularx}{\textwidth}{| >{\raggedright\arraybackslash}p{2.5 cm} | >{\raggedright\arraybackslash}X |} \hline
+Prototype & \texttt{int GetData(int plantId, Plant \&plantToedit)} \\\hline
+Parametre & \texttt{int plantId} \newline Et id som beskriver hvor planeten er henne skal være et tal mellem 1 og 6
+\newline
+\texttt{Plant \&plantToedit} \newline En reference til en plante som du gerne hente ud.
+ \\\hline
+Returværdi & - \\\hline
+Beskrivelse & Anvendes hente en plante ud af systemet .\\\hline
+\end{tabularx}
+\caption{GetData}
+\label{table:GetData}
+\end{table}
+
+\begin{table}[h]
+\begin{tabularx}{\textwidth}{| >{\raggedright\arraybackslash}p{2.5 cm} | >{\raggedright\arraybackslash}X |} \hline
+Prototype & \texttt{plant* GetAll()} \\\hline
+Parametre & \texttt{-} \newline
+
+ \\\hline
+Returværdi & Et array som indeholder de 6 virtuelle planter \\\hline
+Beskrivelse & Anvendes hente en plante ud af systemet .\\\hline
+\end{tabularx}
+\caption{GetAll}
+\label{table:GetAll}
+\end{table}

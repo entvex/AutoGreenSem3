@@ -20,10 +20,11 @@ På Figur \ref{fig:Master_PSoC_klassediagram} ses klassediagrammet for Master PS
 
 \begin{table}[h]
 \begin{tabularx}{\textwidth}{| >{\raggedright\arraybackslash}X | >{\raggedright\arraybackslash}X | >{\raggedright\arraybackslash}p{10 cm} |} \hline
+Navn & Type & Beskrivelse \\\hline
 \texttt{tempTemp} & \texttt{int32} & Midlertidig variabel til opbevaring af temperatur. \\\hline
 \texttt{tempHum} & \texttt{int32} & Midlertidig variabel til opbevaring af luftfugtighed. \\\hline
 \texttt{tempLight} & \texttt{int32} & Midlertidig variabel til opbevaring af lysintensitet. \\\hline
-\texttt{tempSoilHum} & \texttt{int16} & Midlertidig variabel til opbevaring af jordfugtighed. \\\hline
+\texttt{tempSoilHum} & \texttt{int16 [6]} & Array af midlertidige variabler til opbevaring af jordfugtighed. \\\hline
 \end{tabularx}
 \caption{Attributter for klassen PSoC\_Master}
 \label{table:PSoC_Master_attributter}
@@ -56,6 +57,32 @@ Beskrivelse & Denne interrupt service rutine bliver kaldt, når der modtages nog
 \end{tabularx}
 \caption{CY\_ISR(uart\_ISR)}
 \label{table:CY_ISR(uart_ISR)}
+\end{table}
+
+%========================= timerIntHandler ==============
+
+\begin{table}[h]
+\begin{tabularx}{\textwidth}{| >{\raggedright\arraybackslash}p{2.5 cm} | >{\raggedright\arraybackslash}X |} \hline
+Prototype & \texttt{void timerIntHandler(void)} \\\hline
+Parametre & - \\\hline
+Returværdi & - \\\hline
+Beskrivelse & Kontrollerer et flag sat af timer\_ISR. Hvis flag er sat, spørger den på \IIC om sensor-værdier. \\\hline
+\end{tabularx}
+\caption{timerIntHandler()}
+\label{table:timerIntHandler()}
+\end{table}
+
+%========================= uartIntHandler ==============
+
+\begin{table}[h]
+\begin{tabularx}{\textwidth}{| >{\raggedright\arraybackslash}p{2.5 cm} | >{\raggedright\arraybackslash}X |} \hline
+Prototype & \texttt{void uartIntHandler(void)} \\\hline
+Parametre & - \\\hline
+Returværdi & - \\\hline
+Beskrivelse & Kontrollerer et flag sat af uart\_ISR. Hvis flaget er sat, spørger den på \IIC om sensor-værdier. \\\hline
+\end{tabularx}
+\caption{timerIntHandler()}
+\label{table:timerIntHandler()}
 \end{table}
 
 %========================= FLERE UART FUNKTIONER ==============
@@ -366,6 +393,22 @@ Beskrivelse & Metoden skriver ubehandlet data fra sensoren i en variabel. \\\hli
 \textbf{Attributter}
 
 \begin{table}[h]
+\begin{tabularx}{\textwidth}{| >{\raggedright\arraybackslash}X | >{\raggedright\arraybackslash}X | >{\raggedright\arraybackslash}p{8 cm} |} \hline
+Navn & Type & Beskrivelse \\\hline
+\texttt{tempArray} & \texttt{int32} & Array der indeholder måleværdier fra temperaturmåler. \\\hline
+\texttt{humArray} & \texttt{int32} & Array der indeholder måleværdier fra fugtighedsmåler. \\\hline
+\texttt{soilHumArray} & \texttt{int16} & To-dimentionelt array der indeholder målinger fra jordfugtsensorerne. \\\hline
+\texttt{lightArray} & \texttt{int32} & Array der indeholder måleværdier fra lyssensoren. \\\hline
+\texttt{temp} & \texttt{uint8} & Variabel der indeholder den midlede og konverterede værdi af temperaturen, som DevKit8000 kan efterspørge. \\\hline
+\texttt{hum} & \texttt{uint8} & Variabel der indeholder den midlede værdi af fugtigheden, som DevKit8000 kan efterspørge. \\\hline
+\texttt{soilHum} & \texttt{uint8} & Variabel der indeholder den midlede værdi af jordfugtigheden, som DevKit8000 kan efterspørge. \\\hline
+\texttt{light} & \texttt{uint8} & Variabel der indeholder den midlede værdi af lysintensiteten, som DevKit8000 kan efterspørge. \\\hline
+\end{tabularx}
+\caption{Attributter for klassen DSP}
+\label{table:DSP_attributter}
+\end{table}
+
+\begin{table}[h]
 \begin{tabularx}{\textwidth}{| >{\raggedright\arraybackslash}p{2.5 cm} |  >{\raggedright\arraybackslash}p{2.9 cm} | >{\raggedright\arraybackslash}X |} \hline
 Navn & Type & Beskrivelse \\\hline
 \texttt{tempArray} & \texttt{int32[0..*]} & Pointer til et array på en given størrelse, som indeholder ubearbejdede målinger af temperaturen, indhentet fra boundaryklassen \IIC. \\\hline
@@ -387,13 +430,13 @@ Navn & Type & Beskrivelse \\\hline
 
 \begin{table}[h]
 \begin{tabularx}{\textwidth}{| >{\raggedright\arraybackslash}p{2.5 cm} | >{\raggedright\arraybackslash}X |} \hline
-Prototype & \texttt{int8 getTemp(void)} \\\hline
+Prototype & \texttt{int8 getTemp\_DSP(void)} \\\hline
 Parametre & - \\\hline
 Returværdi & \texttt{int8} \newline
 Metoden returnerer variablen temp. \\\hline
 Beskrivelse & Kan bruges til at hente den midlede temperatur, der skal sendes via UART til DevKit8000. \\\hline
 \end{tabularx}
-\caption{getTemp}
+\caption{getTemp\_DSP}
 \label{table:getTemp_DSP}
 \end{table}
 
@@ -401,13 +444,13 @@ Beskrivelse & Kan bruges til at hente den midlede temperatur, der skal sendes vi
 
 \begin{table}[h]
 \begin{tabularx}{\textwidth}{| >{\raggedright\arraybackslash}p{2.5 cm} | >{\raggedright\arraybackslash}X |} \hline
-Prototype & \texttt{int8 getHum(void)} \\\hline
+Prototype & \texttt{int8 getHum\_DSP(void)} \\\hline
 Parametre & - \\\hline
 Returværdi & \texttt{int8} \newline
 Metoden returnerer variablen hum. \\\hline
 Beskrivelse & Kan bruges til at hente den midlede luftfugtighed, der skal sendes via UART til DevKit8000. \\\hline
 \end{tabularx}
-\caption{getHum}
+\caption{getHum\_DSP}
 \label{table:getHum_DSP}
 \end{table}
 
@@ -417,14 +460,14 @@ Beskrivelse & Kan bruges til at hente den midlede luftfugtighed, der skal sendes
 
 \begin{table}[h]
 \begin{tabularx}{\textwidth}{| >{\raggedright\arraybackslash}p{2.5 cm} | >{\raggedright\arraybackslash}X |} \hline
-Prototype & \texttt{int8 getSoilHum(uint8 index)} \\\hline
+Prototype & \texttt{int8 getSoilHum\_DSP(uint8 index)} \\\hline
 Parametre & \texttt{uint8 index} \newline
 Fortæller hvilken jordfugtighedssensor der returneres værdier fra. \\\hline
 Returværdi & \texttt{int8} \newline
 Returnerer variablen soilHum der tilsvarer parametret index. \\\hline
 Beskrivelse & Metoden bruges til at hente den midlede jordfugtighed, der skal sendes via UART til DevKit8000. \\\hline
 \end{tabularx}
-\caption{getSoilHum}
+\caption{getSoilHum\_DSP}
 \label{table:getSoilHum_DSP}
 \end{table}
 
@@ -432,13 +475,13 @@ Beskrivelse & Metoden bruges til at hente den midlede jordfugtighed, der skal se
 
 \begin{table}[h]
 \begin{tabularx}{\textwidth}{| >{\raggedright\arraybackslash}p{2.5 cm} | >{\raggedright\arraybackslash}X |} \hline
-Prototype & \texttt{int8 getLight(void)} \\\hline
+Prototype & \texttt{int8 getLight\_DSP(void)} \\\hline
 Parametre & - \\\hline
 Returværdi & \texttt{int8} \newline
 Metoden returnerer variablen light. \\\hline
 Beskrivelse & Kan bruges til at hente den midlede lysintensitet, der skal sendes via UART til DevKit8000. \\\hline
 \end{tabularx}
-\caption{getLight}
+\caption{getLight\_DSP}
 \label{table:getLight_DSP}
 \end{table}
 
@@ -557,7 +600,7 @@ Beskrivelse & Metoden har til formål at indsætte værdien fra tempLight i ligh
 
 \subsection{Sekvensdiagrammer}
 
-%TODO Indsæt brødtekst omkring noget her. Svissen svassen.
+På Figur \ref{fig:sd_PSoC_master_sensor}, \ref{fig:sd_PSoC_master_tempreq} og \ref{fig:sd_PSoC_master_window}, ses der forskellige forløb af masterens aktivitet. Sekvensdiagrammerne er eksempler på den funktionalitet der forekommer i masteren. 
 
 \begin{figure}[h]
 \centering
