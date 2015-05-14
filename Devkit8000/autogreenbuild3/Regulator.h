@@ -21,6 +21,9 @@ class Regulator
       settings = settings_;
       systemlog = systemlog_;
       datalog = datalog_;
+      heatON = false;
+      ventsON = false;
+      windowON = false;
     }
 
   ~Regulator()
@@ -39,7 +42,7 @@ class Regulator
 	}
       else
 	{
-          cout << "regulator is active\n";
+           //cout << "regulator is active\n";
 	  //load data into plants from Settings (indstillinger)
 	  loadData();
 	  SensorData loadeddata = datalog->GetNewestData();
@@ -76,13 +79,24 @@ class Regulator
 	//    SysMsg* monmsg = new SysMsg;
 	//    monmsg->msg_ = "slukker alle aktuatorer";
 	//    systemlog->send(1, monmsg);
-
+        if(ventsON)
+        {
 	uart->activateSensor("ventoff");
 	usleep(100);
+        ventsON = false;
+        }
+        if(heatON)
+        {
 	uart->activateSensor("heatoff");
 	usleep(100);
+        heatON = false;
+        }
+        if(windowON)
+        {
 	uart->activateSensor("windowoff");
 	usleep(100);
+        windowON = false;
+        }
 
 
       }
@@ -95,8 +109,12 @@ class Regulator
 	//start vent
 	if(use_vents)
 	  {
+            if(!ventsON)
+            {
 	    uart->activateSensor("venton");
 	    usleep(100);
+            ventsON = true;
+            }
 	  }
 	else
 	  {
@@ -105,8 +123,12 @@ class Regulator
 	    //        systemlog->send(1, monmsg);
 	  }
 	//open window
+        if(!windowON)
+        {
 	uart->activateSensor("windowon");
 	usleep(100);
+        windowON = true;
+        }
       }
     else if (temp_drivhus >= avg_temp_drivhus + 0.5)
       {
@@ -117,9 +139,18 @@ class Regulator
 	//    SysMsg* monmsg = new SysMsg;
 	//    monmsg->msg_ = "Window åbnes";
 	//    systemlog->send(1, monmsg);
+              if(!windowON)
+              {
 	      uart->activateSensor("windowon");
 	      usleep(100);
+              windowON = true;
+              }
+              if(ventsON)
+              {
 	      uart->activateSensor("ventoff");
+              usleep(100);
+              ventsON = false;
+              }
       }
     else if (temp_drivhus < avg_temp_drivhus - 0.0)
       {
@@ -133,8 +164,12 @@ class Regulator
 	//    systemlog->send(1, monmsg);
 	if(use_heater)
 	  {
+            if(!heatON)
+            {
 	    uart->activateSensor("heaton");
 	    usleep(100);
+            heatON = true;
+            }
 	  }
 	else
 	  {
@@ -143,11 +178,19 @@ class Regulator
 	    //        monmsg->msg_ = "Heater kan ikke bruges";
 	    //        systemlog->send(1, monmsg);
 	  }
-
+        if(ventsON)
+        {
 	uart->activateSensor("ventoff");
 	usleep(100);
+        ventsON = false;
+        }
+
+        if(windowON)
+        {
 	uart->activateSensor("windowoff");
 	usleep(100);
+        windowON = false;
+        }
 
       }
 
@@ -232,6 +275,8 @@ class Regulator
   Indstillinger * settings;
   MsgQueue * systemlog;
   DataLog * datalog;
+
+  bool ventsON, windowON, heatON;
 
 };
 

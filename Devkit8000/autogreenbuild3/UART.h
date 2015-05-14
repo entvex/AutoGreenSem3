@@ -76,7 +76,23 @@ class UART
 	addMessage("Window Opened");
       }
       usleep(10000);
-    recievedata();
+    
+	int response = recievedata();
+	if(response == 999)
+	{
+	 //response OK	
+	}
+	else{
+		int count;
+		for(count = 0; count < 2; count ++)
+		{
+			senddata(command_);	
+			response = recievedata();
+			if(response == 999)
+				break;
+		}		
+		
+	}
     pthread_mutex_unlock(&mtx);
   }
 
@@ -190,7 +206,7 @@ class UART
   int recievedata()
   {
 int testcount;
-//nødvendigt??
+//nødvendigt?? nej, men spurgte om jeg skulle lave det eller ej, og fik et ja, så her er det.
     for(testcount = 0; testcount <=10; testcount++)
       {
 	buf[0] = 0; buf[1] = 0; buf[2] = 0;
@@ -219,7 +235,6 @@ int testcount;
 	  }
 	else if (buf[0] == 'A')
 	  {
-
 	    return (int)buf[1];
 	  }
 	else if (buf[0] == 'X' && buf[1] == 'A')
@@ -234,6 +249,31 @@ int testcount;
 	  {
 	    return (int)buf[2];
 	  }
+	else if (buf[0] == 'H' || buf[0] == 'K' || buf[0] == 'W' || buf[0] == 'V')
+	  {
+	    return  999;
+	  }
+	  else if (buf[0] == 'X' && buf[1] == 'V')
+	  {
+		  //cout << "fejl ved vent\n";
+		  return -99;
+	  }
+	  else if (buf[0] == 'X' && buf[1] == 'W')
+	  {
+		  return -99;
+	  }
+	  else if (buf[0] == 'X' && buf[1] == 'K')
+	  {
+		  //cout << "fejl ved heater\n";
+		  return -99;
+		  
+	  }
+	  	  else if (buf[0] == 'X' && buf[1] == 'H')
+	  {
+		  //cout << "fejl ved heater\n";
+		  return -99;
+	  }
+	  
 
 	
       }
