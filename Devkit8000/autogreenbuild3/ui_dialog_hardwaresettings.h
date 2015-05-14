@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'dialog_hardwaresettings.ui'
 **
-** Created: Wed May 13 14:53:16 2015
+** Created: Thu May 14 12:11:39 2015
 **      by: Qt User Interface Compiler version 4.8.0
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -50,14 +50,14 @@ public:
         btn_varme->setStyleSheet(QString::fromUtf8("background-color: rgb(0, 255, 0);"));
         btn_ok = new QPushButton(dialog_hardwaresettings);
         btn_ok->setObjectName(QString::fromUtf8("btn_ok"));
-        btn_ok->setGeometry(QRect(370, 218, 61, 31));
+        btn_ok->setGeometry(QRect(370, 200, 61, 31));
         btn_bloeser = new QPushButton(dialog_hardwaresettings);
         btn_bloeser->setObjectName(QString::fromUtf8("btn_bloeser"));
         btn_bloeser->setGeometry(QRect(110, 128, 261, 61));
         btn_bloeser->setStyleSheet(QString::fromUtf8("background-color: rgb(255, 0, 0);"));
         btn_back = new QPushButton(dialog_hardwaresettings);
         btn_back->setObjectName(QString::fromUtf8("btn_back"));
-        btn_back->setGeometry(QRect(50, 220, 61, 31));
+        btn_back->setGeometry(QRect(40, 200, 61, 31));
 
         retranslateUi(dialog_hardwaresettings);
 

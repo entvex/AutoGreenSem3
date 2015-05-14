@@ -138,19 +138,17 @@ public:
   // returns -1 If the selected plant is not active and the ref is edited.
   Plant Getplant(int plantId)
   {
-    // if (plantId >= 0 && plantId < 6)
-    //{
-	return virtuallePlants[plantId];
-    //}
+        return virtuallePlants[plantId - 1];
+         //return virtuallePlants[plantId];
   }
 
   //id mellem 1 og 6
   //Plant plantToPlace
-  void SetVirtualPlant(int id, Plant plantToPlace)
+  void SetVirtualPlant(int id,Plant plantToPlace)
   {
     if (id > 0 && id < 7)
       {
-	this->virtuallePlants[id - 1] = plantToPlace;
+        virtuallePlants[id-1] = plantToPlace;
       }
   }
 

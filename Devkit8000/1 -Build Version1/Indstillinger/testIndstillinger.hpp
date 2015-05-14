@@ -50,3 +50,22 @@ void testGethardware()
 	cout << "Henter hardware bools" << endl;
 	cout << "Bloeser: " << bloeser << " Varme: " << Varme << endl;
 }
+
+void testGetSetPlant()
+{
+
+    Plant standardPlante;
+    standardPlante.hum = 5;
+    standardPlante.light = 5;
+    standardPlante.name = "Tomat";
+    standardPlante.temp = 16;
+    standardPlante.water = 5;
+
+    Indstillinger indstillinger;
+    //Setup af virtualle planter
+    cout << "Soetter plant1" << endl;
+    indstillinger.SetVirtualPlant(1,standardPlante);
+    cout << "Henter plante 1" << endl;
+    Plant testplant = indstillinger.Getplant(1);
+    cout << " temp for plant 1 er:" << testplant.temp << endl;
+}

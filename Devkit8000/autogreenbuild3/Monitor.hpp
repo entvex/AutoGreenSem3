@@ -28,6 +28,7 @@ public:
     syslog_ = &syslog;
     mtx = PTHREAD_MUTEX_INITIALIZER;
     gui.temp = 25;
+    gui.avgtemp = 25;
 
     for(int i = 0; i < 6; i++)
       {
@@ -54,6 +55,7 @@ public:
 	date_ = ind_->getDate();
 	ind_->GetNotifications(daily_, warning_);
 	ind_->GetPlants(virtuel_);
+
       
 	// See if sensor data is aviliable
 	//int sensor = uart_->getSensor();
@@ -68,6 +70,7 @@ public:
        
 	// update live Gui temperature
 	gui.temp = sensordata_.temp;
+    gui.avgtemp = virtuel_[0].temp;
 
 	for(int i = 0; i < 6; i++)
 	  {
@@ -76,7 +79,7 @@ public:
 	    gui.virtualHum[i] = virtuel_[i].hum;
 	  }
 
-	usleep(10000000);
+    usleep(300000);
       }
       usleep(1000000);
     }
@@ -90,13 +93,13 @@ public:
 private:
   int compareSet(SensorData data, Plant plant, int offset, int i)
   {
-    if(plant.hum == 0)
+    if(plant.hum == 0 || data.grund[i] == -99)
       return 1;
 
     if(data.grund[i] >= plant.hum + offset)
-      return 2;
+      return 3;
 
-    return 3;
+    return 2;
   }
 
   GUIStruct gui;

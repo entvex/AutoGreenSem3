@@ -40,7 +40,7 @@ int main(int argc, char *argv[])
     standardPlante.hum = 5;
     standardPlante.light = 5;
     standardPlante.name = "Tomat";
-    standardPlante.temp = 16;
+    standardPlante.temp = 25;
     standardPlante.water = 5;
 
     Indstillinger indstillinger;
@@ -70,6 +70,7 @@ int main(int argc, char *argv[])
     pthread_create(&montrd, NULL, &MonitorTrd, &referenceStruct);
     pthread_create(&systrd, NULL, &SystemLogTrd, &systemlog);
     pthread_create(&regtrd, NULL, &RegulatorTrd, &regulator);
+
 
     MainWindow mainWindow(referenceStruct);
     mainWindow.setOrientation(MainWindow::ScreenOrientationAuto);

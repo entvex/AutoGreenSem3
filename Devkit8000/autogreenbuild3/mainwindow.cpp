@@ -4,9 +4,9 @@
 #include "dialog_historik.h"
 #include "dialoge_systemlog.h"
 #include "ReferenceStruct.hpp"
-#include "dialog_drivhus.h"
 #include "QTimer"
 #include "GUIStruct.hpp"
+#include "dialog_drivehusadministration.h"
 #include <QtCore/QCoreApplication>
 
 
@@ -16,7 +16,7 @@ MainWindow::MainWindow(ReferenceStruct refs, QWidget *parent): QMainWindow(paren
 
   QTimer *timer = new QTimer(this);
   connect(timer, SIGNAL(timeout()), this, SLOT(updateBtn()));
-  timer->start(10000);
+  timer->start(1000);
   refs_ = refs;
 
 }
@@ -84,24 +84,40 @@ void MainWindow::updateBtn()
 {
 
   QString text = "";
-  text.append("temp: ");
+  text.append("Aktuel temp: ");
+
+  QChar ch(0xB0); //celcius
+
   GUIStruct gui = refs_.monitor->getGuiData();
 
   if(gui.temp != -99){
-    text.append(QString::number(gui.temp));
+    text.append(QString::number(gui.temp,'f',1));
+    text.append(ch);
+    text.append("C\n");
+    text.append("Oensket temp: ");
+    text.append(QString::number(gui.avgtemp, 'f',1));
+    text.append(ch);
+    text.append("C\n");
     ui->pte_livestatus->setPlainText(text);
   }
   else {
-    text.append("unavailable");
+    text.append("n/a");
     ui->pte_livestatus->setPlainText(text);
   }
 
   for(int i = 0; i < 6; i++){
 
+    if(gui.realHum[i] != -99)
+    {
     text = "";
     text.append(QString::number(gui.realHum[i]));
     text.append("/");
     text.append(QString::number(gui.virtualHum[i]));
+    }
+    else
+    {
+        text = "n/a";
+    }
 
     switch (i)
       {
@@ -295,7 +311,7 @@ void MainWindow::on_btn_reguler_clicked()
 
 void MainWindow::on_btn_adminDrivhus_clicked()
 {
-  Dialog_drivhus drivhus(refs_);
-  drivhus.setModal(true);
-  drivhus.exec();
+    Dialog_drivehusAdministration drivehusadministration(refs_);
+    drivehusadministration.setModal(true);
+    drivehusadministration.exec();
 }

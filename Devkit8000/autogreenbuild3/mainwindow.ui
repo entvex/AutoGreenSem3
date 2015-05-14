@@ -186,10 +186,7 @@
      </rect>
     </property>
     <property name="plainText">
-     <string>1
-1
-1
-1</string>
+     <string/>
     </property>
    </widget>
    <widget class="QPushButton" name="status5">

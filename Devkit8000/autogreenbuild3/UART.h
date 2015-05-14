@@ -84,7 +84,7 @@ class UART
   {
     pthread_mutex_lock(&mtx);
     SensorData newdata;
-    //void ændres til Sensordata
+    //void Ã¦ndres til Sensordata
     
  
 		
@@ -170,11 +170,11 @@ class UART
     pthread_mutex_unlock(&mtx);
     
     
-    cout << "////////sensordata////////" << endl;
-    cout << newdata.temp << endl;
-    cout << newdata.grund[0] << " " << newdata.grund[1] << " " << newdata.grund[2] << " " <<
-    newdata.grund[3] << " " << newdata.grund[4] << " " << newdata.grund[5] << endl;
-    cout << " ///////sensordata-end//////" << endl;
+//    cout << "////////sensordata////////" << endl;
+//    cout << newdata.temp << endl;
+//    cout << newdata.grund[0] << " " << newdata.grund[1] << " " << newdata.grund[2] << " " <<
+//    newdata.grund[3] << " " << newdata.grund[4] << " " << newdata.grund[5] << endl;
+//    cout << " ///////sensordata-end//////" << endl;
     return newdata;
   }
 
@@ -196,7 +196,7 @@ int testcount;
 	usleep(150000);
 	RS232_PollComport(cport_nr, buf, 4);
 	
-	cout << buf[0] << " " << buf[1] << buf[2] <<  endl;
+    // cout << buf[0] << " " << buf[1] << buf[2] <<  endl;
 
 	if (buf[0] == 'T')
 	  {
@@ -274,7 +274,7 @@ int testcount;
     else if (command_ == "ventoff")
       strcpy(command[1], "V0");
     RS232_cputs(cport_nr, command[1]);
-    cout << command[1] << endl;
+    //cout << command[1] << endl;
   }
   
  private:

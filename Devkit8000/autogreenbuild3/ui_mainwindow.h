@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'mainwindow.ui'
 **
-** Created: Wed May 13 14:53:17 2015
+** Created: Thu May 14 12:11:39 2015
 **      by: Qt User Interface Compiler version 4.8.0
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -140,10 +140,7 @@ public:
         label->setText(QApplication::translate("MainWindow", "                HOVED MENU", 0, QApplication::UnicodeUTF8));
         label_2->setText(QApplication::translate("MainWindow", "        Live status", 0, QApplication::UnicodeUTF8));
         status6->setText(QApplication::translate("MainWindow", "3/2", 0, QApplication::UnicodeUTF8));
-        pte_livestatus->setPlainText(QApplication::translate("MainWindow", "1\n"
-"1\n"
-"1\n"
-"1", 0, QApplication::UnicodeUTF8));
+        pte_livestatus->setPlainText(QString());
         status5->setText(QApplication::translate("MainWindow", "3/2", 0, QApplication::UnicodeUTF8));
         status4->setText(QApplication::translate("MainWindow", "3/2", 0, QApplication::UnicodeUTF8));
         btn_monitor->setText(QApplication::translate("MainWindow", "Monitor", 0, QApplication::UnicodeUTF8));

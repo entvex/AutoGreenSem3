@@ -5,6 +5,6 @@
 #qmake
 make
 
-cp2tgt autogreenbuild
+cp2tgt autogreenbuild3
 conn2tgt
 
