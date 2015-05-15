@@ -83,6 +83,7 @@ public:
   {
     if(time.Year >= 2000 && time.Year <= 2050 && time.Month >= 1 && time.Month <= 24 && time.Day >= 1 && time.Day <= 31 && time.Hour >= 0 && time.Hour <= 23 && time.Min >= 0 && time.Min <= 60 )
       {
+//----------setDate0----------
 	string prepCommand;
 	std::string pwd = exec("pwd"); // get current path
 
@@ -95,13 +96,10 @@ public:
 	  to_string(time.Month) + string(" ") + to_string(time.Day) + string(" ") + to_string(time.Hour) +
 	  string(" ") + to_string(time.Min);
 
-	//cout << prepCommand << endl; //Debug
 	const char * command = prepCommand.c_str();
 	std::string res = exec(command);
-	//cout << res << endl; //Debug
-	
+	//----------setDate1----------
       }
-   
   }
 
 
@@ -179,6 +177,7 @@ private:
   bool monitor;
   bool regulering;
 
+  //----------exec0----------
   string exec(const char* cmd) {
     //Make a linux shell with read
     FILE* pipe = popen(cmd, "r");
@@ -192,6 +191,7 @@ private:
     pclose(pipe); //Close the shell
     return result;
   }
+  //----------exec1----------
 };
 
 #endif
