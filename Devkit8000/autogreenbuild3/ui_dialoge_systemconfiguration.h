@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'dialoge_systemconfiguration.ui'
 **
-** Created: Thu May 14 12:11:39 2015
+** Created: Fri May 15 11:36:23 2015
 **      by: Qt User Interface Compiler version 4.8.0
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!

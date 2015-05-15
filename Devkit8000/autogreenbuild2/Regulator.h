@@ -60,7 +60,7 @@ class Regulator
     double temp_drivhus = drivhus_data.temp;
 
     /* Compare average temperature for plants to Actual temps*/
-    double avg_temp_drivhus = (plant1.temp + plant2.temp + plant3.temp + plant4.temp + plant5.temp + plant6.temp) / 6;
+    double avg_temp_drivhus = (plant1.temp);// + plant2.temp + plant3.temp + plant4.temp + plant5.temp + plant6.temp) / 6;
 
     bool use_heater = false; 
     bool use_vents = false; 

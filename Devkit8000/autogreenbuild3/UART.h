@@ -75,6 +75,66 @@ class UART
 	senddata(command_);	
 	addMessage("Window Opened");
       }
+    else if (command_ == "water1on" )
+      {
+    senddata(command_);
+    addMessage("water1 turned on");
+      }
+    else if(command_ == "water1off" )
+      {
+    senddata(command_);
+    addMessage("water1 turned off");
+      }
+    else if (command_ == "water2on" )
+      {
+    senddata(command_);
+    addMessage("water2 turned on");
+      }
+    else if(command_ == "water2off" )
+      {
+    senddata(command_);
+    addMessage("water2 turned off");
+      }
+    else if (command_ == "water3on" )
+      {
+    senddata(command_);
+    addMessage("water3 turned on");
+      }
+    else if(command_ == "water3off" )
+      {
+    senddata(command_);
+    addMessage("water3 turned off");
+      }
+    else if (command_ == "water4on" )
+      {
+    senddata(command_);
+    addMessage("water4 turned on");
+      }
+    else if(command_ == "water4off" )
+      {
+    senddata(command_);
+    addMessage("water4 turned off");
+      }
+    else if (command_ == "water5on" )
+      {
+    senddata(command_);
+    addMessage("water5 turned on");
+      }
+    else if(command_ == "water5off" )
+      {
+    senddata(command_);
+    addMessage("water5 turned off");
+      }
+    else if (command_ == "water6on" )
+      {
+    senddata(command_);
+    addMessage("water6 turned on");
+      }
+    else if(command_ == "water6off" )
+      {
+    senddata(command_);
+    addMessage("water6 turned off");
+      }
       usleep(10000);
     
 	int response = recievedata();
@@ -126,7 +186,15 @@ class UART
 	newdata.grund[0] = data;
       }	
      else {
-       newdata.grund[0] = -99;
+                    senddata("ground1");
+                    data = recievedata();
+                    if(data != -99)
+                      {
+                    newdata.grund[0] = data;
+                      }
+                      else {
+                       newdata.grund[0] = -99;
+                     }
      }
 	  
 	  	  
@@ -137,7 +205,15 @@ class UART
 	newdata.grund[1] = data;
       }
       else {
-       newdata.grund[1] = -99;
+                        senddata("ground2");
+                        data = recievedata();
+                        if(data != -99)
+                          {
+                        newdata.grund[1] = data;
+                          }
+                          else {
+                           newdata.grund[1] = -99;
+         }
      }
 	  
 	  	  
@@ -148,7 +224,15 @@ class UART
 	newdata.grund[2] = data;
       }		
       else {
-       newdata.grund[2] = -99;
+                                senddata("ground3");
+                                data = recievedata();
+                                if(data != -99)
+                                  {
+                                newdata.grund[2] = data;
+                                  }
+                                  else {
+                                   newdata.grund[2] = -99;
+                                 }
      }
 	  
 	  	  
@@ -198,19 +282,15 @@ class UART
 
   void addMessage(string m)
   {
-    //    SysMsg* uartmsg = new SysMsg;
-    //    uartmsg->msg_ = m;
-    //    systemlog->send(1, uartmsg);
+        SysMsg* uartmsg = new SysMsg;
+        uartmsg->msg_ = m;
+        systemlog->send(1, uartmsg);
   }
 
   int recievedata()
   {
-int testcount;
-//nødvendigt?? nej, men spurgte om jeg skulle lave det eller ej, og fik et ja, så her er det.
-    for(testcount = 0; testcount <=10; testcount++)
-      {
 	buf[0] = 0; buf[1] = 0; buf[2] = 0;
-	usleep(250000);
+    usleep(2100000);
 	RS232_PollComport(cport_nr, buf, 4);
 	
 	cout << buf[0] << " " << buf[1] << buf[2] <<  endl;
@@ -249,7 +329,7 @@ int testcount;
 	  {
 	    return (int)buf[2];
 	  }
-	else if (buf[0] == 'H' || buf[0] == 'K' || buf[0] == 'W' || buf[0] == 'V')
+    else if (buf[0] == 'H' || buf[0] == 'K' || buf[0] == 'W' || buf[0] == 'V'|| buf[0] == 'F')
 	  {
 	    return  999;
 	  }
@@ -273,10 +353,7 @@ int testcount;
 		  //cout << "fejl ved heater\n";
 		  return -99;
 	  }
-	  
 
-	
-      }
       return -99;
   }
 
@@ -290,6 +367,30 @@ int testcount;
       strcpy(command[1], "L");
     else if (command_ == "airhum")
       strcpy(command[1], "A");
+    else if (command_ == "water1on")
+      strcpy(command[1], "F11");
+    else if (command_ == "water1off")
+      strcpy(command[1], "F10");
+    else if (command_ == "water2on")
+      strcpy(command[1], "F21");
+    else if (command_ == "water2off")
+      strcpy(command[1], "F20");
+    else if (command_ == "water3on")
+      strcpy(command[1], "F31");
+    else if (command_ == "water3off")
+      strcpy(command[1], "F30");
+    else if (command_ == "water4on")
+      strcpy(command[1], "F41");
+    else if (command_ == "water4off")
+      strcpy(command[1], "F40");
+    else if (command_ == "water5on")
+      strcpy(command[1], "F51");
+    else if (command_ == "water5off")
+      strcpy(command[1], "F50");
+    else if (command_ == "water6on")
+      strcpy(command[1], "F61");
+    else if (command_ == "water6off")
+      strcpy(command[1], "F60");
     else if (command_ == "ground1")
       strcpy(command[1], "S1");
     else if (command_ == "ground2")

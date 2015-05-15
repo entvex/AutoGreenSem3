@@ -30,6 +30,8 @@ public:
     gui.temp = 25;
     gui.avgtemp = 25;
 
+    uart_->connect();
+
     for(int i = 0; i < 6; i++)
       {
 	gui.status[i] = 1;
@@ -45,9 +47,7 @@ public:
   void compareData()
   {
 
-    uart_->connect();
 
-    while(1) {
 
       if(ind_->getMonitorering()){
 
@@ -62,11 +62,6 @@ public:
 	sensordata_ = uart_->getSensorData();
 	datalog_->InsertSensorData(sensordata_);
 
-	/*
-	  SysMsg* monmsg = new SysMsg;
-	  monmsg->msg_ = "Dårligt klima";
-	  syslog_->send(1, monmsg);
-	*/
        
 	// update live Gui temperature
 	gui.temp = sensordata_.temp;
@@ -79,10 +74,9 @@ public:
 	    gui.virtualHum[i] = virtuel_[i].hum;
 	  }
 
-	usleep(1000000);
+    usleep(100000);
       }
-      usleep(1000000);
-    }
+      usleep(100000);
 
   }
 
@@ -96,10 +90,15 @@ private:
     if(plant.hum == 0 || data.grund[i] == -99)
       return 1;
 
-    if(data.grund[i] >= plant.hum + offset)
-      return 3;
+    if(data.grund[i] < plant.hum + offset){
 
-    return 2;
+          SysMsg* monmsg = new SysMsg;
+          monmsg->msg_ = "Dårligt klima";
+          syslog_->send(1, monmsg);
+
+        return 2;
+    }
+    return 3;
   }
 
   GUIStruct gui;

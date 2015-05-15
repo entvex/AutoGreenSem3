@@ -8,10 +8,15 @@
 
 
 
-void* MonitorTrd(void *ptr)
+void* MonitorAndRegTrd(void *ptr)
 {
+    while(1)
+    {
+
     ReferenceStruct* ref = static_cast<ReferenceStruct*>(ptr);
     ref->monitor->compareData();
+    ref->regulator->run();
+    }
     return NULL;
 }
 
@@ -22,12 +27,12 @@ void* SystemLogTrd(void *ptr)
     return NULL;
 }
 
-void* RegulatorTrd(void *ptr)
-{
-    Regulator* regulator = static_cast<Regulator*>(ptr);
-    regulator->run();
-    return NULL;
-}
+//void* RegulatorTrd(void *ptr)
+//{
+//    Regulator* regulator = static_cast<Regulator*>(ptr);
+//    regulator->run();
+//    return NULL;
+//}
 
 int main(int argc, char *argv[])
 {
@@ -62,15 +67,14 @@ int main(int argc, char *argv[])
     referenceStruct.dataLog = &datalog;
     referenceStruct.systemlog = &systemlog;
     referenceStruct.monitor = &monitor;
+    referenceStruct.regulator = &regulator;
 
     QApplication app(argc, argv);
 
      // Start af monitor
-    pthread_t montrd, systrd, regtrd;
-    pthread_create(&montrd, NULL, &MonitorTrd, &referenceStruct);
+    pthread_t monAndRegtrd, systrd;
+    pthread_create(&monAndRegtrd, NULL, &MonitorAndRegTrd, &referenceStruct);
     pthread_create(&systrd, NULL, &SystemLogTrd, &systemlog);
-    pthread_create(&regtrd, NULL, &RegulatorTrd, &regulator);
-
 
     MainWindow mainWindow(referenceStruct);
     mainWindow.setOrientation(MainWindow::ScreenOrientationAuto);

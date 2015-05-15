@@ -5,6 +5,7 @@
 #include "DataLog.hpp"
 #include "Monitor.hpp"
 #include "SystemLog.hpp"
+#include "Regulator.h"
 
 struct ReferenceStruct
 {
@@ -12,5 +13,6 @@ struct ReferenceStruct
     DataLog* dataLog;
     Monitor* monitor;
     SystemLog* systemlog;
+    Regulator* regulator;
 };
 #endif

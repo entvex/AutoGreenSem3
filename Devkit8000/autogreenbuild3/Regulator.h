@@ -1,3 +1,8 @@
+
+
+#ifndef Regulator_H_
+#define Regulator_H_
+
 #include <iostream>
 #include <unistd.h>
 //include others
@@ -24,6 +29,24 @@ class Regulator
       heatON = false;
       ventsON = false;
       windowON = false;
+      water1ON = false;
+      water2ON = false;
+      water3ON = false;
+      water4ON = false;
+      water5ON = false;
+      water6ON = false;
+      uart->activateSensor("ventoff");
+      uart->activateSensor("heatoff");
+      uart->activateSensor("water1off");
+      uart->activateSensor("water2off");
+      uart->activateSensor("water3off");
+      uart->activateSensor("water4off");
+      uart->activateSensor("water5off");
+      uart->activateSensor("water6off");
+
+      uart->activateSensor("windowoff");
+
+
     }
 
   ~Regulator()
@@ -34,7 +57,6 @@ class Regulator
   void run()
   {
     //run is running at all times
-    while(1) {
       if(!settings->getRegulering())
 	{
 	  //   cout << "regulator is not active\n";
@@ -51,7 +73,6 @@ class Regulator
 	  //linux
 	  usleep(100000);
 	}
-    }
   }
 
   void ControlData( SensorData drivhus_data)
@@ -112,7 +133,7 @@ class Regulator
             if(!ventsON)
             {
 	    uart->activateSensor("venton");
-	    usleep(100);
+        usleep(100);
             ventsON = true;
             }
 	  }
@@ -123,12 +144,19 @@ class Regulator
 	    //        systemlog->send(1, monmsg);
 	  }
 	//open window
+    if(heatON)
+    {
+        uart->activateSensor("heatoff");
+        usleep(100);
+      heatON = false;
+    }
         if(!windowON)
         {
 	uart->activateSensor("windowon");
 	usleep(100);
         windowON = true;
         }
+
       }
     else if (temp_drivhus >= avg_temp_drivhus + 0.5)
       {
@@ -195,59 +223,166 @@ class Regulator
       }
 
     /* check waterstatus for plant 1-6*/
-    /*
+
       if(drivhus_data.grund[0] < plant1.water)
       {
 
-      //    SysMsg* monmsg = new SysMsg;
-      //    monmsg->msg_ = "Plante 1 mangler vand";
-      //    systemlog->send(1, monmsg);
-      //uart->activateSensor("water1");
+
+              if(drivhus_data.grund[0] != -99){
+                  if(!water1ON){
+                     uart->activateSensor("water1on");
+                     water1ON = true;
+                  }
+              }
+              else {
+                  if(water1ON){
+                  uart->activateSensor("water1off");
+                  water1ON = false;
+                  }
+
+              }
+
       //plant1 need water
+      } else
+      {
+          if(water1ON){
+          uart->activateSensor("water1off");
+          water1ON = false;
+          }
       }
+
       if(drivhus_data.grund[1] < plant2.water)
       {
-      SysMsg* monmsg = new SysMsg;
-      monmsg->msg_ = "Plante 2 mangler vand";
-      systemlog->send(1, monmsg);
-      //uart->activateSensor("water1");
-      //plant1 need water
+
+
+              if(drivhus_data.grund[1] != -99){
+                  if(!water2ON){
+                     uart->activateSensor("water2on");
+                     water2ON = true;
+                  }
+              }
+              else {
+                  if(water2ON){
+                  uart->activateSensor("water2off");
+                  water2ON = false;
+                  }
+
+              }
+
+      //plant2 need water
+      } else
+      {
+          if(water2ON){
+          uart->activateSensor("water2off");
+          water2ON = false;
+          }
       }
+
       if(drivhus_data.grund[2] < plant3.water)
       {
-      //    SysMsg* monmsg = new SysMsg;
-      //    monmsg->msg_ = "Plante 3 mangler vand";
-      //    systemlog->send(1, monmsg);
-      //uart->activateSensor("water1");
+
+
+              if(drivhus_data.grund[2] != -99){
+                  if(!water3ON){
+                     uart->activateSensor("water3on");
+                     water3ON = true;
+                  }
+              }
+              else {
+                  if(water3ON){
+                  uart->activateSensor("water3off");
+                  water3ON = false;
+                  }
+
+              }
+
       //plant1 need water
+      } else
+      {
+          if(water3ON){
+          uart->activateSensor("water3off");
+          water3ON = false;
+          }
       }
       if(drivhus_data.grund[3] < plant4.water)
       {
-      //    SysMsg* monmsg = new SysMsg;
-      //    monmsg->msg_ = "Plante 4 mangler vand";
-      //    systemlog->send(1, monmsg);
-      //uart->activateSensor("water1");
+
+
+              if(drivhus_data.grund[3] != -99){
+                  if(!water4ON){
+                     uart->activateSensor("water4on");
+                     water4ON = true;
+                  }
+              }
+              else {
+                  if(water4ON){
+                  uart->activateSensor("water4off");
+                  water4ON = false;
+                  }
+
+              }
+
       //plant1 need water
+      } else
+      {
+          if(water4ON){
+          uart->activateSensor("water4off");
+          water4ON = false;
+          }
       }
       if(drivhus_data.grund[4] < plant5.water)
       {
-      //    SysMsg* monmsg = new SysMsg;
-      //    monmsg->msg_ = "Plante 5 mangler vand";
-      //    systemlog->send(1, monmsg);
-      //uart->activateSensor("water1");
+
+
+              if(drivhus_data.grund[4] != -99){
+                  if(!water5ON){
+                     uart->activateSensor("water5on");
+                     water5ON = true;
+                  }
+              }
+              else {
+                  if(water5ON){
+                  uart->activateSensor("water5off");
+                  water5ON = false;
+                  }
+
+              }
+
       //plant1 need water
+      } else
+      {
+          if(water5ON){
+          uart->activateSensor("water5off");
+          water5ON = false;
+          }
       }
+
       if(drivhus_data.grund[5] < plant6.water)
       {
-      //    SysMsg* monmsg = new SysMsg;
-      //    monmsg->msg_ = "Plante 6 mangler vand";
-      //    systemlog->send(1, monmsg);
-      //uart->activateSensor("water1");
-      //plant1 need water
-      }
-      //added later if needed
-      */
 
+
+              if(drivhus_data.grund[5] != -99){
+                  if(!water6ON){
+                     uart->activateSensor("water6on");
+                     water6ON = true;
+                  }
+              }
+              else {
+                  if(water6ON){
+                  uart->activateSensor("water6off");
+                  water6ON = false;
+                  }
+
+              }
+
+      //plant1 need water
+      } else
+      {
+          if(water6ON){
+          uart->activateSensor("water6off");
+          water6ON = false;
+          }
+      }
 
   }
 
@@ -276,7 +411,8 @@ class Regulator
   MsgQueue * systemlog;
   DataLog * datalog;
 
-  bool ventsON, windowON, heatON;
+  bool ventsON, windowON, heatON, water1ON, water2ON, water3ON, water4ON, water5ON, water6ON;
 
 };
 
+#endif

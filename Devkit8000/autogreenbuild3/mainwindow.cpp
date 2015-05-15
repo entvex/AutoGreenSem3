@@ -16,7 +16,7 @@ MainWindow::MainWindow(ReferenceStruct refs, QWidget *parent): QMainWindow(paren
 
   QTimer *timer = new QTimer(this);
   connect(timer, SIGNAL(timeout()), this, SLOT(updateBtn()));
-  timer->start(1000);
+  timer->start(6900);
   refs_ = refs;
 
 }
