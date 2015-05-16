@@ -1,3 +1,4 @@
+#//----------buildandrun0----------
 #!/bin/bash
 
 #make -clean
@@ -7,4 +8,4 @@ make
 
 cp2tgt autogreenbuild3
 conn2tgt
-
+#//----------buildandrun1----------

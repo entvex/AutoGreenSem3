@@ -66,18 +66,22 @@ public:
     this->E_mails[2] = mail3;
   }
 
+//----------GetHardware0----------
   void GetHardware(bool &Varmelegeme, bool &bloeserne)
   {
     Varmelegeme = this->Varmelegeme;
     bloeserne = this->bloeserne;
   }
-
+//----------GetHardware1----------
+  
+//----------SetHardware0----------
   void SetHardware(const bool Varmelegeme, const bool bloeserne)
   {
     this->Varmelegeme = Varmelegeme;
     this->bloeserne = bloeserne;
   }
-
+//----------SetHardware1----------
+  
   //Note This code is Devkit8000 specific and needs root access to run.
   void setDate(Date time)
   {
@@ -105,6 +109,7 @@ public:
 
   Date getDate()
   {
+//----------getDate0----------
     time_t mytime = time(0);
     struct tm* tm_ptr = localtime(&mytime);
     struct Date date;
@@ -118,6 +123,7 @@ public:
 	return date;
       }
     return date;
+//----------getDate1----------
   }
 
   void GetNotifications(bool &daily, bool &Warning)
