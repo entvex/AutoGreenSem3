@@ -146,42 +146,49 @@ public:
 	}
 	//----------PeekHead1----------
 
-	//   virtual void deleteAt(int place) {
-	//     Node<A_Type>* cursor = headPtr;
-	// 
-	//     for (int i = 1; i <= this->itemsInList; ++i) {
-	// 
-	//       if (i == place) {
-	// 	if (cursor == headPtr) {
-	// 	  headDelete();
-	// 	  return;
-	// 	} else if (cursor == tailPtr) {
-	// 	  tailDelete();
-	// 	  return;
-	// 	} else {
-	// 
-	// 	  Node<A_Type>* cond = cursor; //pointer til den cond node.
-	// 	  Node<A_Type>* prevPtr = cursor->prev; //pointer til den lige før con node.
-	// 
-	// 	  prevPtr->next = cond->next; //prevPtr next sættes til conds next.
-	// 	  cond->prev = prevPtr->prev; //prevPtr next sættes til conds next.
-	// 	  delete cond; //Sletter cond.
-	// 	  --this->itemsInList;
-	// 	  return;
-	// 	}
-	//       }
-	//       cursor = cursor->next;
-	//     }
-	//   }
-	// 
-	//   virtual void findAndDelete(A_Type valueToFind)
-	//   {
-	//     int found = Find(valueToFind);
-	//     if (found != -1) {
-	//       deleteAt(found);
-	//     }
-	//   }
-	
+
+	/*
+
+	//----------deleteAt0----------
+	   virtual void deleteAt(int place) {
+	     Node<A_Type>* cursor = headPtr;
+	 
+	     for (int i = 1; i <= this->itemsInList; ++i) {
+	 
+	       if (i == place) {
+	 	if (cursor == headPtr) {
+	 	  headDelete();
+	 	  return;
+	 	} else if (cursor == tailPtr) {
+	 	  tailDelete();
+	 	  return;
+	 	} else {
+	 
+	 	  Node<A_Type>* cond = cursor; //pointer til den cond node.
+	 	  Node<A_Type>* prevPtr = cursor->prev; //pointer til den lige før con node.
+	 
+	 	  prevPtr->next = cond->next; //prevPtr next sættes til conds next.
+	 	  cond->prev = prevPtr->prev; //prevPtr next sættes til conds next.
+	 	  delete cond; //Sletter cond.
+	 	  --this->itemsInList;
+	 	  return;
+	 	}
+	       }
+	       cursor = cursor->next;
+	     }
+	   }
+	 
+	   virtual void findAndDelete(A_Type valueToFind)
+	   {
+	     int found = Find(valueToFind);
+	     if (found != -1) {
+	       deleteAt(found);
+	     }
+	   }
+	//----------deleteAt1----------
+
+	*/
+
 	//----------GetItems0----------
 	int GetItemsInList()
 	{
