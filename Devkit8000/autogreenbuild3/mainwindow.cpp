@@ -14,11 +14,11 @@ MainWindow::MainWindow(ReferenceStruct refs, QWidget *parent): QMainWindow(paren
 {
   ui->setupUi(this);
 
-  //----------MainWindow4---------
+  //----------MainWindow4----------
   QTimer *timer = new QTimer(this);
   connect(timer, SIGNAL(timeout()), this, SLOT(updateBtn()));
   timer->start(6900);
-  //----------MainWindow5---------
+  //----------MainWindow5----------
   
   refs_ = refs;
 
