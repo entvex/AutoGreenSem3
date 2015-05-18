@@ -135,6 +135,7 @@ public:
 		return -1;
 	}
 
+	//----------PeekHead0----------
 	int PeekHead(A_Type &PeekHead)
 	{
 		if (headPtr != NULL) {
@@ -143,6 +144,7 @@ public:
 		}
 		return -1;
 	}
+	//----------PeekHead1----------
 
 	//   virtual void deleteAt(int place) {
 	//     Node<A_Type>* cursor = headPtr;
