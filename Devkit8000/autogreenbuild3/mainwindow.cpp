@@ -255,17 +255,17 @@ void MainWindow::on_btn_history_clicked()
   historik.exec();
 }
 
-//----------MainWindow2---------
+//----------MainWindow2----------
 void MainWindow::on_btn_systemlog_clicked()
 {
   dialoge_systemlog systemlog(refs_);
   systemlog.setModal(true);
   systemlog.exec();
 }
-//----------MainWindow3---------
+//----------MainWindow3----------
 
 
-//----------MainWindow0---------
+//----------MainWindow0----------
 void MainWindow::on_btn_monitor_clicked()
 {
 
@@ -297,7 +297,7 @@ void MainWindow::on_btn_monitor_clicked()
         }
     }
 }
-//----------MainWindow1---------
+//----------MainWindow1----------
 
 
 void MainWindow::on_btn_reguler_clicked()
