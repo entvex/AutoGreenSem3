@@ -8,6 +8,7 @@
 
 
 
+//----------MonitorAndRegTrd0----------
 void* MonitorAndRegTrd(void *ptr)
 {
     while(1)
@@ -19,6 +20,8 @@ void* MonitorAndRegTrd(void *ptr)
     }
     return NULL;
 }
+//----------MonitorAndRegTrd1----------
+
 
 void* SystemLogTrd(void *ptr)
 {
@@ -71,10 +74,14 @@ int main(int argc, char *argv[])
 
     QApplication app(argc, argv);
 
-     // Start af monitor
+//----------pthread_create0----------
+
+     // Start af tråede
     pthread_t monAndRegtrd, systrd;
     pthread_create(&monAndRegtrd, NULL, &MonitorAndRegTrd, &referenceStruct);
     pthread_create(&systrd, NULL, &SystemLogTrd, &systemlog);
+
+//----------pthread_create1----------
 
     MainWindow mainWindow(referenceStruct);
     mainWindow.setOrientation(MainWindow::ScreenOrientationAuto);
