@@ -13,23 +13,28 @@
 
 class DataLog
 {
+	//----------DATALOGprivate0----------
 private:
-
   DoublyLinkedList<SensorData> list;
+  //----------DATALOGprivate1----------
 
 public:
 
+	//----------InsertSensorData0----------
   void InsertSensorData(SensorData SensorData)
   {
     list.headInsert(SensorData);
   }
+  //----------InsertSensorData0----------
 
+  //----------GetNewestData0----------
   SensorData GetNewestData()
   {
     SensorData dataToReturn;
     list.PeekHead(dataToReturn);
     return dataToReturn;
   }
+  //----------GetNewestData1----------
 
   //Not implemented because they are part of later req.
   void SortDay()
