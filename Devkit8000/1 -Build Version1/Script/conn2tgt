@@ -1,9 +1,8 @@
 
-
+#//----------conn2tgt0----------
 #!bin/bash
-
 sshpass -p 'stud' ssh  root@10.9.8.2
-
+#//----------conn2tgt1----------
 
 
 
