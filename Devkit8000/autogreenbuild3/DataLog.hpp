@@ -25,7 +25,7 @@ public:
   {
     list.headInsert(SensorData);
   }
-  //----------InsertSensorData0----------
+  //----------InsertSensorData1----------
 
   //----------GetNewestData0----------
   SensorData GetNewestData()
