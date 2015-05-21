@@ -1,7 +1,7 @@
 
+#//----------setupTarget0----------
 #!bin/bash
-
 echo setting up Devkit8000
 sshpass -p 'stud' ifdown usb0
 sshpass -p 'stud' ifup usb0
-
+#//----------setupTarget1----------
