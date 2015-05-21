@@ -100,7 +100,7 @@ public:
 		--this->itemsInList;
 	}
 
-	//   virtual void forwardTraversing() {
+	//   void forwardTraversing() {
 	//     for (Node<A_Type>* cursor = headPtr; cursor != NULL; cursor = cursor->next)
 	//       {
 	// 	cout << cursor->info << endl;
