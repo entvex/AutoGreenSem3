@@ -1,14 +1,13 @@
-\subsection{DoublyLinkedList}
+\subsection{Monitor}
 
 Monitor er tråd styret, hvilket betyder den kan arbejde samtidigt med fra andre software dele i AutoGreen systemet. Tråden virker som en grænseflade mellem DevKit8000 og sensorer fra drivhus klimaet. 
 Dens primære opgave er at finde ud af, hvilke sensorer er tilkoblet og udvinde data fra dem mindst 1 gang i minuttet og derefter sende det indhentede data til dataloggen.
-På grund af Monitor konstant anmoder om data, skal Monitor loope uendeligt fra DevKit8000 starter tråden indtil DevKit8000 afslutter tråden, dog kan monitor klassen sættes til at sove, ved styring af hovedmenuen.\\
+På grund af Monitor konstant anmoder om data, skal Monitor loope uendeligt fra DevKit8000 starter tråden indtil DevKit8000 afslutter tråden, dog kan monitor klassen sættes til at sove, ved styring af hovedmenuen.
 
-
-\textbf{Attributter}
+\subsubsection{Attributter}
 
 \begin{table}[h]
-\begin{tabularx}{\textwidth}{| >{\raggedright\arraybackslash}X | >{\raggedright\arraybackslash}X | >{\raggedright\arraybackslash}p{10 cm} |} \hline
+\begin{tabularx}{\textwidth}{| Z | Z | L{10 cm} |} \hline
 \texttt{CurrentTime} & \texttt{Date} & Indeholder sidste tidpunkt modtaget fra Indstillinger. \\\hline
 \texttt{Email} & \texttt{Notification} & Indeholder status for rapportering. \\\hline
 \texttt{Virtuel} & \texttt{Plant[]} & Indeholder array af virtuelle planteparametre. \\\hline
@@ -18,10 +17,10 @@ På grund af Monitor konstant anmoder om data, skal Monitor loope uendeligt fra 
 \label{table:Monitor_attributter}
 \end{table}
 
-\textbf{Metoder}
+\subsubsection{Metoder}
 
 \begin{table}[h]
-\begin{tabularx}{\textwidth}{| >{\raggedright\arraybackslash}p{2.5 cm} | >{\raggedright\arraybackslash}X |} \hline
+\begin{tabularx}{\textwidth}{| L{2.5 cm} | Z |} \hline
 Prototype & \texttt{void CompareData()} \\\hline
 Parametre & \texttt{-} \\\hline
 Returværdi & \texttt{-} \\\hline

@@ -1,18 +1,24 @@
 \chapter{Software Design} \label{ch:SwDesign}
 
-\section{Version}
+\section*{Version}
 \begin{table}[h]
 	\centering
 	\begin{tabularx}{\textwidth - 2cm}{|l|l|l|X|}
 	\hline
 	Dato	& Version	& Initialer & Ændring	\\ \hline
 	29. marts & 1 & KS & Første udkast. \\ \hline 
+	15. maj & 2 & HBJ & Klassebeskrivelser indskrevet i LaTeX samt andre mindre rettelser. \\\hline 
+	18. maj & 3 & KTS & Opdateret figurer og trådhåndtering. \\\hline 
+	20. maj & 4 & KTS & Tilføjet forklarende tekst til figurer \\\hline 
 	\end{tabularx}
 \end{table}
 
 \section{Indledning}
-%TODO Skriv en indledning?
+Under dette afsnit vil design af software blive beskrevet gennem sekvensdiagrammer og dertil tilhørende klassebeskrivelser. Herudover vil der kort blive beskrevet hvorledes tråde håndteres i systemet.
 
+\clearpage
 \input{SoftwareDesign/Applikationsmodel/appmodel}
+\clearpage
 \input{SoftwareDesign/KlasseBeskrivelser/KlasseBeskrivelser}
+\clearpage
 \input{SoftwareDesign/Threads/threads}

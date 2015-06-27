@@ -1,0 +1,51 @@
+\section{System structs} \label{sec:system_structs}
+
+\subsection{Sensordata} \label{sec:sensordata}
+
+Sensor data er en simpel struct der bruges til at lagre, temperatur, lysintensitet, luftfugtighed og jordfugtighederne for de 6 planter. Den indeholder også en Date struct, som indeholder tid og dato.
+
+\begin{lstlisting}[caption=Sensordata-structen., label=lst:Sensordata_struct]
+struct SensorData
+{
+  Date time;
+  double temp;
+  int light;
+  int humidity;
+  int grund[6];
+};
+\end{lstlisting}
+
+Ideen bag SensorData structen er at kunne returnere mere end en parameter adgangen fra UARTen, ved at returnere et SensorData object kan alle data om drivhuset returneres, uden brug af referrencer.
+
+\subsection{Date} \label{sec:Date}
+
+Date structen er en struct, brugt til at have samling på data der har med tid og dato at gøre.
+\begin{lstlisting}[caption=Date-structen., label=lst:Date_struct]
+struct Date
+{
+  int Min;
+  int Hour;
+  int Day;
+  int Month;
+  int Year;
+};
+\end{lstlisting}
+
+Date indeholder, minut-tal, time-tal, dag på måned(mellem 1-31), og hvilken måned det er(1-12), samt årstal. Formålet er at kunne bruge til lagering af Sensordata, så det kan ses hvornår en given data er fra.
+
+\subsection{Plant} \label{sec:Plant}
+
+Plant structen er en simpel struct der indeholder data over en plante. den indeholder plantens navn, plantes ønskede temperatur, lysintensitet, luftfugtighed og jordfugtighed.
+\begin{lstlisting}[caption=Plant-struct., label=lst:plant_struct]
+struct Plant
+{
+  string name;
+  int temp;
+  int light;
+  int hum;
+  int water;
+};
+\end{lstlisting}
+
+Ideen med Plante structen er at kunne sende structen rundt i systemet uden at skulle give alle de individuelle parametre med. 
+Den er valgt at blive lavet som en struct, frem for en klasse, da der ikke er yderligere mening med den, end at lagre data samlet.

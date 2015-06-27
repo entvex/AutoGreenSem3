@@ -1,0 +1,75 @@
+\subsection{UART}
+
+UART er en klasse til at sende og modtage data fra PSoC masteren. Til kommunikation bruges UART protokollen (REF til UART protokol).\\
+UARTen opbygges ved hjælp af et open source bibliotek (ref), som allerede har funktioner til sending og modtagelse af data.
+
+\subsubsection{Attributter}
+
+\begin{table}[h]
+\begin{tabularx}{\textwidth}{| L{2.5cm} | l | Z |} \hline
+\texttt{-} & \texttt{SystemLog *} & En pointer til udskrivelse til systemloggen. \\\hline
+\end{tabularx}
+\caption{Attributter for klassen UART}
+\label{table:UART_attributter}
+\end{table}
+
+\subsubsection{Metoder}
+
+\begin{table}[h]
+\begin{tabularx}{\textwidth}{| >{\raggedright\arraybackslash}p{2.5 cm} | >{\raggedright\arraybackslash}X |} \hline
+Prototype & \texttt{void ScanForSensors()} \\\hline
+Parametre & \texttt{-} \\\hline
+Returværdi & \texttt{-} \\\hline
+Beskrivelse & Metoden sender en besked til PSoC masteren og beder om antallet af tilsluttede sensorer til systemet. UARTen sender kommandoen (REF til UART protokol), og venter derefter på svar fra PSoC masteren. Hvis den får et gyldigt svar tilbage afsluttes metoden. Hvis svaret ikke er gyldigt vil metoden kontakte PSoC masteren en gang til for at få antallet af tilsluttede sensorer. Efter 4 fejlforsøg afsluttes metoden, og systemet sender en besked til bruger at tjekke systemet. \\\hline
+\end{tabularx}
+\caption{ScanForSensors}
+\label{table:UART_ScanForSensors}
+\end{table}
+
+\begin{table}[h]
+\begin{tabularx}{\textwidth}{| L{2.5 cm} | Z |} \hline
+Prototype & \texttt{SensorData GetSensorData()} \\\hline
+Parametre & \texttt{-} \\\hline
+Returværdi & SensorData, som er en struct over temperatur, luftfugtighed, lysintensitet og jordfugtighed returneres med værdierne for målt temperatur, luftfugtighed, lysintensitet og jordfugtighed. \\\hline
+Beskrivelse & Metoden sender via UART protokollen en anmodning til PSoC masteren om at få temperaturen i drivhuset. Når korrekt data er modtaget fortsætter metoden til at indsamle data for luftfugtighed, lysintensitet og jordfugtighed for de 6 planter. Hvis en fejl i en af beskederne opstår, forsøges yderlige 3 forsøg for den gældte data, før den springer den gældende data over og fortsætter til næste data.  \\\hline
+\end{tabularx}
+\caption{GetSensorData}
+\label{table:UART_GetSensorData}
+\end{table}
+
+\clearpage
+
+\begin{table}[h]
+\begin{tabularx}{\textwidth}{| L{2.5 cm} | Z |} \hline
+Prototype & \texttt{void ActivateSensor( String Command\_)} \\\hline
+Parametre & \texttt{Command\_} \newline
+commando er enten heaton/heatoff for at tænde og slukke for heater, windowon/windowoff for at åbne og lukke for vinduet, venton/ventoff for at tænde og slukke for blæseren. \\\hline
+Returværdi & \texttt{-} \\\hline
+Beskrivelse & \texttt{-} \\\hline
+\end{tabularx}
+\caption{ActivateSensor}
+\label{table:UART_ActivateSensor}
+\end{table}
+
+\begin{table}[h]
+\begin{tabularx}{\textwidth}{| L{2.5 cm} | Z |} \hline
+Prototype & \texttt{int RecieveData()} \\\hline
+Parametre & \texttt{-} \\\hline
+Returværdi & Den returnerede værdi er svarende til en værdi udreget udfra hvilken char der modtages, f.eks. hvis T modtages som første byte og derefter modtages en char svarende til ’A’ (ascii) returnes 65, da det er værdien for ’A’. \\\hline
+Beskrivelse & RecieveData kaldes og står derefter og læser på UARTen, ud fra UART protokollen, er det bestemt hvilke sammensætninger af bogstaver der ledes efter, og når 2 bytes der passer til protokollen er fundet, returne funktionen. \\\hline
+\end{tabularx}
+\caption{RecieveData}
+\label{table:UART_RecieveData}
+\end{table}
+
+\begin{table}[h]
+\begin{tabularx}{\textwidth}{| L{2.5 cm} | Z |} \hline
+Prototype & \texttt{Void SendData(string command\_)} \\\hline
+Parametre & \texttt{command\_} \newline
+Er kommandoen der skal sendes over til pSoC masteren via UART protokollen. \\\hline
+Returværdi & \texttt{-} \\\hline
+Beskrivelse & funktionen har til formål at oversætte sætninger. F.eks. ’heaton’ til det der skal sendes via UART protokollen. Den oversætter simple sætninger/ord til et enkelt Byte eller to, som er passer til hvad UART protokollen, og sender derefter den forkortede besked over UART. \\\hline
+\end{tabularx}
+\caption{SendData}
+\label{table:UART_SendData}
+\end{table}

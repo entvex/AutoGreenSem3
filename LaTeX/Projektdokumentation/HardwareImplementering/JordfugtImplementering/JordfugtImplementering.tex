@@ -12,11 +12,12 @@ Dette afsnit beskriver implementering af SW og HW på PSoC4 i blokken Jordfugt.
 
 Den HW, der syntetiseres i PSoC4 Jordfugt er vist på Figur \ref{fig:topdesign_jordfugt}. 
 
-Komponenten I2C styrer kommunikation med MasterPSoC via \IIC. 
+Komponenten I2C styrer kommunikation med PSoC Master via \IIC. 
 Den er konfigureret til at være slave med adressen 0x32, datarate er indstillet til 100 kbps.
 
-ADC\_SAR komponenten er en Analog to Digital converter med seks forskellige inputs. Den indeholder seks registre, som opdateres løbende, når den sætets til at køre. Referencespænding er konfigureret til VDDA, dvs. måleområdet er 0V - 3.3V.
+ADC\_SAR komponenten er en Analog to Digital converter med seks forskellige inputs. Den indeholder seks registre, som opdateres løbende, når den sættes til at køre. Referencespænding er konfigureret til VDDA, dvs. måleområdet er 0V - 3.3V.
 Den er desuden indstillet til 8 bit opløsning og en clock frekvens på 1 MHz, hvilket resulterer i en samplerate på 11904 SPS på hver sensor.
+Det er overvejet hvorvidt det har kunne betale sig at gøre indgangene på ADC'en differentielle for at undertrykke støj. Dog har det gennem MSE øvelse 6 \cite{lib:MSE_06} vist sig, at den støj der kommer fra jordfugtsensoren er så ubetydelig, at det ikke har noget at sige, og derfor er der valgt single-ended for at undgå længere konverteringer.
 
 Alle pins i topdeignet er konfigureret til high impedans analog, for at undgå spæmdingsdeling med det øvrige kredsløb.
 
@@ -43,7 +44,7 @@ Alle pins i topdeignet er konfigureret til high impedans analog, for at undgå s
             }
             readBuffer[0] = convertedData; //Goer data klar til aflaesning
             I2C_I2CSlaveClearReadBuf(); //Reset read buffer pointer
-            i = 0xFFFFFFFF;
+            i = 0xFFFFFFFF; //Variabel i saettes til en vaerdi uden for sensor numre
         }
     }
 }

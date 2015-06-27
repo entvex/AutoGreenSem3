@@ -1,4 +1,4 @@
-\section{PSoC Master implementering} \label{sec:PSoC_Master_impl}
+\section{PSoC Master} \label{sec:PSoC_Master_impl}
 Dette afsnit indeholder overvejelser og dokumentation for implementeringen af PSoC Master blokken i systemet.
 
 \begin{figure}[h]
@@ -8,8 +8,11 @@ Dette afsnit indeholder overvejelser og dokumentation for implementeringen af PS
 \caption{TopDesign.cysch for PSoC\_Master}
 \end{figure}
   
-I Figur \ref{fig:psoc_master_topdesign} ses topdesignet for PSoC Master. Ud fra dette ses det at vi overordnet set har at gøre med en UART, som genererer interrupts, en Timer, som genererer interrupts, en I2C blok og to outputs til LED. 
+I Figur \ref{fig:psoc_master_topdesign} ses topdesignet for PSoC Master. Ud fra dette ses det at vi overordnet set har at gøre med en UART, som genererer interrupts, en Timer med tilhørende clock, som genererer interrupts, en I2C blok og to outputs til LED. 
 Selve topdesignet er lavet ud fra de behov der er stillet i Design-fasen. Der blev under implementeringen af UART afprøvet en anden UART komponent grundet problemer med UART kommunikationen, men problemet viste sig at ligge i et tidligere design-valg angående paritet.
+
+
+%=================================== Main ===================================
 
 \subsection{Main implementering}
 Main funktionen, der er vist i Listing \ref{lst:PSoC_Master_main}, er ganske simpel da stort set alt funktionaliteten er håndteret vha interrupts. 
@@ -20,7 +23,7 @@ De to funktioner er nærmere beskrevet i afsnittet om Controller klassen på sid
 
 \clearpage
 
-%===================================I2C===================================
+%=================================== I2C ===================================
 \subsection{\IIC implementering} 
 I forbindelse med implementeringen af \IIC klassen blev prototyperne oprettet jf. \IIC protokollen (se side \pageref{sec:I2C_protokol}).
 Generelt set formidler klassen kald fra både timer og UART og er i stand til at sende og indhente information hhv. fra og til sensorer og aktuatorer der er tilkoblet \IIC-bussen.
@@ -35,22 +38,24 @@ I dette eksempel er det temperatursensoren LM75, der kommunikeres med.
 For at LM75 reagerer på masterens kald, sendes der en slaveadresse og en read-request. 
 Denne udskriver to bytes når der læses over \IIC. 
 Der sendes herefter en \IIC stop-kommando for at frigøre bussen igen.
-Jf. \IIC protokollen på side \pageref{sec:I2C_protokol}, indeholder de to bytes temperaturdata, hvor MSB angiver om temperaturen er negativ eller ej (værdien er signed) og de 8 efterfølgende bits angiver selve temperaturen med en halv grads opløsning. 
+Jf. \IIC protokollen på side \pageref{sec:I2C_protokol}, indeholder de to bytes temperaturdata, hvor MSB angiver om temperaturen er negativ eller ej (værdien er signed) og de 8 efterfølgende bits angiver selve temperaturen med en halv grads opløsning.
 
 Fra aktuatorens side er det valgt, at når der modtages en kommando over \IIC, aktiveres der en interrupt der håndterer den pågældende kommando. 
 For \IIC-klassen betyder det at uanset tidspunktet, kan der sendes kommandoer hele tiden, men af hensyn til svaret der skal modtages over bussen, holder masteren klokken lav, indtil enten et svar eller en fejl er modtaget. 
 Princippet i read/write funktionen er, at masteren blokerer for andre interrupts og sender en slaveadresse ud på bussen, hvorefter der kommer et acknowledge tilbage fra slaven, som derefter sender et antal bytes ud. 
 Det samme kan overordnet siges om write metoden.
 
-\lstinputlisting[linerange=getActuatorStatus0-getActuatorStatus1, label=lst:I2C_Class_getActuatorStatus(), caption=Implementering af getActuatorStatus()]{../src/PSoC_Master/PSoC_Master.cydsn/I2C_Class.c}
+\clearpage
 
-Det kan ses på Listing \ref{lst:I2C_Class_getActuatorStatus()} linje 193, at systemet venter på, at bussen bliver ledig. Under debugging af \IIC-klassen var der store problemer, netop med at bussen ikke var ledig under fx. en læsning. 
+\lstinputlisting[linerange=getActuatorStatus0-getActuatorStatus1, label=lst:I2C_Class_getActuatorStatus(), caption=Udsnit af getActuatorStatus()]{../src/PSoC_Master/PSoC_Master.cydsn/I2C_Class.c}
+
+Det kan ses på Listing \ref{lst:I2C_Class_getActuatorStatus()} linje 171, at systemet venter på, at bussen bliver ledig. Under debugging af \IIC-klassen var der store problemer, netop med at bussen ikke var ledig under fx. en læsning. 
 Problemet viste sig at ligge i rækkefølgen PSoC4 afvikler de interrupts der kommer. 
 Systemet ventede med at udføre alle andre metodekald, indtil efter UART'en havde fået et svar. 
 Dog udførte systemet stadig en del af funktionaliteten for \IIC read/write, hvilket betød at bussen var optaget i den tid der blev forsøgt at læse. 
 Løsningen på problemet viste sig at være en genopbygning af UART- og timer-interruptet, således alt funktionelt blev rykket ud i main og at der bliver sat flag, når det er nødvendigt.
 
-%=================================UART=====================================
+%================================= UART =====================================
 \subsection{UART implementering}
 UART klassen har til formål at modtage kommandoer fra DevKit8000, tolke disse og give passende svar. 
 
@@ -67,7 +72,7 @@ Grunden til at vi har valgt at implementere denne er for at sikre os at hvis UAR
 
 Klassen er testet ved at koble en PC på med en COM port og via en terminal indlæse forskellige værdier, for at simulere aktivitet fra DevKit8000. Der er herved kontrolleret at alle muligheder for inputs er tjekket og at klassen udfører det den skal ved hvert input.
 
-%===============================DSP=======================================
+%=============================== DSP =======================================
 \subsection{DSP implementering}\label{sec:DSP_impl}
 DSP klassen agerer både digital signal processor og hukommelse for vores måledata. 
 Hver type af data er gemt i sit eget array, som vist i Listing \ref{lst:DSP_decl}. 
@@ -84,17 +89,21 @@ Når der er målt en ny værdi fra en sensor, via \IIC klassen, bliver den indl�
 
 I Listing \ref{lst:DSP_inputTemp} ses \texttt{inputTemp}-funktionen der indlæser den målte værdi i \texttt{tempArray} vha den tilhørende pointer \texttt{tempArrayPtr}. Pointeren flyttes herefter til næste plads i arrayet. Arrayet overskrives på ny når dette er fuldt. Til sidst kaldes den private funktion \texttt{avgTemp}.
 
+\clearpage
+
 \lstinputlisting[linerange=avgTemp0-avgTemp1,label=lst:DSP_avgTemp, caption=Funktion der midler og konverterer tempArray]{../src/PSoC_Master/PSoC_Master.cydsn/DSP_Class.c}
 
 I Listing \ref{lst:DSP_avgTemp} vises avgTemp funktionen. Denne har flere funktionaliteter. Først midles alle de data der er i \texttt{tempArray}, samtidig med at det kontrolleres at der er nok valide datapunkter. Øverst i klassen er der defineret hvor mange valide datapunkter der skal være til stede i et givent array fra en sensor, for at der sendes en værdi videre fra PSoC\_Master til DevKit8000. Herefter konverteres data fra den form det kommer i fra sensorerne, til den form de skal sendes til DevKit8000 i. I dette tilfælde med temperaturen, skal temperaturen begrænses en værdi mellem 1 og 200, jf. UART protokollen som kan ses på side \pageref{sec:UART_protokol}. Når data'en er blevet begrænset, gemmes den i en privat variabel(\texttt{temp}), som herefter kan tilgås med funktionen getTemp\_DSP, der kan ses i Listing \ref{lst:DSP_getTemp}.
 
 \lstinputlisting[linerange=getTemp_DSP0-getTemp_DSP1, label=lst:DSP_getTemp, caption=Getter-funktion som returnerer den seneste midlede temperatur]{../src/PSoC_Master/PSoC_Master.cydsn/DSP_Class.c}
 
-De resterende dele af DSP klassen, altså dem der håndterer jordfugt, luftfugt og lysintensitet, er implementeret efter samme principper og fremgangsmåde og der henvises derfor til kommentarerne i kildekoden som findes i Bilag XXX. for mere information om dette.
-%TODO henvisning til kildekodebilag
+De resterende dele af DSP klassen, altså dem der håndterer jordfugt, luftfugt og lysintensitet, er implementeret efter samme principper og fremgangsmåde og der henvises derfor til kommentarerne i kildekoden\cite{lib:PSoC_m_git} for mere information om dette.
+
 \clearpage
 
-%===============================PSoC Master===================================
+
+%========================== Controller (PSoC Master) ==============================
+
 \subsection{Controller implementering} \label{sec:Controller_impl}
 
 PSoC\_Master controller-klassen er som udgangspunkt designet ud fra at blive styret af hvilke kommandoer der er modtaget på UART'en. På den måde agerer vores 'master' slave for DevKit8000. 
@@ -102,7 +111,8 @@ For at huske den nuværende status er der oprettet en \texttt{enum} med den nuv�
 
 \lstinputlisting[linerange=flags0-flags1, label=lst:PSoC_m_dec, caption=Deklaration af buffers og flag.]{../src/PSoC_Master/PSoC_Master.cydsn/PSoC_Master_Class.c}
 
-Ydermere er der lavet en form for debugging ved hjælp af de tre farvede LED'er på PSoC4 Pioneer Kit. Der tændes fx for den røde LED når et interrupt sker på timeren og for den blå når et interrupt sker på UARTen.
+Ydermere er der lavet en form for debugging ved hjælp af de tre farvede LED'er på PSoC4 Pioneer Kit. 
+Der tændes fx for den røde LED når et interrupt sker på timeren og for den blå når et interrupt sker på UARTen.
 
 Når der sker et interrupt på UART'en, sættes flaget \texttt{uartInt} til 1 og der fyldes data i bufferen. Dette ses i Listing \ref{lst:PSoC_m_uart_int}.
 
@@ -114,9 +124,15 @@ Der er derfor udarbejdet en ny privat funktion kaldet \texttt{uartIntHandler()},
 som sørger for at håndtere selve arbejdet mht. det input UART'en giver. 
 Denne bliver kaldt med jævne mellemrum fra en \texttt{while(1)} løkke i main.c, se Listing \ref{lst:PSoC_Master_main} på side \pageref{lst:PSoC_Master_main}.
 
-\lstinputlisting[linerange=uartIntHandler0-uartIntHandler1, label=lst:PSoC_m_uartinth, caption=Interrupt handler for UART.]{../src/PSoC_Master/PSoC_Master.cydsn/PSoC_Master_Class.c}
+\lstinputlisting[linerange=uartIntHandler0-uartIntHandler1, label=lst:PSoC_m_uartinth1, caption=Interrupt handler for UART.]{../src/PSoC_Master/PSoC_Master.cydsn/PSoC_Master_Class.c}
 
-I Listing \ref{lst:PSoC_m_uartinth} ses implementeringen af selve interrupthandleren. Det ses hvordan der først tjekkes for om der er kommet ny data via \texttt{uartInt} og der herefter kontrolleres hvilket stadie, systemet er i. Hvis det er i \texttt{IDLE} tjekkes der på hvad der står i bufferen og der udfærdes evt et svar eller ventes på næste databyte. Til at starte med tændes den blå LED og når kaldet er slut slukkes denne.
+I Listing \ref{lst:PSoC_m_uartinth1} ses den indledende del af interrupthandleren. Det ses hvordan der først tjekkes for om der er kommet ny data via \texttt{uartInt} og der herefter kontrolleres hvilket stadie, systemet er i. Hvis det er i \texttt{IDLE} tjekkes der på hvad der står i bufferen og der udfærdes evt et svar eller ventes på næste databyte.
+
+\lstinputlisting[linerange=uartIntHandler2-uartIntHandler3, label=lst:PSoC_m_uartinth2, caption=Interrupt handler for UART.]{../src/PSoC_Master/PSoC_Master.cydsn/PSoC_Master_Class.c}
+
+I Listing \ref{lst:PSoC_m_uartinth2} ses endnu et udsnit af \texttt{uartIntHandler}. Her er metoden kaldt i et stadie, hvor systemet venter på en parameter til kommandoen \texttt{'W'}, der oversættes til åbning/lukning af vinduet.
+
+\mbox{}
 
 Til at indsamle data fra sensorerne med jævne mellemrum er der implementeret en timer med et tilhørende interrupt. 
 Denne interrupt service rutine sætter et flag, på samme måde som UART-klassen, som herefter udløser en privat funktion \texttt{timerIntHandler}.

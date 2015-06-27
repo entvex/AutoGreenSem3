@@ -1,0 +1,76 @@
+\subsection{Plantedatabase}
+
+Plantedatabasen er en klasse som anvendes til at gemme planter i. Den er indeholder en Doublylinkedlist. Ud over dette tilbyder den metoder så man kan interagere med den.
+
+
+\subsubsection{Attributter}
+
+\begin{table}[h]
+\begin{tabularx}{\textwidth}{| L{2.5cm} | l | Z |} \hline
+\texttt{dataBase} & \texttt{DoublyLinkedList} & Datastrukturen som indeholder alle planterne\\\hline
+\end{tabularx}
+\caption{Attributter for klassen Plantedatabase}
+\label{table:Plantedatabase_attributter}
+\end{table}
+
+\subsubsection{Metoder}
+
+\begin{table}[h]
+\begin{tabularx}{\textwidth}{| L{2.5 cm} | Z |} \hline
+Prototype & \texttt{Plant* GetPlantList()} \\\hline
+Parametre & \texttt{-} \\\hline
+Returværdi & Et Plant array med alle planter I database. \\\hline
+Beskrivelse & Bruges til at hente all planter i databasen. \\\hline
+\end{tabularx}
+\caption{GetPlantList}
+\label{table:Plantedatabase_GetPlantList}
+\end{table}
+
+\begin{table}[h]
+\begin{tabularx}{\textwidth}{| L{2.5 cm} | Z |} \hline
+Prototype & \texttt{Plant GetPlant(int id)} \\\hline
+Parametre & \texttt{id} \newline
+Er id nummeret for den ønskede plante. \\\hline
+Returværdi & En plante som har det givne id. \\\hline
+Beskrivelse & Henter en plant ud af databasen som har det angivne id. \\\hline
+\end{tabularx}
+\caption{GetPlant}
+\label{table:Plantedatabase_GetPlant}
+\end{table}
+
+\begin{table}[h]
+\begin{tabularx}{\textwidth}{| L{2.5 cm} | Z |} \hline
+Prototype & \texttt{void InsertPlant(plant)} \\\hline
+Parametre & \texttt{plant} \newline
+Den plante som skal indsættes. \\\hline
+Returværdi & \texttt{-} \\\hline
+Beskrivelse & Indsætter en plante i databasen. \\\hline
+\end{tabularx}
+\caption{InsertPlant}
+\label{table:Plantedatabase_InsertPlant}
+\end{table}
+
+\clearpage
+
+\begin{table}[h]
+\begin{tabularx}{\textwidth}{| L{2.5 cm} | Z |} \hline
+Prototype & \texttt{void DeletePlant(int id)} \\\hline
+Parametre & \texttt{id} \newline
+id på planeten som skal slettes. \\\hline
+Returværdi & \texttt{-} \\\hline
+Beskrivelse & Sletter en planet som har det angivende id. \\\hline
+\end{tabularx}
+\caption{DeletePlant}
+\label{table:Plantedatabase_DeletePlant}
+\end{table}
+
+\begin{table}[h]
+\begin{tabularx}{\textwidth}{| L{2.5 cm} | Z |} \hline
+Prototype & \texttt{plant CreatePlant()} \\\hline
+Parametre & \texttt{-} \\\hline
+Returværdi & En ny plante. \\\hline
+Beskrivelse & Opretter en ny plante i Datastrukturen og returnere denne plante, så det er muligt at redigere i data på den ved brug af plantedataredigeringsmenuen. \\\hline
+\end{tabularx}
+\caption{CreatePlant}
+\label{table:Plantedatabase_CreatePlant}
+\end{table}

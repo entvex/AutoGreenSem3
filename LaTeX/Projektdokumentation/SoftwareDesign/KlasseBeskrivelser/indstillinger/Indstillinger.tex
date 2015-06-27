@@ -1,0 +1,244 @@
+\subsection{Indstillinger}
+
+\subsubsection{Attributter}
+
+\begin{table}[ht]
+\begin{tabularx}{\textwidth}{| Z | Z | L{9 cm} |} \hline
+\texttt{virtuallePlants} & \texttt{Plant[6]} & Indeholder 6 structs af typen Plant \\\hline
+\texttt{Email} & \texttt{String[3]} & Indeholder 3 e-mails \\\hline
+\texttt{Warning} & \texttt{bool} & En bool som fortæller om advarsels e-mails er slået til eller fra.\\\hline
+\texttt{daily} & \texttt{bool} & En bool som fortæller om daglige e-mails er slået til eller fra. \\\hline
+\texttt{Varmelegeme} & \texttt{bool} & En bool som fortæller om Varmelegemet er slået til eller fra.\\\hline
+\texttt{blæserne} & \texttt{bool} & En bool som fortæller om blæserne er slået til eller fra. \\\hline
+\texttt{monitor} & \texttt{bool} & En bool som fortæller om monitor er slået til eller fra. \\\hline
+\texttt{regulering} & \texttt{bool} & En bool som fortæller om regulering er slået til eller fra. \\\hline
+\end{tabularx}
+\caption{Attributter for klassen Indstillinger}
+\label{table:Indstillinger_attributter}
+\end{table}
+
+\subsubsection{Metoder}
+
+\begin{table}[ht]
+\begin{tabularx}{\textwidth}{| L{2.5 cm} | Z |} \hline
+Prototype & \texttt{string exec(const char* cmd)} \\\hline
+Parametre & En string med den shell kommando der skal eksekveres på systemet. \\\hline
+Returværdi & \texttt{String} \newline
+En string som indeholder outputtet fra den kørte shell kommando \\\hline
+Beskrivelse & Kan kørere kommandoer på et Linux system via en pipe til systemet. \\\hline
+\end{tabularx}
+\caption{exec}
+\label{table:Indstillinger_exec}
+\end{table}
+
+
+\begin{table}[ht]
+\begin{tabularx}{\textwidth}{| L{2.5 cm} | Z |} \hline
+Prototype & \texttt{void SetMonitorering(bool active)} \\\hline
+Parametre & \texttt{bool active} \newline
+True hvis den skal kører ellers false. \\\hline
+Returværdi & - \\\hline
+Beskrivelse & Anvendes til sætte monitorering til at kører eller ikke kører. \\\hline
+\end{tabularx}
+\caption{SetMonitorering}
+\label{table:Indstillinger_SetMonitorering}
+\end{table}
+
+\begin{table}[ht]
+\begin{tabularx}{\textwidth}{| L{2.5 cm} | Z |} \hline
+Prototype & \texttt{void SetRegulering(bool active)} \\\hline
+Parametre & \texttt{bool active} \newline
+True hvis den skal kører ellers false. \\\hline
+Returværdi & - \\\hline
+Beskrivelse & Anvendes til sætte regulering til at kører eller ikke kører. \\\hline
+\end{tabularx}
+\caption{SetRegulering}
+\label{table:Indstillinger_SetRegulering}
+\end{table}
+
+\begin{table}[ht]
+\begin{tabularx}{\textwidth}{| L{2.5 cm} | Z |} \hline
+Prototype & \texttt{bool getRegulering()} \\\hline
+Parametre & \texttt{-} \newline
+ \\\hline
+Returværdi & True hvis den skal kører ellers false. \\\hline
+Beskrivelse & Anvendes til at tjekke status på regulering, så man kan se om den kører eller ej. \\\hline
+\end{tabularx}
+\caption{getRegulering}
+\label{table:Indstillinger_getRegulering}
+\end{table}
+
+\begin{table}[ht]
+\begin{tabularx}{\textwidth}{| L{2.5 cm} | Z |} \hline
+Prototype & \texttt{bool getMonitorering()} \\\hline
+Parametre & \texttt{-} \newline
+ \\\hline
+Returværdi & True hvis den skal kører ellers false. \\\hline
+Beskrivelse & Anvendes til at tjekke status på monitorering, så man kan se om den kører eller ej. \\\hline
+\end{tabularx}
+\caption{getMonitorering}
+\label{table:Indstillinger_getMonitorering}
+\end{table}
+
+\begin{table}[ht]
+\begin{tabularx}{\textwidth}{| L{2.5 cm} | Z |} \hline
+Prototype & \texttt{void SetVirtualPlant(int id, Plant plantToPlace)} \\\hline
+Parametre & \texttt{int id} \newline et id som er mellem 1 og 6 som svare til hvor planeten er i det Virtual drivhus. \newline
+\texttt{Plant plantToPlace} \newline Planten som skal sættes ind i det virtual drivhus. \\\hline
+Returværdi & - \\\hline
+Beskrivelse & Bruges til at indsætte en plante ind i det virtuelle drivhus. På den ønskede placering \\\hline
+\end{tabularx}
+\caption{SetVirtualPlant}
+\label{table:Indstillinger_SetVirtualPlant}
+\end{table}
+
+\begin{table}[ht]
+\begin{tabularx}{\textwidth}{| L{2.5 cm} | Z |} \hline
+Prototype & \texttt{void DelVirtualPlant(int id)} \\\hline
+Parametre & \texttt{int id} \newline et id som er mellem 1 og 6 som svare til hvor planeten er i det Virtual drivhus. \\\hline
+Returværdi & - \\\hline
+Beskrivelse & Anvendes til at slette en virtuel plante i det virtuel drivhus. \\\hline
+\end{tabularx}
+\caption{DelVirtualPlant}
+\label{table:Indstillinger_DelVirtualPlant}
+\end{table}
+
+\begin{table}[ht]
+\begin{tabularx}{\textwidth}{| L{2.5 cm} | Z |} \hline
+Prototype & \texttt{void GetEmails(string \&mail1, string \&mail2, string \&mail3)} \\\hline
+Parametre & \texttt{string \&mail1} \newline En reference til en string, son ændres til E-mail et som er gemt i system. \newline
+\texttt{string \&mail2} \newline En reference til en string, son ændres til E-mail to som er gemt i system.
+\newline
+\texttt{string \&mail3} \newline En reference til en string, son ændres til E-mail tre som er gemt i system.
+ \\\hline
+Returværdi & - \\\hline
+Beskrivelse & Bruges til at hente de tre e-mail adresser som systemet har gemt. \\\hline
+\end{tabularx}
+\caption{GetEmails}
+\label{table:Indstillinger_GetEmails}
+\end{table}
+
+\clearpage
+
+\begin{table}[ht]
+\begin{tabularx}{\textwidth}{| L{2.5 cm} | Z |} \hline
+Prototype & \texttt{void SetEmails(const string mail1, const string mail2, const string mail3)} \\\hline
+Parametre & \texttt{string \&mail1} \newline E-mail et som der kan ønskes gemt. \newline
+\texttt{string \&mail2} \newline E-mail to som der kan ønskes gemt.
+\newline
+\texttt{string \&mail3} \newline E-mail et som der kan ønskes gemt.
+ \\\hline
+Returværdi & - \\\hline
+Beskrivelse & Bruges til at gemme tre e-mail adresser i systemet. \\\hline
+\end{tabularx}
+\caption{SetEmails}
+\label{table:Indstillinger_SetEmails}
+\end{table}
+
+\begin{table}[ht]
+\begin{tabularx}{\textwidth}{| L{2.5 cm} | Z |} \hline
+Prototype & \texttt{void GetHardware(bool \&Varmelegeme, bool \&bloeserne)} \\\hline
+Parametre & \texttt{bool \&Varmelegeme} \newline En reference til en bool, som ændres til den aktuelle status på Varmelegemet.
+\newline
+\texttt{bool \&bloeserne} \newline En reference til en bool, som ændres til den aktuelle status på blæserne.
+ \\\hline
+Returværdi & - \\\hline
+Beskrivelse & Anvendes til at se om varmelegemet og/eller blæserne må bruges til at regulere. Hvis den er true må hardwaren bruges hvis false må det ikke bruges til at regulere med. \\\hline
+\end{tabularx}
+\caption{GetHardware}
+\label{table:Indstillinger_GetHardware}
+\end{table}
+
+\begin{table}[ht]
+\begin{tabularx}{\textwidth}{| L{2.5 cm} | Z |} \hline
+Prototype & \texttt{void SetHardware(const bool Varmelegeme, const bool bloeserne)} \\\hline
+Parametre & \texttt{const bool Varmelegeme} \newline Sættes true hvis varmelegemet skal kører ellers false
+\newline
+\texttt{const bool bloeserne} \newline Sættes true hvis blæserne skal kører ellers false
+ \\\hline
+Returværdi & - \\\hline
+Beskrivelse & Anvendes at sætte om Varmelegemet og/eller blæserne skal må bruges til regulering i drivhuset. \\\hline
+\end{tabularx}
+\caption{SetHardware}
+\label{table:Indstillinger_SetHardware}
+\end{table}
+
+\clearpage
+
+\begin{table}[ht]
+\begin{tabularx}{\textwidth}{| L{2.5 cm} | Z |} \hline
+Prototype & \texttt{void setDate(Date time)} \\\hline
+Parametre & \texttt{Date time} \newline En struct af type Date som beskriver den tid som systemet skal indstilles til. \\\hline
+Returværdi & - \\\hline
+Beskrivelse & Anvendes at sætte tiden på systemet, dette sker ved at eksekvere et script bash script på systemet via en shell som smider de rette parameter ind. Systemet kan sættes til en tid mellem år 2000 og 2050. \\\hline
+\end{tabularx}
+\caption{setDate}
+\label{table:Indstillinger_setDate}
+\end{table}
+
+\begin{table}[ht]
+\begin{tabularx}{\textwidth}{| L{2.5 cm} | Z |} \hline
+Prototype & \texttt{Date getDate()} \\\hline
+Parametre & \texttt{-} \newline \\\hline
+Returværdi & En struct af type Date som beskriver den aktuelle tid som på systemet. \\\hline
+Beskrivelse & Anvendes henter den aktuelle tid på systemet.\\\hline
+\end{tabularx}
+\caption{getDate}
+\label{table:Indstillinger_getDate}
+\end{table}
+
+\begin{table}[ht]
+\begin{tabularx}{\textwidth}{| L{2.5 cm} | Z |} \hline
+Prototype & \texttt{void GetNotifications(bool \&daily, bool \&Warning)} \\\hline
+Parametre & \texttt{bool \&daily} \newline En reference til en bool, som ændres til den aktuelle status på daily notifications, hvis den ændres til true er daily slået til, men hvis den er false er daily ikke slået til.
+\newline
+\texttt{bool \&Warning} \newline En reference til en bool, som ændres til den aktuelle status på warning notifications, hvis den ændres til true er warning slået til, men hvis den er false er warning ikke slået til.
+ \\\hline
+Returværdi & - \\\hline
+Beskrivelse & Anvendes til at se om daily og/eller Warning er slået til, hvis værdien for er true sendes notifications for den, men hvis false sendes den ikke.\\\hline
+\end{tabularx}
+\caption{GetNotifications}
+\label{table:Indstillinger_GetNotifications}
+\end{table}
+
+\clearpage
+
+\begin{table}[ht]
+\begin{tabularx}{\textwidth}{| L{2.5 cm} | Z |} \hline
+Prototype & \texttt{void SetNotifications(const bool \&daily, const bool \&Warning)} \\\hline
+Parametre & \texttt{bool \&daily} \newline En reference til en bool, som bruges til at ændres den aktuelle status på daily notifications, hvis den ændres til true er daily slået til, men hvis ændres til false er daily ikke slået til.
+\newline
+\texttt{bool \&Warning} \newline En reference til en bool, som bruges til at ændres den aktuelle status på Warning notifications, hvis den ændres til true er Warning slået til, men hvis ændres til false er Warning ikke slået til.
+ \\\hline
+Returværdi & - \\\hline
+Beskrivelse & Anvendes til gemme daily og/eller Warning om er slået til, hvis værdien for er true sendes notifications for den angivende notification, men hvis false sendes den/de ikke.\\\hline
+\end{tabularx}
+\caption{SetNotifications}
+\label{table:Indstillinger_SetNotifications}
+\end{table}
+
+\begin{table}[ht]
+\begin{tabularx}{\textwidth}{| L{2.5 cm} | Z |} \hline
+Prototype & \texttt{Plant Getplant(int plantId)} \\\hline
+Parametre & \texttt{int plantId} \newline Et id som beskriver hvilken plante der skal hentes ud. Id'et skal være et tal mellem 1 og 6.
+\newline
+ \\\hline
+Returværdi & Plant \\\hline
+Beskrivelse & Anvendes hente en plante ud af det virtuelle drivhus.\\\hline
+\end{tabularx}
+\caption{Getplant}
+\label{table:Indstillinger_Getplant}
+\end{table}
+
+\begin{table}[ht]
+\begin{tabularx}{\textwidth}{| L{2.5 cm} | Z |} \hline
+Prototype & \texttt{plant* GetAll()} \\\hline
+Parametre & \texttt{-} \newline
+
+ \\\hline
+Returværdi & Et array som indeholder de 6 virtuelle planter \\\hline
+Beskrivelse & Anvendes hente en plante ud af systemet .\\\hline
+\end{tabularx}
+\caption{GetAll}
+\label{table:Indstillinger_GetAll}
+\end{table}

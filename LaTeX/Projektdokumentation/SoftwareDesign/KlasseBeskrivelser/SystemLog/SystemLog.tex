@@ -1,0 +1,39 @@
+\subsection{SystemLog}
+
+Systemloggen anvendes til at gemme data omkring systemhændelser angående: ændringer i den virtuelle og normale plantedatabase, aktivering af aktuatorerne, samt sendte beskeder til brugeren. Systemloggen kan tilgås af brugeren i Systemlogmenuen.
+
+
+\subsubsection{Attributter}
+
+\begin{table}[h]
+\begin{tabularx}{\textwidth}{| L{2.5cm} | l | Z |} \hline
+\texttt{SystemMsg} & \texttt{DoublyLinkedList <string> } & SystemMsg implementeres med en DoublyLinkedList, som gemmer i alle systemhændelser i form af strings.  \\\hline
+\end{tabularx}
+\caption{Attributter for klassen SystemLog}
+\label{table:SystemLog_attributter}
+\end{table}
+
+\subsubsection{Metoder}
+
+\begin{table}[h]
+\begin{tabularx}{\textwidth}{| L{2.5 cm} | Z |} \hline
+Prototype & \texttt{void AddMessage(string msg)} \\\hline
+Parametre & \texttt{msg} \newline
+Er en besked indeholdende den pågældende systemhændelse formateret på følgende måde: ”klassenavn”: ”hændelse” på ”tidspunkt”. \\\hline
+Returværdi & \texttt{-} \\\hline
+Beskrivelse & Funktionen har til formål at modtage systembeskeder fra andre klasser og indsætte disse beskeder i en datastruktur til senere brug. \\\hline
+\end{tabularx}
+\caption{AddMessage}
+\label{table:SystemLog_AddMessage}
+\end{table}
+
+\begin{table}[h]
+\begin{tabularx}{\textwidth}{| L{2.5 cm} | Z |} \hline
+Prototype & \texttt{void PrintSystemLog()} \\\hline
+Parametre & \texttt{-} \\\hline
+Returværdi & \texttt{-} \\\hline
+Beskrivelse & PrintSystemLog bliver kaldt fra QT menuen ”Systemlogmenu” og udskriver de sidste 5 systemhændelser med den femte ældste hændelse først og den nyeste hændelse sidst. \\\hline
+\end{tabularx}
+\caption{PrintSystemLog}
+\label{table:SystemLog_PrintSystemLog}
+\end{table}

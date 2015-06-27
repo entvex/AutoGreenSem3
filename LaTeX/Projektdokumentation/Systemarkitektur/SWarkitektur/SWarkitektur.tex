@@ -27,7 +27,7 @@ Monitorklassens primære opgave er at opsamle sensordata fra UART klassen og skr
 
 \subsubsection{Regulator}
 
-Reguleringsklassen har ansvaret for at planterværdierne bliver overholdt. Den opnår dette ved at læse fra data-loggen og hvis uregelmæssigheder findes blandt disse data, vil klassen tænde de fornødende akutuatorer gennem UART klassen. Der ud over skal Regulator skrive til System-log, hvis UART klassen rapporter fejl ved data overførelse.
+Reguleringsklassen har ansvaret for at planterværdierne bliver overholdt. Den opnår dette ved at læse fra data-loggen, samt indstillinger som indeholder de virtuelle planter og hvis uregelmæssigheder findes blandt disse data, vil klassen tænde de fornødende akutuatorer gennem UART klassen. Der ud over skal Regulator skrive til System-log, hvis UART klassen rapporter fejl ved data overførelse.
 
 \subsubsection{UART}
 
@@ -35,7 +35,7 @@ UARTklassen er grænsefladen mellem Devkittet og de sensorer/akutuatorer, der m�
 
 \subsubsection{Rapport}
 
-Rapportering indlæser E-mailkonfigurationer fra indstillinger, som bestemmer hvilke funktionaliteter, der skal benyttes. Rapporting skal sende E-mail til brugeren dagligt, når der er kritisk klima i drivhuset, eller både dagligt og ved kritisk klima. 
+Rapportering indlæser E-mailkonfigurationer fra indstillinger, som bestemmer hvilken slags E-mails, der skal benyttes. Rapporting skal sende E-mail til brugeren dagligt, når der er kritisk klima i drivhuset, eller både dagligt og ved kritisk klima.
 
 \subsection{Domain-Klasser}
 
@@ -49,11 +49,11 @@ System-loggen har til ansvar at styre en datastruktur med henblik på at gemme d
 
 \subsubsection{Indstillinger}
 
-Indstillinger gemmer konfigurationer og indlæser dem i konfigurationsfilen, når regulering eller rapportering startes af brugeren. 
+Indstillinger gemmer konfigurationer og indlæser dem i konfigurationsfilen, når regulering eller rapportering startes af brugeren. Den holder gemmer også de virtuelle planter og hvilken hardware der må bruges til at regulere temperaturen med. Der ud over bruges den også til at indstille og hente tiden i systemet.
 
 \subsubsection{Plantedatabasen}
 
-Plantedatabasen gemmer parametre for brugerdefinerede planter samt  prækonfigurede planter og tilgås via en klasse menu.
+Plantedatabasen gemmer parametre for brugerdefinerede planter samt prækonfigurede planter og tilgås via en klasse menu.
 
 \clearpage
 
@@ -86,7 +86,7 @@ I systemloggen har brugeren mulighed for at se systemhændelser, f.eks. hvis sys
 \subsubsection{Konfigurationsmenu}
 I konfigurationsmenu har brugeren mulighed for at tilgå 4 undermenuer: E-mailmenu, Notifikationsmenu, Tid- og datomenu, samt Hardware Indstillingsmenu.
 
-\subsubsection{E-mailmenu}
+\subsubsection{E-mailmenu} \label{sec:mailmenu}
 I E-mailmenuen, vises 3 kolonner, hvor brugeren har mulighed for at indtaste E-mail adresse, som skal modtage notifiktationer. 
 
 \subsubsection{Notifikationsmenu} 
@@ -96,4 +96,6 @@ I notifikationsmenuen har brugeren mulighed for at slå notifikationer til og fr
 I Tids- og datomenuen har brugeren mulighed for at ændre dato og tid. 
 
 \subsubsection{Hardware Indstillingsmenu} 
-I Hardware Indstillingsmenu har brugeren mulighed for at vælge hvilke akutuatorer drivhuset skal bruge. Hvis brugeren ønsker at spare strøm, kan blæser og varmelegeme fravælges til regulering temperaturen. \\
+I Hardware Indstillingsmenu har brugeren mulighed for at vælge hvilke akutuatorer drivhuset skal bruge. Hvis brugeren ønsker at spare strøm, kan blæser og varmelegeme fravælges til regulering temperaturen.
+
+\clearpage

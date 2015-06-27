@@ -1,6 +1,7 @@
 \chapter{Kravspecifikation} \label{ch:Kravspec}
 
-\section{Version}
+\section*{Version}
+
 \begin{table}[h]
 	\centering
 	\begin{tabularx}{\textwidth - 2cm}{|l|l|l|X|}
@@ -9,8 +10,60 @@
 	26. februar & 1 & MHG & Første udkast. \\ \hline
 	6. marts & 2 & MHG & Rettelser efter review. \\ \hline
 	12. marts & 3 & MHG & Mindre rettelser efter fælles gennemlæsning. \\\hline
+	16. maj & 4 & MHG & Mindre rettelser. \\\hline
 	\end{tabularx}
 \end{table}
+
+\clearpage
+
+%==================== Ordforklaring ====================
+
+\section{Ordforklaring}
+
+\subsubsection{Plantedatabase}
+
+Plantedatabasen indeholder information om ideelle forhold for forskellige typer planter, som brugeren kunne tænkes at plante i sit fysiske drivhus.
+Informationen i plantedatabasen står til grund for udgangsparametre for nye planter i det virtuelle drivhus. 
+Der findes en række systemplanter, som brugeren ikke kan redigere eller slette, men brugeren kan tilføje egne planter.
+
+\subsubsection{Data Log}
+
+Systemet er udstyret med en log over de indsamlede data fra sensorer i systemet, der måles og indskrives i loggen hvert minut. 
+Denne er opbygget som en database, hvor hver logning indeholder information fra de diskrete sensorer samt et tidspunkt.
+
+\subsubsection{System Log}
+
+Systemet er udstyret med en log over hvad systemet foretager sig. 
+Dette kunne f.eks. være et indlæg når systemet foretager en måling, sender en e-mail, regulerer miljøet i drivhuset.
+
+\subsubsection{Virtuelt Drivhus}
+
+Det virtuelle drivhus er systemets repræsentation af det fysiske drivhus. Brugeren kan tilføje planter fra plantedatabasen i det virtuelle drivhus, og på den måde give systemet indirekte oplysninger om ønskede parametre.
+Disse informationer lagres i systemets konfigurationsfil.
+
+\subsubsection{Fysisk Drivhus}
+
+Ved det fysiske drivhus forstås det drivhus hvori systemet er monteret.
+
+\subsubsection{Konfigurationsfil}
+
+Dette er en automatisk genereret fil, der er placeret på DevKit8000, som indeholder brugerens konfigurationer om blandt andet notifikationer, e-mailadresser, antallet af fugtsensorer og deres unikke id mm.
+
+\subsubsection{Notifikations E-mail}
+
+Dette er en daglig E-mail, som brugeren kan vælge at få tilsendt. Den sendes klokken 12:00, og indeholder informationer om parametrene i det fysiske drivhus.
+
+\subsubsection{Advarsels E-mail}
+
+Dette er en E-mail, som brugeren kan vælge at få tilsendt. Den sendes, hvis en parameter i det fysiske drivhus kommer uden for tolerancen af den ønskede værdi.
+
+\subsubsection{API}
+
+Application Programming Interface.
+
+\clearpage
+
+%==================== Systembeskrivelse ====================
 
 \section{Systembeskrivelse}
 Under udviklingen af prototypen for AutoGreen, anvendes en drivhusmodel, der er vist på Figur \ref{fig:dimensioner}.
@@ -23,6 +76,9 @@ Under udviklingen af prototypen for AutoGreen, anvendes en drivhusmodel, der er 
 \end{figure}
 
 På billedet ses blæsere samt vinduesmotoren (ikke monteret). Disse indgår som en del af systemet, men selve drivhuset gør ikke. Der vil i systemet ydermere være et varmelegeme, som ikke er repræsenteret på billedet. 
+
+
+\clearpage
 
 \begin{figure}[!h]
 \centering 
@@ -45,28 +101,9 @@ I\textsuperscript{2}C Master er realiseret på et PSoC4 udviklingsboard (CY8CKIT
 \subsubsection{\IIC Slave Aktuatorer}
 \IIC Slave Aktuatorer er ansvarlig for al kommunikation mellem \IIC Master og alle aktuatorer i det fysiske drivhus. Enheden er realiseret på et PSoC4 udviklingsboard (CY8CKIT-042).
 
-\section{Ordforklaring}
+\clearpage
 
-\subsubsection{Plantedatabase}
-Plantedatabasen indeholder information om ideelle forhold for forskellige typer planter, som brugeren kunne tænkes at plante i sit fysiske drivhus. 
-Informationen i plantedatabasen står til grund for udgangsparametre for nye planter i det virtuelle drivhus. Der findes en række systemplanter, som brugeren ikke kan redigere eller slette, men brugeren kan tilføje egne planter.
-\subsubsection{Data Log}
-Systemet er udstyret med en log over de indsamlede data fra sensorer i systemet, der måles og indskrives i loggen hvert minut. 
-Denne er opbygget som en database, hvor hver logning indeholder information fra de diskrete sensorer samt et tidspunkt. 
-\subsubsection{System Log}
-Systemet er udstyret med en log over hvad systemet foretager sig. 
-Dette kunne f.eks. være et indlæg når systemet foretager en måling, sender en e-mail, regulerer miljøet i drivhuset.
-\subsubsection{Virtuelt Drivhus}
-Det virtuelle drivhus er systemets repræsentation af det fysiske drivhus. Brugeren kan tilføje planter fra plantedatabasen i det virtuelle drivhus, og på den måde give systemet indirekte oplysninger om ønskede parametre.
-Disse informationer lagres i systemets konfigurationsfil.
-\subsubsection{Fysisk Drivhus}
-Ved det fysiske drivhus forstås det drivhus hvori systemet er monteret. 
-\subsubsection{Konfigurationsfil}
-Dette er en automatisk genereret fil, der er placeret på DevKit8000, som indeholder brugerens konfigurationer om blandt andet notifikationer, e-mailadresser, antallet af fugtsensorer og deres unikke id mm.
-\subsubsection{Notifikations E-mail}
-Dette er en daglig E-mail, som brugeren kan vælge at få tilsendt. Den sendes klokken 12:00, og indeholder informationer om parametrene i det fysiske drivhus.
-\subsubsection{Advarsels E-mail}
-Dette er en E-mail, som brugeren kan vælge at få tilsendt. Den sendes, hvis en parameter i det fysiske drivhus kommer uden for tolerancen af den ønskede værdi.
+%==================== Brugerfladen ====================
 
 \section{Brugerfladen}
 \begin{figure}[h]
@@ -82,10 +119,12 @@ Nederst ses "Monitorér" og "Regulér" knapper, som kan aktivere eller deaktiver
 
 Til højre ses live status for det fysiske drivhus. Nederst ses live status for jordfugtighed for hver plante. Dette er vist ved seks felter i forskellige farver. Disse symboliserer planter i det virtuelle drivhus, og viser status for den enkelte plante. Grøn betyder at plantens jordfugtighed er indenfor tolerancerne, hvor rød betyder at den er uden for tolerancen. Grå (Not Available) betyder, at der ikke er placeret en plante i det virtuelle drivhus, for den pågældende fugtighedssensor. 
 
+%==================== Aktør Kontekst Diagram ====================
+
 \section{Aktør Kontekst Diagram} 
 \begin{figure}[h]
 \centering 
-\includegraphics[width={\textwidth}, trim=0 0 0 0, clip=true] {../fig/Aktoer_Kontekst_Diagram.pdf}
+\includegraphics[width={\textwidth*4/5}, trim=0 0 0 0, clip=true] {../fig/Aktoer_Kontekst_Diagram.pdf}
 \caption{Aktør Kontekst Diagram for AutoGreen}
 \label{fig:aktoer_kontekst_diagram}
 \end{figure}
@@ -118,10 +157,14 @@ Drivhusklimaet består af en række parametre, som systemet måler og/eller regu
 	\subitem Måles og registreres af systemet
 \end{itemize}
 
+\clearpage
+
+%==================== Funktionelle Krav ====================
+
 \section{Funktionelle Krav}
 Systemet\ldots
 \begin{enumerate}\itemsep1pt \parskip0pt \parsep0pt
-	\item \ldots \emph{Skal} give brugeren mulighed for at monitorere og konfigurere drivhusklimaet vha. en grafisk brugerflade på et touch display.
+	\item \ldots  \emph{Skal} give brugeren mulighed for at monitorere og konfigurere drivhusklimaet vha. en grafisk brugerflade på et touch display.
 	\item \ldots \emph{Skal} have mulighed for at starte og stoppe systemet.
 	\item \ldots \emph{Skal} måle lufttemperatur i det fysiske drivhus.
 	\item \ldots \emph{Skal} kunne regulere temperatur i det fysiske drivhus.
@@ -145,6 +188,10 @@ Systemet\ldots
 	\item \ldots \emph{Kan} sende e-mail til brugeren, på baggrund af brugerindstillinger.
 \end{enumerate}
 
+\clearpage
+
+%==================== Ikke Funktionelle Krav ====================
+
 \section{Ikke Funktionelle Krav}
 Systemet\ldots
 \begin{enumerate}\itemsep1pt \parskip0pt \parsep0pt
@@ -160,6 +207,9 @@ Systemet\ldots
 	\item \ldots \emph{Kan} sende mail til brugeren højest 1 minut efter et for lavt jordfugtighedsniveau er målt, hvis den er indstillet til dette.
 \end{enumerate}
 
+\clearpage
+
+%==================== Use Case Diagram ====================
 
 \section{Use Case Diagram}
 \begin{figure}[h]
@@ -171,7 +221,7 @@ Systemet\ldots
 
 \clearpage
 
-\subsection{Use Case beskrivelser - Initiering og Formål}
+\subsection{Use Case beskrivelser - Initiering og Formål} 
 \subsubsection{UC1: Start}
 Initieres af: Bruger
 
@@ -208,6 +258,8 @@ Initieres af: Bruger
 
 Denne UC giver brugeren mulighed for at se på planter i databasen. 
 Brugeren kan desuden tilføje og fjerne egne planter i databasen, og brugeren kan redigere i de planter brugeren tidligere har tilføjet. 
+
+\clearpage
 
 \subsubsection{UC7: Konfigurer System}
 Initieres af: Bruger
@@ -260,10 +312,12 @@ Det kan ske uden luftcirkulation og/eller varmelegeme, hvis brugeren har valgt d
 
 \clearpage
 
-\subsection{Use Case Beskrivelser - Fully Dressed}
+%==================== Fully Dressed Use Cases ====================
+
+\subsection{Use Case Beskrivelser - Fully Dressed} \label{sec:usecasebeskrivelser}
 For alle Use Cases hvor brugeren navigerer i undermenuer af hovedmenuen, gælder det, at brugeren har mulighed for at gå et skridt tilbage ved at trykke på en ”tilbage knap”. Fremover ved benævningen ”Systemet er operationelt” menes, at systemet er tilsluttet strømforsyning og at alt fungerer samt at systemet er tilsluttet ethernet.
 
-%UC1
+%-------------------- UC1 --------------------
 \begin{table}[h]
 \begin{tabularx}{\textwidth}{| >{\raggedright\arraybackslash}p{3.3 cm} | >{\raggedright\arraybackslash}X |} \hline
 
@@ -299,7 +353,8 @@ For alle Use Cases hvor brugeren navigerer i undermenuer af hovedmenuen, gælder
 \end{table}
 
 \clearpage
-%UC2
+%-------------------- UC2 --------------------
+
 \begin{table}[h]
 \begin{tabularx}{\textwidth}{| >{\raggedright\arraybackslash}p{3.3 cm} | >{\raggedright\arraybackslash}X |} \hline
 
@@ -355,11 +410,13 @@ For alle Use Cases hvor brugeren navigerer i undermenuer af hovedmenuen, gælder
 Ingen \\ \hline
 \end{tabularx}
 
-\clearpage
-
 \caption{UC3: Overvåg}
 \label{tbl:UC3}
 \end{table}
+
+\clearpage
+
+%-------------------- UC4 --------------------
 
 \begin{table}[h]
 \begin{tabularx}{\textwidth}{| >{\raggedright\arraybackslash}p{3.3 cm} | >{\raggedright\arraybackslash}X |} \hline
@@ -421,6 +478,8 @@ Ingen
 
 \clearpage
 
+%-------------------- UC5 --------------------
+
 \begin{table}[h]
 \begin{tabularx}{\textwidth}{| >{\raggedright\arraybackslash}p{3.3 cm} | >{\raggedright\arraybackslash}X |} \hline
 
@@ -448,6 +507,8 @@ Ingen
 \end{table}
 
 \clearpage
+
+%-------------------- UC6 --------------------
 
 \begin{table}[h]
 \begin{tabularx}{\textwidth}{| >{\raggedright\arraybackslash}p{3.3 cm} | >{\raggedright\arraybackslash}X |} \hline
@@ -506,7 +567,9 @@ Ingen
 
 \clearpage
 
-\begin{table}[!h]
+%-------------------- UC7 --------------------
+
+\begin{table}
 \begin{tabularx}{\textwidth}{| >{\raggedright\arraybackslash}p{3.3 cm} | >{\raggedright\arraybackslash}X |} \hline
 \textbf{Navn:} 						& UC7: Konfigurer System\\ \hline
 \textbf{Mål:}						& At konfigurere indstillinger for systemet. \\ \hline
@@ -574,6 +637,8 @@ Ingen
 
 \clearpage
 
+%-------------------- UC8 --------------------
+
 \begin{table}[h]
 \begin{tabularx}{\textwidth}{| >{\raggedright\arraybackslash}p{3.3 cm} | >{\raggedright\arraybackslash}X |} \hline
 
@@ -601,7 +666,9 @@ Ingen
 \label{tbl:UC8}
 \end{table}
 
-%UC9
+
+%-------------------- UC9 --------------------
+
 \begin{table}[h]
 \begin{tabularx}{\textwidth}{| >{\raggedright\arraybackslash}p{3.3 cm} | >{\raggedright\arraybackslash}X |} \hline
 
@@ -629,6 +696,8 @@ Ingen \\ \hline
 
 \clearpage
  
+%-------------------- UC10 --------------------
+
 \begin{table}[h]
 \begin{tabularx}{\textwidth}{| >{\raggedright\arraybackslash}p{3.3 cm} | >{\raggedright\arraybackslash}X |} \hline
 
@@ -669,7 +738,8 @@ Ingen \\ \hline
 
 \clearpage
 
-%UC11
+%-------------------- UC11 --------------------
+
 \begin{table}[h]
 \begin{tabularx}{\textwidth}{| >{\raggedright\arraybackslash}p{3.3 cm} | >{\raggedright\arraybackslash}X |} \hline
 
@@ -721,5 +791,3 @@ Ingen \\ \hline
 \caption{UC11: Regulering}
 \label{tbl:UC11}
 \end{table}
-
-\clearpage

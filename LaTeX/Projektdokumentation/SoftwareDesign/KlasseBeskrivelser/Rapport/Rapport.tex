@@ -1,0 +1,57 @@
+\subsection{Rapport}
+
+Rapport sender beskeder til bruger gennem E-mail, så frem brugeren har aktiveret dette i Indstillinger. Klassen kan sende 2 forskellige beskeder til brugeren: En dagligt status af alle systemhændelser sket siden sidste status E-mail, samt en kritisk E-mail med en systemhændelse, der kræver brugerens indgreb. Den daglige status sendes på et brugerdefineret tidspunkt, mens den kritiske status-besked sendes ved første mulighed.
+
+\subsubsection{Private aributter}
+
+\begin{table}[h]
+\begin{tabularx}{\textwidth}{| L{2.5cm} | l | Z |} \hline
+Navn & Type & Beskrivelse \\\hline
+\texttt{CurrentTime} & \texttt{Date} & Indeholder sidste tidpunkt modtaget fra Indstillinger. \\\hline
+\texttt{Email[]} & \texttt{String} & Indeholder maillingsliste for status emails. \\\hline
+\end{tabularx}
+\caption{Attributter for klassen Rapport}
+\label{table:Rapport_attributter}
+\end{table}
+
+\subsubsection{Metoder}
+
+%%%%%%%%%%%%%%%%%%%%%%%%% ActivateRapport %%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{table}[h]
+\begin{tabularx}{\textwidth}{| >{\raggedright\arraybackslash}p{2.5 cm} | >{\raggedright\arraybackslash}X |} \hline
+Prototype & \texttt{void ActivateRapport()} \\\hline
+Parametre & \texttt{-} \\\hline
+Returværdi & \texttt{-} \\\hline
+Beskrivelse & Sendes fra Monitor og angiver om rapporterings funktionaliteter skal bruges eller ej.
+ \\\hline
+\end{tabularx}
+\caption{ActivateRapport()}
+\label{table:Rapport_ActivateRapport}
+\end{table}
+
+%%%%%%%%%%%%%%%%%%%%%%%%% SendDailyRapport %%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{table}[h]
+\begin{tabularx}{\textwidth}{| L{2.5 cm} | Z |} \hline
+Prototype & \texttt{void SendDailyRapport()} \\\hline
+Parametre & \texttt{-} \\\hline
+Returværdi & \texttt{-} \\\hline
+Beskrivelse & Sender en E-mail til brugeren med en liste over de seneste systemhændelser siden sidste E-mail.
+ \\\hline
+\end{tabularx}
+\caption{SendDailyRapport()}
+\label{table:Rapport_SendDailyRapport}
+\end{table}
+
+%%%%%%%%%%%%%%%%%%%%%%%%% SendWarningRapport %%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{table}[h]
+\begin{tabularx}{\textwidth}{| L{2.5 cm} | Z |} \hline
+Prototype & \texttt{void SendWarningRapport()} \\\hline
+Parametre & \texttt{-} \\\hline
+Returværdi & \texttt{-} \\\hline
+Beskrivelse & Sender en E-mail til brugeren med den kritiske systemhændelse. 
+ \\\hline
+\end{tabularx}
+\caption{SendWarningRapport()}
+\label{table:Rapport_SendWarningRapport}
+\end{table}
+

@@ -16,7 +16,7 @@ Clock\_1 forsyner PWM komponenten med en grundfrekvens; der er valgt 1 kHz.
 
 PWM\_Ventilation genererer et PWM signal til styring af drivhusets fire ventilatorer. Timeren er indstillet til 8 bit.  
 
-I2C\_1 komponenten styrer kommunikation med MasterPSoC via \IIC. 
+I2C\_1 komponenten styrer kommunikation med PSoC Master via \IIC. 
 Den konfigureret til at være slave med adressen 0x42, datarate er indstillet til 100 kbps.
 
 Alle pins i topdeignet er konfigureret til strong drive. 
@@ -25,6 +25,7 @@ Det vil sige at de altd er defineret enten high eller low.
 \clearpage
 
 \subsection{SW PSoC4}
+\label{subsec:sw_aktuator}
 
 \begin{lstlisting}[caption=Udsnit af main.c for PSoC4 i Aktuator, label=fig:main_aktuator]
     for(;;) //Evigt loop
@@ -93,30 +94,15 @@ void checkForData()
         }           
         if((writeBuffer[0] >> 6) == 0x1) //Check for Varme
         {
-            //Put data fra buffer i uint16 og skift til rigtig position
-            temp = (writeBuffer[0] & 0b00000111) << 9; 
-            //Overskriv relevante pladser med 0'er
-            Status_Reg = Status_Reg & 0b1111000111111111;
-            //Put nye data ind i Status_Reg
-            Status_Reg = Status_Reg | temp;                
+            /*...*/               
         }           
         if((writeBuffer[0] >> 6) == 0x2) //Check for Ventilation
         {
-            //Put data fra buffer i uint16 og skift til rigtig position
-            temp = (writeBuffer[0] & 0b00000111) << 6; 
-            //Overskriv relevante pladser med 0'er
-            Status_Reg = Status_Reg & 0b1111111000111111;
-            //Put nye data ind i Status_Reg
-            Status_Reg = Status_Reg | temp;                
+            /*...*/             
         }            
         if((writeBuffer[0] >> 6) == 0x3) //Check for Vanding
         {
-            //Put data fra buffer i uint16 og skift til rigtig position
-            temp = (writeBuffer[0] & 0b00111111); 
-            //Overskriv relevante pladser med 0'er
-            Status_Reg = Status_Reg & 0b1111111111000000;
-            //Put nye data ind i Status_Reg
-            Status_Reg = Status_Reg | temp;                
+            /*...*/           
         }                    
         I2C_1_I2CSlaveClearWriteBuf(); //Clear buffer pointer
         I2C_1_I2CSlaveClearWriteStatus(); //Clear status                       
@@ -128,17 +114,17 @@ void checkForData()
 }
 \end{lstlisting}
 
-\clearpage
-
-Funktionen checkForData() på Listing \ref{fig:checkForData_aktuator} checker om slavens status er, at den har modtaget data. 
+Funktionen checkForData() på Listing \ref{fig:checkForData_aktuator} checker om slavens status er, at den har modtaget data. Halvdelen af koden er ikke vist, da det stort set er den samme kode, der bliver brugt under check for vindue som for check for varme, ventilation og vanding.
 
 I så fald checker den for hvilken aktuator, der modtages data til.
 Herefter behandles data, og Status\_Reg opdateres.
 
 Efter dette klargøres systemet til at modtage nye data, ved at write buffer og status for slaven nulstilles.
 
-Til slut opdateres read buffer, i tilfælde af at MasterPSoC beder om information om aktuel status. 
-\newline
+Til slut opdateres read buffer, i tilfælde af at PSoC Master beder om information om aktuel status. 
+
+\clearpage
+
 \begin{lstlisting}[caption=Udsnit af heat.c for PSoC4 i Aktuator, label=fig:heat_aktuator]
 void InitHeat()
 {   
@@ -371,7 +357,8 @@ Omkredserne af komponenterne (sort) printes ikke, de vises kun som en slags hjæ
 Databasen i Ultiboard indeholder ikke komponenter til modstande, derfor er disse omkredse ikke med på figuren. 
 
 Der skrives lidt forklarende tekst på oversiden af printet, så man kan se hvad der skal kobles til hvor; dette er lidt svært at se på figuren.
-\newline
+
+\mbox{}
 
 Printudlægget bestilles ved E-LAB på IHA, hvorefter komponenter loddes på.
 Det færdige print er vist på Figur \ref{fig:varmelegeme_print}.
@@ -409,6 +396,7 @@ Printudlægget i Ultiboard er vist på Figur \ref{fig:ultiboard_blaesere}, og de
 \clearpage
 
 \subsection{HW Vinduesmotor}
+\label{subsec:vinduesmotor_impl}
 
 Implementering af Mosfetdriver til Vinduesmotor foretages på samme måde som til Varmelegeme og Blæsere.
 Printudlægget i Ultiboard er vist på Figur \ref{fig:ultiboard_vinduesmotor}, og det færdige print er vist på Figur \ref{fig:vinduesmotor_print}. 

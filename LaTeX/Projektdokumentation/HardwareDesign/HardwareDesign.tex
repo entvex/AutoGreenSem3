@@ -1,24 +1,28 @@
-
 \chapter{Hardware Design} \label{ch:HwDesign}
 
-\section{Version}
+\section*{Version}
 \begin{table}[h]
 	\centering
 	\begin{tabularx}{\textwidth - 2cm}{|l|l|l|X|}
 	\hline
 	Dato	& Version	& Initialer & Ændring	\\ \hline
-	30. marts & 1 & MHG & I2C Protokol og design af Aktuator. \\ \hline
-	8. april & 2 & MHG & Mindre rettelser i Aktuatordesign. \\ \hline
-	10. april & 3 & MHG & Skrevet det sidste (varmelegeme) design i aktuator blokken. \\\hline 
-	23. april & 4 & MHG & Lavet mindre rettelser i et par diagrammer. \\\hline
-	27. april & 5 & MHG & Skrevet design for Strømforsyning. \\\hline
-	1. maj & 6 & MHG & Skrevet design for Slave Jordfugt. \\\hline
-	13. maj & 7 & PKP &\IIC protokol opdateret med ny temperatursensor og PSoC Master funktionsbeskrivelser opdateret. \\\hline
+	30. marts & 1 & PKP & PSoC Master use case diagram og klassebeskrivelser tilføjet.\\ \hline
+	30. marts & 2 & MHG & I2C Protokol og design af Aktuator. \\ \hline
+	8. april & 3 & MHG & Mindre rettelser i Aktuatordesign. \\ \hline
+	10. april & 4 & MHG & Skrevet det sidste (varmelegeme) design i aktuator blokken. \\\hline
+	23. april & 5 & MHG & Lavet mindre rettelser i et par diagrammer. \\\hline
+	27. april & 6 & MHG & Skrevet design for Strømforsyning. \\\hline
+	27. april & 7 & PKP & Design for PSoC master rettet.	\\\hline
+	1. maj & 8 & MHG & Skrevet design for Slave Jordfugt. \\\hline
+	13. maj & 9 & PKP & \IIC protokol opdateret med ny temperatursensor og PSoC Master funktionsbeskrivelser opdateret. \\\hline
+	21. maj & 10 & LBS & Tilføjet breakoutboard afsnit. \\\hline
 	\end{tabularx}
 \end{table}
 
+\clearpage
 \input{HardwareDesign/I2CProtokol/I2CProtokol}
 \input{HardwareDesign/PSoC_Master/PSoC_Master}
+\input{HardwareDesign/Breakoutboards/Breakoutboards}
 \input{HardwareDesign/AktuatorDesign/AktuatorDesign}	
 \input{HardwareDesign/Stroemforsyning/stroemforsyning}
 \input{HardwareDesign/JordfugtDesign/JordfugtDesign}

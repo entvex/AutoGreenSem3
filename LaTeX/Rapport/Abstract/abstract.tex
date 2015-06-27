@@ -1,1 +1,20 @@
-\lipsum[1-2]
+\chapter{Abstract}
+\label{ch:Abstract}
+
+This documentation contains the development of a prototype, which is meant to be installed in a greenhouse. The system, AutoGreen, measures the temperature in the greenhouse and regulates it, by opening/closing windows, using ventilation and a heater. The system is also able to measure soil humidity, with its six soil humidity-sensors, and with the data, able to give the user a notice if it is time to water the plants.
+
+During the first phases of the project, it was set to have air humidity sensors and light sensors in the greenhouse, logging and graphical preview of the logged data, a database with standard and customized plants, an e-mail system to inform the user of important event in the greenhouse, and much more. This was not implemented in the prototype.
+
+During the development of the product, a miniature greenhouse was used. If AutoGreen was to be installed in a real greenhouse, the ventilators, heater and window motor should be scaled up to fit the size of the greenhouse.
+
+AutoGreen’s user interface and controller are developed on an Embest Devkit8000 Evaluation board\cite{lib:DK8000}. The Devkit8000 communicates with a \IIC master, made on a PSoC 4 Pioneer Kit\cite{lib:psoc4_guide}, using UART communication. The master unit communicates with its two \IIC slaves. One of the slaves being the “Actuator” unit, and the other slave being the unit for measuring soil-humidity. The slaves are developed on a PSoC 4 Pioneer Kit. The temperature is measured using a LM75 with \IIC interface\cite{lib:LM75}.
+
+The system can measure temperatures within the greenhouse with a precision of +/- 0.5 degrees. It is able to regulate the temperature with a precision of +/- 1 degree, up to 10 degrees above the surrounding temperature. 
+
+In case of water shortage at one of the soil humidity sensors, a message is displayed on the Graphical interface, and a port on one of the \IIC slaves switches from low to high.
+
+The soil humidity sensors adds an option to install an automatic watering system to the AutoGreen system. There are much more options to further develop the system. See chapter \ref{P-ch:Projektformulering} \nameref{P-ch:Projektformulering} (danish) on page \pageref{P-ch:Projektformulering} in the documentation for further information. 
+
+The biggest obstacle in the product is the UART communication. A simplified version of UART is used, which means only Tx, Rx and ground reference is used, there are a few miscommunications between the UART and the \IIC master. The miscommunication never occurs when connecting a UART terminal directly to the \IIC master. See chapter \ref{P-ch:Accepttest} \nameref{P-ch:Accepttest} (danish) on page \pageref{P-ch:Accepttest} in the documentation for further information on results.
+
+\clearpage

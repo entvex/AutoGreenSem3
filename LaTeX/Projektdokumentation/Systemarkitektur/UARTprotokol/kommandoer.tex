@@ -1,6 +1,6 @@
-\begin{longtable}{| p{3cm} | p{3cm} | p{3.2cm} | p{6cm} |}
-    \hline
-    Kommando \newline (DevKit -> PSoC Master)  & Svar \newline (PSoC Master -> DevKit)  & Beskrivelse                                         & Bitmønster                                                                                                                                                                                                                                    \\ \hline
+\begin{longtable}{| L{2.5cm} | L{2.3cm} | L{4cm} | >{\raggedright\arraybackslash}X |}
+	\hline
+    Kommando \newline (DevKit til\newline PSoC Master)  & Svar \newline (PSoC Master\newline til DevKit)  & Beskrivelse                                         & Bitmønster                                                                                                                                                                                                                                    \\ \hline
     RequestTemp                       & ~                             & Forespørgsel om data fra temperatursensor.          & ’T’                                                                                                                                                                                                                                           \\ \hline
     ~                                 & Temp                          & Temperaturværdi fra sensor.                         & ’T’ efterfulgt af char med decimalværdi 1-200. 1 svarer til -19,5 grader, 200 svarer til 80 grader. Der sendes ”XT”, hvis der ikke er kontakt til temperatursensoren.                                                                       \\ \hline
     RequestLight                      & ~                             & Forespørgsel om data fra temperatursensor.          & ’L’                                                                                                                                                                                                                                            \\ \hline
@@ -19,5 +19,6 @@
     ~                                 & VentilationStatus             & Ack.                                                & ’V’ \newline ”XV”, hvis der ikke er kontakt til aktuator for blæsere.                                                                                                                                                                                 \\ \hline
     Watering                          & ~                             & Aktivere eller deaktivere vandingssignaler.         & ’F’ efterfulgt af char for plantenummer (1-6 i ASCII). Herefter ASCII værdien for 0 eller 1. 0 svarer til ingen vanding, 1 svarer til vanding.                                                                                                \\ \hline
     ~                                 & WaterStatus                   & Ack.                                                & ’F’ \newline Der sendes ”XF”, hvis der ikke er kontakt til aktuator for vanding.                                                                                                                                                                      \\ \hline
-\caption{Kommando liste for UART kommunikation}\label{tbl:kommando}
+\caption{Kommando liste for UART kommunikation}
+\label{tbl:kommando}
 \end{longtable}

@@ -1,0 +1,20 @@
+\section{Datalog}
+
+Dataloggen gør internt brug af template-klassen \nameref{sec:DoublyLinkedList_impl}, afsnit \ref{sec:DoublyLinkedList_impl} på side \pageref{sec:DoublyLinkedList_impl}, som er en datastruktur. Denne datastruktur avendes til at gemme sensordata (se afsnit \ref{sec:sensordata}, side \pageref{sec:sensordata}). Både Regulator og Monitor bruger den funktionalitet i klassen tilbyder, så der kan hentes og gemmes det nyeste data, som er blevet indsat.
+DoublyLinkedList er en template-klasse, dvs. den kan rumme mange forskellige datatyper. Der kan dog kun vælges en type, som den så vil indeholde resten af dens livscyklus.
+
+\subsection{Lagering af data i datalogen}
+
+\lstinputlisting [linerange=DATALOGprivate0-DATALOGprivate1, label=lst:DATALOGprivate, caption=Template af DoublyLinkedList.]{../src/AutoGreenSem3/Devkit8000/autogreenbuild3/DataLog.hpp}
+
+For at hente data ud gøres der brug af metoden GetNewestData, som bruger den førnævnte variabel "list" af typen DoublyLinkedList og bruger dens metode PeekHead. Efter den har hentet informationerne ud, returnerer GetNewestData det nyste sensordata-struct som beskrevet i metodens signatur.
+
+\clearpage
+
+\subsection{GetNewestData}
+
+\lstinputlisting [linerange=GetNewestData0-GetNewestData1, label=lst:getNewestData, caption=Implementering af GetNewestData.]{../src/AutoGreenSem3/Devkit8000/autogreenbuild3/DataLog.hpp}
+
+Ønskes det at indsætte SensorData, gøres dette ved at bruge "list" igen, men hvor metoden headInsert bruges.
+
+\lstinputlisting [linerange=InsertSensorData0-InsertSensorData1, label=lst:InsertSensorData, caption=Implementering af InsertSensorData.]{../src/AutoGreenSem3/Devkit8000/autogreenbuild3/DataLog.hpp}

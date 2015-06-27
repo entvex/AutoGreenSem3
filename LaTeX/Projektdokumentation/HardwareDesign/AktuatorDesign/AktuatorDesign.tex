@@ -1,6 +1,8 @@
-\section{Aktuator Design (Henrik og Morten)}
+\section{Aktuator Design} \label{sec:Aktuator_Design}
 
 Dette afsnit omhandler design af blokken Aktuator. Den opdeles i underblokkene Varmelegeme, Blæsere, Vinduesmotor og PSoC4.
+
+%-------------------- Varmelegeme --------------------
 
 \subsection{Varmelegeme}
 
@@ -21,7 +23,7 @@ Dette vil sandsynligvis resultere i en sprunget glødepære.
 En mulig løsning på problemet kunne være at tænde og slukke de 230V AC direkte med Mosfet transistoren, men vi må ikke håndtere så høje spændinger. 
 En anden mulig løsning er at anvende for eksempel 12V glødepærer i stedet. Der skal dog nok temmelig mange til for at opnå samme effekt. 
 
-Såfremt det senere vælges at opgradere til PWM styring, skal man tage højde for - eller se bort fra - at effekten ikke er lineært sammenhængende med dytucyclen. Dette skyldes dels at effekt har en sammenhæng med kvadratet af strømmen, dels at modstanden i glødetråden afhænger af temperaturen. 
+Såfremt det senere vælges at opgradere til PWM styring, skal man tage højde for - eller se bort fra - at effekten ikke er lineært sammenhængende med dutycyclen. Dette skyldes dels at effekt har en sammenhæng med kvadratet af strømmen, dels at modstanden i glødetråden afhænger af temperaturen. 
 
 \clearpage
 
@@ -40,6 +42,8 @@ D1 er er indsat for at sikre transistoren mod peakspændinger fra USB skinnen, n
 Modstanden R1 er en beskyttelsesmodstand, som beskytter PSoC4, hvis Mosfet transistoren brændes af. 
 
 \clearpage
+
+%-------------------- Blæsere --------------------
 
 \subsection{Blæsere}
 
@@ -72,6 +76,8 @@ Der er blot tilsluttet fire blæsere, der alle styres vha. den samme transistor.
 
 \clearpage
 
+%-------------------- Vinduesmotor --------------------
+
 \subsection{Vinduesmotor}
 
 \begin{figure}[h]
@@ -83,9 +89,13 @@ Der er blot tilsluttet fire blæsere, der alle styres vha. den samme transistor.
 
 Ovenstående diagram (Figur \ref{fig:ibd_vinduesmotor}) viser interne forbindelser i underblokken Vinduesmotor, der består af en Steppermotor og en Mosfetdriver. 
 Der åbnes og lukkes for mosfet transistorer i Mosfet Driveren vha. 3,3V signaler fra PSoC4, og derved forsynes Steppermotor med 12V DC. 
-\\\\
+
+\mbox{}
+
 Mosfet Driveren til Vinduesmotor på Figur \ref{fig:multisim_vinduesmotor_mosfetdriver} side \pageref{fig:multisim_vinduesmotor_mosfetdriver} fungerer i princippet på samme måde som Mosfet Driver for Blæsere (Figur \ref{fig:multisim_blaesere_mosfetdriver}).
 Der er dog den forskel, at de fire signaler styres af hver deres transistor, da de ikke alle skal åbne og lukke samtidigt. 
+
+\clearpage
 
 \begin{figure}[h]
 \centering 
@@ -95,6 +105,8 @@ Der er dog den forskel, at de fire signaler styres af hver deres transistor, da 
 \end{figure}
 
 \clearpage
+
+%-------------------- PSoC4 --------------------
 
 \subsection{PSoC4}
 
@@ -115,6 +127,10 @@ Denne rutine kan til enhver tid afbrydes af interrupt fra I2C bussen, der opdate
 Ved opdaterering af aktuatorer er den priorterede rækkefølge: Varme, blæsere, vanding og vindue. 
 Vinduet er sidst i rækkefølgen, da det tager lang tid at åbne eller lukke. Koden for åbning eller lukning af vindue skrives således, at slave write complete registeret løbende tjekkes. Hvis dette register er højt vil indstillinger af aktuatorer opdateres, og derefter fortsætte fra vinduets position med de nye indstillinger.
 Derved undgås det, at vinduet fx skal lukke helt, inden det åbnes, hvis disse to kommandoer modtages med meget kort mellemrum. 
+
+\clearpage
+
+%-------------------- Drivers til PSoC4 --------------------
 
 \subsection{Drivers til PSoC4}
 Dette afsnit beskriver drivere for opdatering af aktuatorer. 

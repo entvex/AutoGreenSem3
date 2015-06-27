@@ -1,0 +1,27 @@
+\subsection{PSoC Master Design} \label{ch:master_psoc_design}
+
+PSoC Master blokken er hardwaremæssigt bestående af et Cypress PSoC 4 Pioneer Kit \cite{lib:psoc4_guide}. 
+Dokumenation af designet for PSoC Master findes i projektdokumentationen side \pageref{P-sec:PSoC_Master_design}.
+
+PSoC Master blokken interfacer med DevKit8000 via UART og samtlige \IIC enheder på \IIC bussen.
+Der er derfor oprettet klasser til at håndtere hhv. UART og \IIC samt yderligere en klasse til at udføre digital signalbehandling. Disse er vist på Figur \ref{fig:Master_PSoC_cd}.
+
+\begin{figure}[h]
+\centering 
+\includegraphics[width={\textwidth}*4/5, trim=0 0 0 0, clip=true] {../fig/cd_PSoC_master_simple.pdf}
+\caption{Klassediagram over PSoC Master.}
+\label{fig:Master_PSoC_cd}
+\end{figure}
+
+Under designet af PSoC Master blev det nøje overvejet hvilke datatyper, der skulle returneres og bruges som parametre i de forskellige metoder.
+
+Ydermere er det generelt i designfasen overvejet, hvordan de forskellige værdier er repræsenteret i binære mønstre og decimalværdier.
+Dette er gjort med henblik på at de forskellige klassers metoder skal kunne bruges sammen, så at eksempelvis returværdien fra \texttt{getLight()} i \IIC klassen kan sættes direkte ind i \texttt{inputLight()} i DSP klassen.
+
+\input{Projektbeskrivelse/HWDesign/MasterPSoC/PSoC_Master/psocmaster}
+\input{Projektbeskrivelse/HWDesign/MasterPSoC/I2C_design/I2C_design}\clearpage
+\input{Projektbeskrivelse/HWDesign/MasterPSoC/DSP_design/DSP_design}\clearpage
+\input{Projektbeskrivelse/HWDesign/MasterPSoC/UART_design/UART_design}
+\input{Projektbeskrivelse/HWDesign/MasterPSoC/Breakoutboards/Breakoutboards}
+
+\clearpage

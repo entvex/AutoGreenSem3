@@ -1,0 +1,18 @@
+\clearpage
+
+\section{Monitor} \label{sec:Monitor_impl}
+
+Monitor klassen bliver oprettet i main og tager i konstuktoren referencer til uart, datalog, indstillinger og en MsgQueue. Desuden har konstruktoren til opgave at starte uart forbindelsen, og sætte startværdier for gui elementer i hovedmenuen. 
+
+\lstinputlisting[linerange=MonitorCon0-MonitorCon1, label=lst:Monitor_con, caption=Monitors konstruktor]{../src/AutoGreenSem3/Devkit8000/autogreenbuild3/Monitor.hpp}
+
+Gui er en private member af Monitor og er af typen GuiStruct. GuiStruct bruges til at gemme de fleste grafiske data om hovedmenue, derefter kan hentes fra mainwindow klassen via monitors getGuiData metode.
+
+\lstinputlisting[linerange=MonitorCompare0-MonitorCompare1, label=lst:Monitor_compare, caption=Monitors compareData]{../src/AutoGreenSem3/Devkit8000/autogreenbuild3/Monitor.hpp}
+
+Den vigtigeste metode i monitor er compareData, som køres fra en tråd i main sammen med Regulator. Den har til opgave at: Hente sensordata fra PSoC masteren, Indsætte disse data i datalogen, sammenligne fugtighedsdata mellem de virtuelle planter og de indhentede sensordata fra uart'en, opdater GuiStruct'en udfra disse sammen ligningerne.   
+
+\lstinputlisting[linerange=MonitorSet0-MonitorSet1, label=lst:Monitor_set, caption=Monitors compareSet]{../src/AutoGreenSem3/Devkit8000/autogreenbuild3/Monitor.hpp}
+
+CompareSet er en privat hjælpefunktion til sammenligne fugtighedsdata og opdater Gui'en for status knapperne i hovedmenuen. Den tager som parametre: Sensordata fra uart, virtuel plantedata fra indstillinger, offset for fugtighedstolerance. Den sender en besked til systemloggen hvis en plante falder uden for dens tolerance.
+

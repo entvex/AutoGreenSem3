@@ -1,0 +1,60 @@
+\subsection{Regulator}
+
+Regulatoren er en klasse der køres i sin egen tråd på systemet. Regulatoren går ind og læser data-loggen en gang i minuttet, og tjekker at alle data er inden for tolerance niveauerne, i forhold til de ønskede som aflæses i Indstillings-klassen. Hvis noget data ligger for langt uden for tolerance niveauet har regulatoren mulighed for at sende besked til PSoC masteren ved brug a UARTen, om at åbne eller lukke for drivhusvinduet, tænde eller slukke for en blæser, og tænde og slukke for et varmelegeme. Regulatoren er en evighedsløkke der kun stoppes ved at afslutte den på QT-hovedmenuen.
+
+\mbox{}
+
+Når regulator kører, starter den ud med at hente data fra data-loggen og gemmer dem i interne variabler, hvorefter der bliver hentet data ind fra indstillingsklassen. Herefter køres ControlData().Regulatoren bruger derefter UARTen til at tilrette klimaet i drivhuset efter behov. Herefter lægger Regulatoren sig til at sove i et minut, hvorefter den kører starter forfra.
+
+
+\subsubsection{Attributter}
+
+\begin{table}[h]
+\begin{tabularx}{\textwidth}{| L{2.5cm} | l | Z |} \hline
+\texttt{plante1..6} & \texttt{Plant} & plante 1..6 er de virtuelle planter der lagres her, de hentes ind fra indstillinger.\\\hline
+\texttt{uart} & \texttt{UART *} & En pointer til UARTen, så den kan bruges til at sende beskeder til pSoC masteren.\\\hline
+\texttt{systemlog} & \texttt{SystemLog *} & En pointer til systemloggen, så der kan skrives beskeder til systemloggen om evt. fejl eller handlinger fra regulatoren.\\\hline
+\texttt{datalog} & \texttt{DataLog *} & En pointer til dataloggen, så regulatoren har mulighed for at tilgå de nyeste data fra den og bruge til at tilpasse klimaet.\\\hline
+\texttt{settings} & \texttt{Indstillinger *} & En pointer til Indstillingsklassen, så information om systemet og de virtueller kan tilgåes.\\\hline
+\end{tabularx}
+\caption{Attributter for klassen Regulator}
+\label{table:Regulator_attributter}
+\end{table}
+
+\subsubsection{Metoder}
+
+\begin{table}[h]
+\begin{tabularx}{\textwidth}{| L{2.5 cm} | Z |} \hline
+Prototype & \texttt{Void Run()} \\\hline
+Parametre & \texttt{-} \\\hline
+Returværdi & \texttt{-} \\\hline
+Beskrivelse & Run har et formål at fungere som regulatoren og kører evigt. Den henter data ind om de virtuelle planter fra drivhuset, og bruger herefter ControlData funktionen til at til. \\\hline
+\end{tabularx}
+\caption{Run}
+\label{table:Regulator_Run}
+\end{table}
+
+\clearpage
+
+\begin{table}[h]
+\begin{tabularx}{\textwidth}{| L{2.5 cm} | Z |} \hline
+Prototype & \texttt{void ControlData(SensorData drivhus\_data)} \\\hline
+Parametre & \texttt{drivhus\_data} \newline
+Sensor data omkring det faktiske klima i drivhuset.\\\hline
+Returværdi & \texttt{-} \\\hline
+Beskrivelse & Metoden har til formål at sammenligne den faktiske temperatur i drivhuset med den ønskede temperatur. Det samme fortages med luftfugtighed. I forhold til jordfugtigheden tjekkes hver plante, og hvis jordfugtigheden er for lav. Hvis nogle af parametrene ligger for langt fra den ønskede kalder ControlData via UART pointeren, til UARTen om at ændre klimaet i drivhuset. \\\hline
+\end{tabularx}
+\caption{ControlData}
+\label{table:Regulator_ControlData}
+\end{table}
+
+\begin{table}[h]
+\begin{tabularx}{\textwidth}{| L{2.5 cm} | Z |} \hline
+Prototype & \texttt{void Loaddata()} \\\hline
+Parametre & \texttt{-} \\\hline
+Returværdi & \texttt{-} \\\hline
+Beskrivelse & LoadData er en hjælpefunktion, som bruges til at kunne loade de virtuelle planter fra indstillinger ind i plante-objekterne der befinder sig i regulatoren. \\\hline
+\end{tabularx}
+\caption{LoadData}
+\label{table:Regulator_LoadData}
+\end{table}

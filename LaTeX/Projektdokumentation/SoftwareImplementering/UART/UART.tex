@@ -1,0 +1,182 @@
+\section{UART} \label{sec:UART_impl}
+
+UART'en som bruges til at transmittere data imellem DevKit8000 og PSoC Masteren, har til formål at oversætte sætninger, der har en given betydning (UART Protokol, side \pageref{sec:UART_protokol}), op i chars. Disse chars sendes via DevKit8000's add-on Board.\cite{lib:DevKit8000_Addon}
+UART'en er lavet ud fra et open-source bibliotek \cite{lib:DevKit8000_Addon} , har giver en række funktionaliteter til at skrive UARTen, uden at skulle lave egne kernemoduler til devkittet.
+
+\subsection{UART opsætning} \label{sec:uart_impl_opsatning}
+
+Da open-source biblioteket til UART'en er skrevet til brug på en seriel(RS232) udgang, har det betydet at en opsætning på DevKit8000 har været nødvendig, og udover dette, en lille ændring i source-koden til biblioteket. 
+I biblioteket er der ændret i rs232.c filen under "comports". Her er standarden for pc'er at comportene hedder henholdsvis /dev/ttyS0, /dev/ttysS1 osv. Dette er ændret til at passe til de comporte der befinder sig på DevKit8000.
+
+\clearpage
+
+\begin{lstlisting}[language=C ,caption=Porte connect metoden vil forsøge at lave forbindelse på, label=lst:comports]
+char comports[38][16]={"/dev/ttyO1","/dev/ttyO0","/dev/ttyO2","/dev/ttyS3","/dev/ttyS4","/dev/ttyS5","/dev/ttyS6","/dev/ttyS7","/dev/ttyS8","/dev/ttyS9","/dev/ttyS10","/dev/ttyS11",
+\end{lstlisting}
+
+Den port der sendes med UART til, hedder /dev/ttyO1, og som det ses på Listing \ref{lst:comports}, er denne sat til dette.
+Denne ændring resulterer i, at data bliver sendt ud på J1(RS-232). Men da det ønskes at bruge pins til dette istedet for det fulde RS-232 kabel, bruges en mapping til J9. 
+Denne mapping fortages i et script som indeholder hvad der kan ses i Listing \ref{lst:map_script}.
+
+\begin{lstlisting}[language=bash ,caption=kommando til at mappe forbindelse fra J1 til J9 på addonboard, label=lst:map_script]
+echo 0x2 > /sys/class/cplddrv/cpld/ext_serial_if_route_reg
+\end{lstlisting}
+
+Dette danner mapningen over til J9, og det er nu muligt at forbinde UART'ens TX til pin 4, RX til pin 6 og en ground til pin 7.
+
+\subsection{UART Connect} 
+
+Metoden Connect bruges til at forbinde til en aktiv port på DevKit8000. Ved brug af en while-løkke, løbes programkoden igennem samtlige porte på systemet, for at tjekke for om de er tilsluttet et kabel.
+
+\begin{lstlisting}[language=C ,caption=connect metodens funktionalitet, label=lst:comport_tjek]
+    while (RS232_OpenComport(cport_nr, bdrate, mode))
+      {
+	cout << "cannot connect to port number " << cport_nr << endl;
+	cport_nr++;
+      }
+    cout << " connection made on port: " << cport_nr << endl;
+
+  }
+\end{lstlisting}
+
+Set i Listing \ref{lst:comport_tjek}, køres while-løkken indtil der er oprettet en forbindelse på en port. Når denne port er fundet, tælles cport\_nr ikke længere op, og denne port kan bruges til at sende data over.
+
+Det vil ikke forekomme at systemet vil tjekke på mere end den første port. Det er skrevet i koden, at scriptet skal tjekke på den port, som vi ønsker at anvende, som den første.
+
+\subsection{UART senddata}
+
+Metoden senddata er en hjælpe-metode, som har til formål at tage et kommando-parameter ind- og ud fra den kommando, og kan ved brug af if-statements bestemme hvilke chars der skal sendes over UART.
+
+\begin{lstlisting}[language=C ,caption=logikken for at sende data ud på uartens tx, label=lst:UART_senddata]
+    if (command_ == "temp")
+      strcpy(command[1], "T");
+    else if (command_ == "light")
+      strcpy(command[1], "L");
+    else if (command_ == "airhum")
+      strcpy(command[1], "A");
+      ....
+      
+       RS232_cputs(cport_nr, command[1]);
+\end{lstlisting}
+
+Listing \ref{lst:UART_senddata}, viser et udsnit af den samlede kode, hvor der tjekkes på command\_ parameteren. Hvis if-sætningen er sand, kopieres en reduceret string - fx T til command-arrayet. Derefter sendes command-arrayet ud på UART'en, ved brug af RS232\_cputs funktionen.
+
+\subsection{UART recievedata}
+
+Metoden receivedata er ligesom sendata en hjælpefunktion. Dog hvor senddata bruges til at sende data over UART'en, bruges receivedata til at læse på UART'en. Modtages der data der overholder UART-protokollen, bliver der returneret en værdi, afhængigt af, om der modtages data for temperatur, luftfugtighed, jordfugtighed eller lysintensitet
+
+\begin{lstlisting}[language=C ,caption=kodeafsnit af indsamling af data på rx, label=lst:poll_comport]
+	RS232_PollComport(cport_nr, buf, 4);
+	
+	if (buf[0] == 'T')
+	  {
+
+	    return (int)buf[1];
+	  }
+	else if (buf[0] == 'X' && buf[1] == 'T')
+	  {
+	    return -99;
+	  }
+	  ...
+\end{lstlisting}
+
+Listing \ref{lst:poll_comport}, viser hvor i koden der bliver hentet 2 byte data ind i buf-parameteren, ved hjælp af RS232\_PollComport funktionen.
+Der køres herefter et tjek på buf (som er en buffer til at indeholde modtagne data), om UART-protokollen overholdes. Fx hvis der modtages et T, betyder dette, at der er blevet returneret en temperatur, og der returneres værdien af buf[1] konverteret fra en char til int. Hvis indholdet af buf[0] er et X, er det en standard i UART-protokollen, at der er sket en fejl. Herefter tjekkes der på buf[1], for at se hvilken sensor der er sket en fejl på. Hvis det som i Listing \ref{lst:poll_comport} er et 'T', betyder det, at der er sket en fejl i aflæsning af temperatursensoren. Dette returnerer et -1.
+Ved fejl returneres -99, som er en overordnet fejlkode brugt i UART og regulator.
+
+\subsection{UART getSensor} 
+
+Metoden getSensor er ikke implementeret i systemet, men idéen bag funktionen er, at sende besked til PSoC Masteren og derefter returnere hvor mange sensorer der er tilsluttet systemet.
+
+\subsection{UART activateSensor} 
+
+Metoden activateSensor er brugt til at aktivere de 3 forskellige aktuatorer i systemet. Den kan tænde og slukke for aktuatorene og sender samtidig en besked til Systemloggen om hvilken hændelse der er sidst er foretaget. Der kan ses et eksempel på activateSensor i Listing \ref{lst:activateSensor}, som viser et af de mange if-statements. Hjælpefunktionen senddata bruges til at transmitere kommandoen til PSoC masteren, og der sendes en besked til systemloggen om, at varmelegemet er blevet tændt.
+
+\begin{lstlisting}[language=C ,caption=activateSensor(), label=lst:activateSensor]
+ if( command_ == "heaton")
+      {
+	senddata(command_);
+	systemlog->addMessage("Heat Turned on");
+      }	 
+      ....
+\end{lstlisting}
+
+Fejlhåndtigering på activateSensor forgår ved, at der efter sendt kommando ventes på et svar fra PSoC-masteren, om aktuatoren er blevet tændt eller ej. 
+
+\begin{lstlisting}[language=C ,caption=ReceiveData(), label=lst:receiveData]
+int response = receivedata();
+if(response == 999)
+	{
+	 //response OK	
+	}
+	else{
+		int count;
+		for(count = 0; count < 2; count ++)
+		{
+			senddata(command_);	
+			response = recievedata();
+			if(response == 999)
+				break;
+		}		
+		
+	}
+\end{lstlisting}
+
+Hvis den returnede værdi i Listing \ref{lst:receiveData} er 999, betyder det at operationen var vellykket. Hvis ikke operationen er vellykket, sendes kommandoen til PSoC Masteren 2 gange mere, og hvis et godkendt svar kommer, stoppes metoden. Hvis ikke aktuatoren får et godkendt svar inden for de 3 forsøg, springer metoden over den givne aktuator indtil videre.
+
+\subsection{UART getSensorData} 
+
+Metoden getSensorData anvendes til at returnere et SensorData-objekt, med indhold der er hentet fra PSoC Masteren.
+
+\begin{lstlisting}[language=C ,caption=sensorData(), label=lst:sensorData]
+SensorData newdata;
+\end{lstlisting} 
+
+Der oprettes først et nyt objekt af SensorData-typen til at gemme data i.
+Herefter hentes data for de forskellige parametre.
+
+\begin{lstlisting}[language=C ,caption=indsamling af temperatur og fejlsikring, label=lst:senddata]
+	senddata("temp");
+	int data = recievedata();
+	cout << data << endl;
+	if (data != -99)
+	  {
+		
+	    newdata.temp = (double(data)/2)-20;
+	  }
+	  else
+	  {
+	    newdata.temp = -99;
+	  }
+\end{lstlisting}
+
+I Listing \ref{lst:senddata}, vises hvordan der hentes data ned fra temperatursensoren. Der sendes besked til PSoc Masteren om, at få temperaturen ved brug af hjælpefunktionen senddata();
+Herefter indhentes svar ved brug af hjælpefunktionen recievedata(). De modtagne data bliver valideret og så længe der ikke er modtaget en fejlkode, udregnes temperaturen og indsættes i sensordata-structen. Hvis der sker en fejl, indsættes -99 i sensordata-structen, så monitoren ved at den skal skrive "ugyldig data" ud i hovedmenuen.	
+Efter temperaturen er indsat, fortsætter metoden med at hente data ind for de seks jordfugtsensorer. Dog er der foretaget en lille ændring i forhold til indsamling, hvilket vises i Listing \ref{lst:send_eksempel}.
+
+\begin{lstlisting}[language=C ,caption=indsamling af jordfugtighedsdata og fejlsikring, label=lst:send_eksempel]
+senddata("ground1");
+    data = recievedata();
+    if(data != -99)
+      {
+	newdata.grund[0] = data;
+      }	
+     else {
+                    senddata("ground1");
+                    data = recievedata();
+                    if(data != -99)
+                      {
+                    newdata.grund[0] = data;
+                      }
+                      else {
+                       newdata.grund[0] = -99;
+                     }
+     }
+\end{lstlisting}
+  
+I indsamling af temperatur spørges der kun efter data én gang, hvilket der af sikkerhedsmæssige grunde er ændret, så der kan spørges efter jordsensordata en ekstra gang, hvis ikke der kommer noget svar fra PSoC Masteren. Returneres der en fejlmeddelse fra recievedata(), sendes en efterspørgsel om data én gang til. Hvis det andet forsøg igen fejler, indsættes -99 i sensordata-structen som fejlbesked.
+Når Der er indsamlet data fra alle jordfugtsensorer, inklusive fejlmeddelelser, returnes sensordata-structen.
+
+\subsection{Fejlsikring i UART} 
+
+UART'ens måde at indhente data på foregår ved, at UART'en anmoder om data. Herefter afvikles recievedata(), som startes med et sleep wait i et sekund, hvilket giver PSoC Masteren tid til at sende data over. Herefter validerer recievedata() de sendte data og hvis den har modtaget ugyldige eller ingen data, returnes -99. Med valideringen sikres systemet mod fejl i forbindelse med udtagede stik og bruger ikke tid på at vente på data der aldrig kommer. Systemet er altså fejlsikret, da det fylder structet op med fejlmeddelelser, indtil stikket igen er sat korrekt i.

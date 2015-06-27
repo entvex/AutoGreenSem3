@@ -1,0 +1,2 @@
+Powershell:
+PS C:\Users\Snufkin> get-childitem C:\Dropbox\Dokumenter\Elektro\PRJ3\LaTeX\Projektdokumentation\*.tex -recurse | select-string -pattern TODO

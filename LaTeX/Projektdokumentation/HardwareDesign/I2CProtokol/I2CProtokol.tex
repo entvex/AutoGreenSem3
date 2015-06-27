@@ -28,7 +28,7 @@ Når der skal læses data fra sensoren, sker det jf. Figur \ref{fig:I2CTempProto
 \clearpage
 
 \subsection{Slave Aktuator}
-Formålet med Slave Aktuatoren er at udføre forskellige opgaver, via et varmelegeme, blæsere, en motor og seks vandings bools. Disse opgaver bliver anmodet af Master PSoC. Under dette afsnit vil protokolen mellem Slave Aktuator og Master PSoC blive gennemgået.
+Formålet med Slave Aktuatoren er at udføre forskellige opgaver, via et varmelegeme, blæsere, en motor og seks vandings bools. Disse opgaver bliver anmodet af PSoC Master. Under dette afsnit vil protokolen mellem Slave Aktuator og PSoC Master blive gennemgået.
 
 %Slave Aktuator
 \begin{table}[h]
@@ -168,13 +168,13 @@ W3 & W2 & W1 & W0 & H2 & H1 & H0 & V2 & V1 & V0 & I5 & I4 & I3 & I2 & I1 & I0			
 \label{tbl:I2CAktuatorKommandoReadStatus}
 \end{table}
 
-ReadStatus gør det muligt for Master PSoC at spørge hvilken status de forskellige aktuatorer har. Dette passer overens med de klargjorte bits til de forskellige reguleringer for at simplificere processen.
+ReadStatus gør det muligt for PSoC Master at spørge hvilken status de forskellige aktuatorer har. Dette passer overens med de klargjorte bits til de forskellige reguleringer for at simplificere processen.
 
 \clearpage
 
 \subsection{Slave Jordfugt}
 
-Formålet med Slave Jordfugt er at måle og bearbejde værdier læst fra op til seks jordfugt sensorer. Disse data bliver anmodet af Master PSoC og herefter spurgt efter. Under dette afsnit vil protokolen mellem Slave Jordfugt og Master PSoC blive gennemgået.
+Formålet med Slave Jordfugt er at måle og bearbejde værdier læst fra op til seks jordfugt sensorer. Disse data bliver anmodet af PSoC Master og herefter spurgt efter. Under dette afsnit vil protokollen mellem Slave Jordfugt og PSoC Master blive gennemgået.
 
 %Slave Jordfugt
 \begin{table}[h]
@@ -219,7 +219,7 @@ S7 & S6 & S5 & S4 & S3 & S2 & S1 & S0				\\ \hline
 \label{tbl:I2CJordfugtKommandoWriteDesiredSensor}
 \end{table}
 
-Master PSoC har via denne kommando mulighed for, at fortælle Slave Jordfugt hvilken sensor der ønskes data fra ved næste læsning. Da der er seks sensorer er der klargjort tre bits til værdi af sensor nummer.
+PSoC Master har via denne kommando mulighed for, at fortælle Slave Jordfugt hvilken sensor der ønskes data fra ved næste læsning. Da der er seks sensorer er der klargjort tre bits til værdi af sensor nummer.
 
 %ReadStatus
 \begin{table}[h]
@@ -240,6 +240,6 @@ S7 & S6 & S5 & S4 & S3 & S2 & S1 & S0				\\ \hline
 \label{tbl:I2CJordfugtKommandoReadDesiredSensor}
 \end{table}
 
-Ved læsning vil Slave Jordfugt besvare Master PSoC med en værdi, mellem 1 og 100, fra den sensor Master PSoC'en har bedt om data fra via WriteDesiredSensor. I tilfælde af at der er opstået en fejl vil MSB være høj.
+Ved læsning vil Slave Jordfugt besvare PSoC Master med en værdi, mellem 1 og 100, fra den sensor PSoC Master'en har bedt om data fra via WriteDesiredSensor. I tilfælde af at der er opstået en fejl vil MSB være høj.
 
 \clearpage

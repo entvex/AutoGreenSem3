@@ -1,0 +1,167 @@
+\section{Regulator} \label{sec:Regulator_impl}
+
+Regulatoren står for håndtering af ændringer i drivhuset. Hvis temperaturen er for høj eller for lav, har regulatoren mulighed for at ændre klimaet ved brug af aktuatorerne. Regulatoren kører i samme tråd som monitoren.
+Regulatortråden bliver ikke stoppet, men et tjek i regulatoren sørger for at regulatoren ikke ændrer noget ved drivhuset.
+
+\begin{lstlisting}[caption=Regulatorens tjek af settings, label=lst:regulator_tjek]
+if(!settings->getRegulering())
+	{
+	
+	  usleep(100000);
+	  }
+		else 
+		{
+		....
+\end{lstlisting}
+
+Set i Listing \ref{lst:regulator_tjek}, tilgår regulatoren settings og tjekker om regulering er slået til i indstillinger. Hvis ikke regulatoren er slået til, ventes der i et sekund, hvorefter run-metoden venter på at blive aktiveret igen. 
+
+\subsection{Regulator constructor}
+
+Da Regulatoren skal have forbindelse til UART'en, Indstillinger, Systemloggen og Dataloggen, opsættes dette i constructoren. Der er ingen grund til at kunne ændre pointerne til forbindelserne, hvorfor placeringen blev valgt til constructoren.
+
+\begin{lstlisting}[caption=Regulator(), label=lst:regulator]
+	Regulator(UART * uart_, Indstillinger * settings_, SystemLog *systemlog_, DataLog *datalog_)																															
+	{
+		
+		//* set pointers
+		uart = uart_;
+		settings = settings_;
+		systemlog = systemlog_;
+		datalog = datalog_;
+		...
+\end{lstlisting}
+
+Når Regulator-klassen oprettes, skal der opgives pointere til UART, Indstillinger, SystemLog og Datalog som set i Listing \ref{lst:regulator}. Systemet ville ikke fungere uden disse pointers, da regulator-klassen skal bruge dataloggen til at læse fra drivhusets klima. UART'en er vigtig, da reguleringen skal kunne snakke til PSoC Masteren om hvad aktuatorerne, der skal køre i drivhuset.
+
+På opstart af systemet sættes der også en række booleans som set i Listing \ref{lst:sys_opstart}.
+
+\begin{lstlisting}[caption=Oprettelse af booleans ved system opstart, label=lst:sys_opstart]
+      heatON = false;
+      ventsON = false;
+      windowON = false;
+      water1ON = false;
+      water2ON = false;
+      water3ON = false;
+      water4ON = false;
+      water5ON = false;
+      water6ON = false;
+\end{lstlisting}
+
+Disse booleans sættes så regulatoren internt ved at blæser, varmelegeme, vindue og vanding på alle planterne er slukket. Herefter sender regulatoren besked over UART'en om, at slukke for alle aktuatorer i system ved brug af activateSensor fra UART-klassen.
+
+\begin{lstlisting}[caption=Anvendelse af UART-klassens activateSensor, label=lst:fra]
+		uart->activateSensor("ventoff");
+      uart->activateSensor("heatoff");
+      uart->activateSensor("water1off");
+      uart->activateSensor("water2off");
+      ....
+\end{lstlisting}
+
+Da der sendes 9 kommandoer til UART'en ved opstart, har systemet derved en boot-time på omkring 9-10 sekunder, da den skal have slukket alle aktuatorer før hovedmenuen vise, og systemet kan aktiveres.
+
+\subsection{loadData} 
+
+Metoden loadData er en hjælpe metode, hvis eneste formål er at gøre run-metoden mere overskuelig. Metoden har til formål at hente data ind fra indstillinger og derefter gemme informationerne om de virtuelle planter.
+
+\begin{lstlisting}[caption=Implementering af loadData., label=lst:loadData]
+		plant1 = settings->getPlant(1);
+		plant2 = settings->getPlant(2);	
+		...
+\end{lstlisting}
+
+Data bliver hentet ind ved brug af settings-pointeren, som kalder getPlant-metoden fra Indstillings-klassen, hvilket returnerer et plante-objekt. Objektet kopieres ind i planten metoden bliver kaldt for. Der laves et getPlant kald for alle 6 planter.
+
+\subsection{Run metoden} 
+
+Run-metoden i Regulatoren kaldes fra main. Formålet med metoden er at kalde alle andre metoder direkte fra main. Fra design er det meningen at run skal køre i en evighedsløkke, men den blev kun implementeret til at køre igennem en enkelt gang. I stedet har QT en tråd der indeholder en evighedsløkke, som kalder run, når der skal laves reguleringer.
+
+\begin{lstlisting}[caption=Implementering af run metoden., label=lst:regulator_run]
+  //load data into plants from Settings (indstillinger)
+	  loadData();
+	  SensorData loadeddata = datalog->GetNewestData();
+	  ControlData(loadeddata);
+	  //linux
+	  usleep(100000);
+\end{lstlisting}
+
+Hvis reguleringen er aktiveret i hovedmenuen, køres koden i Listing \ref{lst:regulator_run}. Der hentes først det nyeste data ind fra indstillings-klassen ved brug af loadData-metoden.
+herefter oprettes der et SensorData-objekt, hvor de nyeste data fra datalogen indhentes ved brug af pointeren til dataloggen. SensorData-objektet gives til ControlData-metoden, som sørger for at sammenligne de interne plante-objekters klimapræferencer med de faktiske data fra drivhuset. Når ControlData er afviklet, lægger tråden sig til at sove i et minut, før run starter fra begydnelsen af while-løkken igen.
+
+\subsection{ControlData metoden}
+
+ControlData-metoden er står for sammenligningen af det ønskede klima og det faktiske klima i drivhuset. Hvis en parameter, f.eks. temperatur, er meget afvigende fra den ønskede temperatur, kan controlData regulere temperaturen op og ned ved brug af aktuatorerne i systemet.
+
+ControlData fungerer ved først at hente den faktiske temperatur ud af SensorData structen. Den finder herefter en gennemsnitlig temperatur for de virtuelle planter i systemet.
+
+\begin{lstlisting}[caption=Implementering af ControlData metoden., label=lst:ControlData]
+   double temp_drivhus = drivhus_data.temp;
+    double avg_temp_drivhus = (plant1.temp + plant2.temp + plant3.temp + plant4.temp + plant5.temp + plant6.temp) / 6;
+\end{lstlisting}
+
+Metoden henter herefter information ind fra indstillingsklassen om brugen af varmelegeme og blæserne, hvilket sker ved brug af settings-pointeren, hvor GetHardware metoden kaldes med referencer til use\_heater og use\_vents bools, som set i \ref{lst:Regulator_getHardware}.
+
+\begin{lstlisting}[caption=Implementering af getHardware metoden., label=lst:Regulator_getHardware]
+    bool use_heater = false; 
+    bool use_vents = false; 
+    settings->GetHardware(use_heater,use_vents);
+\end{lstlisting}
+
+ControlData kører, efter indhentning af data, en lang række tjek på temperaturen ved brug af if-statements. I tilfælde af temperaturforskelle på aktuel temperatur og ønsket temperatur, bruges aktuatorer til at regulere temperaturen.
+
+\begin{lstlisting}[caption=Eksempel på if-statements i regulator., label=regulator_ifstats]
+else if (temp_drivhus >= avg_temp_drivhus + 0.5)
+      {
+
+	cout << "temp lidt varm\n";
+	//OPEN WinDOW
+
+              if(!windowON)
+              {
+	      uart->activateSensor("windowon");
+	      usleep(100);
+              windowON = true;
+              }
+              if(ventsON)
+              {
+	      uart->activateSensor("ventoff");
+              usleep(100);
+              ventsON = false;
+              }
+      }
+\end{lstlisting}
+
+Hvis temperaturen er en halv grad for høj, bruges vinduet til at regulere temperaturen. Der tjekkes på den interne boolean \texttt{windowON} om vinduet allerede er åbent. Hvis vinduet allerede er åbnet fortages ingenting, men hvis det er lukket åbnes det.
+Der tjekkes også på, om blæserne er tændt. Hvis de er tændte, slukkes der for dem, da det ikke er ønsket at bruge dem når temperaturen er så tæt på det ønskede. Temperaturreguleringen kan ses i \ref{lst:tempregulering}.
+
+Efter temperaturreguleringen, bliver der kørt et tjek på de 6 planter i drivhuset igen og igen.
+
+\begin{lstlisting}[caption=Temperaturregulering., label=lst:tempregulering]
+if(drivhus_data.grund[0] < plant1.water)
+      {
+
+
+              if(drivhus_data.grund[0] != -99){
+                  if(!water1ON){
+                     uart->activateSensor("water1on");
+                     water1ON = true;
+                  }
+              }
+              else {
+                  if(water1ON){
+                  uart->activateSensor("water1off");
+                  water1ON = false;
+                  }
+
+              }
+
+      } else
+      {
+          if(water1ON){
+          uart->activateSensor("water1off");
+          water1ON = false;
+          }
+\end{lstlisting}
+
+Funktionaliteten for plantetjekket fungerer ved sammenligning af jordfugtigheden fra SensorData-objektet og den givne plantes ideelle jordfugtighed kaldet \texttt{water}. Er den ønskede jordfugtighed højere end den faktiske jordfugtighed, antages det at en vanding vil være aktuel. Hvis en vanding er aktuel tjekkes der først på at data fra plantestructen ikke er -99, da denne værdi betyder fejl. Er værdien ikke -99, tjekkes der for om vanding allerede er aktiv på den interne boolean \texttt{water1ON}. Er \texttt{water1ON} false, sendes der besked på UART'en om at tænde for vandingen og den interne boolean sættes til true.
+Else-sætningen der er gældende, hvis der mangler vand og fejlkoden -99 er indskrevet i plante-structen, sørger for at slukke for vandingsbooleanen og vise et N/A i hovedmenuen. På denne måde undgås det at vandingsbools altid er tændt, hvis der ikke er modtaget data, eller jordfugtsensoren ikke er tilsluttet systemet.

@@ -4,7 +4,7 @@
 	\multicolumn{2}{|l|}{\textbf{Forudsætning}} & \multicolumn{3}{p{10.2cm}|}{UC1 Start er gennemført og systemet er operationelt. \hfill} \\ \hline
 	%\multicolumn{5}{|l|}{}\\ \hline
 	\textbf{Step} & \textbf{Handling} & \textbf{Forventet Resultat} & \textbf{Resultat} & \textbf{Godkendt / Kommentar} \\ \hline
-       10.1 & Bruger noterer aktuel værdi for temperatur i Hovedmenuen. Brugeren sprayer kuldespray på temperatursensoren og venter mindst 1 minut.      & Visuel test: Værdien i feltet "Temperatur" i Hovedmenuen falder.                                                   & ~ & ~ \\ \hline
-       10.2 & Bruger deaktiverer monitorering og tilgår systemloggen. & Visuel test: Systemloggen er blevet opdateret med nye data og korrekt tidsstempling. & ~ & ~ \\ \hline
+       10.1 & Bruger noterer aktuel værdi for temperatur i Hovedmenuen. Brugeren køler temperatursensoren og venter mindst 30 sekunder. & Visuel test: Værdien i feltet "Temperatur" i Hovedmenuen falder. & Temperaturen falder efter ca. 26 sekunder. & Godkendt. \\ \hline
+       10.2 & Bruger deaktiverer monitorering og tilgår systemloggen. & Visuel test: Systemloggen er blevet opdateret med nye data og korrekt tidsstempling. & Systemloggen viser ikke ny data. & Ikke godkendt. Ikke implementeret. \\ \hline
 	\caption{Accepttest for UC10: Monitorering}\label{tbl:acceptUC10}
 \end{longtable}

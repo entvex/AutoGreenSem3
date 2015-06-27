@@ -1,0 +1,20 @@
+\section{Build tools} \label{sec:Build_impl}
+
+Under dette projekt er der udviklet scripts til at gøre arbejdet med linux platformen lettere. Scriptene blev brugt til at oprette forbindelse til DevKit8000, kopiere filer fra host til platformen, bygge hele projektet og automatisk flytte det over til DevKit8000, uden at skulle skrive alle kommandoer på ny hver gang.
+Scriptet \texttt{conn2tgt} bruges til at oprette en shh (Secure Shell) forbindelse til Devkit8000, så det kan undgås at indtaste password ved login. Dette kan lade sig gøre ved at bruge \texttt{sshpass}, der sender et password videre til programmer, som kræver et superuser password. I dette tilfælde bruges kommandoen \texttt{ssh} sammen med parameteren \texttt{root@10.9.8.2}, som betyder at der laves et login med brugernavnet root på IP'en 10.9.8.2. Scriptet kan ses i Listing \ref{lst:conn2tgt}.
+
+\lstinputlisting[linerange=conn2tgt0-conn2tgt1, label=lst:conn2tgt, caption=Implementering af conn2tgt scriptet., language=bash]{../src/AutoGreenSem3/Devkit8000/autogreenbuild3/conn2tgt.sh}
+
+Scriptet cp2tgt set i Listing \ref{lst:conn2tgt} bruges kopiere en fil mellem en computer og DevKit8000. Dette sker ved at bruge kommandoen scp (Secure copy), til at overføre filerne. I dette script er der anvendt et parameter som ses i linje 3, hvor der står "\$1". Det betyder at man kan kalde scriptet med en fil, som vil blive overført. Det kan ses i praksis i Listing \ref{lst:buildandrun}.
+
+\lstinputlisting[linerange=cp2tgt0-cp2tgt1, label=lst:cp2tgt, caption=Implementering af cp2tgt scriptet.,language=bash]{../src/AutoGreenSem3/Devkit8000/autogreenbuild3/cp2tgt.sh}
+
+Dette script gør brug af den makefile som QT har genereret og bruger den ved at anvende linux kommandoen make. Efter kommandoen er kørt, kopieres den eksekverbare fil, autogreenbuild3, over til linux platformen via scriptet \texttt{cp2tgt}. Til sidst køres \texttt{conn2tgt}, som laver en ssh forbindelse til DevKit8000, så det er nemt køre programmet og teste det.
+
+\lstinputlisting[linerange=buildandrun0-buildandrun1, label=lst:buildandrun, caption=Implementering af buildandrun scriptet.,language=bash]{../src/AutoGreenSem3/Devkit8000/autogreenbuild3/buildandrun.sh}
+
+Et andet script der bruges hedder setupTarget, som får host computeren til at forbinde til linux platformen via et usb kabel og kan ses i Listing \ref{lst:setupTarget}.
+
+\lstinputlisting[linerange=setupTarget0-setupTarget1, label=lst:setupTarget, caption=Implementering af buildandrun scriptet.,language=bash]{../src/AutoGreenSem3/Devkit8000/autogreenbuild3/setupTarget.sh}
+
+Det første der sker er at der bruges kommandoen echo til at udskrive en text på skærem, så brugeren ved at den er ved lave så der kan laves en forbindelse til Devkittet via et usb kabel. Kommandoerne ifdown usb0 og ifup usb0 får usb interfacet på hosten til at lukke en og derefter åbne igen bagefter, det skal gøres for at den ser forbindelsen rigtigt.

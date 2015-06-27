@@ -1,0 +1,25 @@
+\section{SystemLog} \label{sec:Systemlog_impl}
+
+Bare for iteration, så bruges SystemLog klassen til at gemme systemhændelser fra monitor, regulator, uart, samt rapport klassen, hvis den var blevet implementeret. Klassen bygger videre på en ISU øvelse angående inter-thread communication, og kan håndterer beskeder fra forskellige tråde uden der sker segmentation faults. Centralt i implementation er to klasser Message og MsgQueue. De har selve ansvaret for at håndterer beskeder mellem klassen, der sender beskeden og SystemLog, som gemmer beskederne.     
+
+\lstinputlisting[linerange=Systemlog_send0-Systemlog_send1, label=lst:systemlog_send, caption=MsgQueues send metode]{../src/AutoGreenSem3/Devkit8000/autogreenbuild3/MsgQueue.hpp}
+
+MsgQueue indeholder to interesante methoder \textbf{send} og \textbf{receive}. Send metoden indsætter message objekter sammen med dens id ind i en stl vector. Den anvender en mutex, som sørger for at kun en tråd kan indsætte/udtage et message objekt af gangen. Den bruger desuden en conditional til at danne en kø, hvis MsgQueuen er fyldt op.
+
+\clearpage
+
+\lstinputlisting[linerange=Systemlog_receive0-Systemlog_receive1, label=lst:systemlog_receive, caption=MsgQueues receive metode]{../src/AutoGreenSem3/Devkit8000/autogreenbuild3/MsgQueue.hpp}
+
+Receive virker på samme måde, dog pop den items på stakken. Den bruger samme mutex som send, da tråd procceser helst ikke må til gå vectoren på samme tid.
+
+\lstinputlisting[linerange=Message0-Message01, label=lst:Message, caption=Message klassen]{../src/AutoGreenSem3/Devkit8000/autogreenbuild3/Message.hpp}
+
+Alle beskeder sendt til SystemLog, skal nedarve fra Message klassen, som er tom udover en virtuel destructor, således den nedarve klasse selv kan styre sig nedlæggelse. I AutoGreen systemet er oprettet en struct kladet SysMsg som nedarver fra Message og udvider den med en member msg af typen string. Dette giver klasserne, der skal sende beskeder til SystemLog, mulighed for at sende en string sammen med. 
+
+\lstinputlisting[linerange=Systemlog_check0-Systemlog_check1, label=lst:Systemlog_msgCheck, caption=SystemLog's checkMsg metode]{../src/AutoGreenSem3/Devkit8000/autogreenbuild3/SystemLog.hpp}
+
+SystemLog's checkMsg metode virker som en event handler for alle beskeder, der bliver tilsendt systemLog's MsgQueue og videre sender den til en handler metode til at indsætte beskeden i en doublylinkedlist. SystemLog indeholder desuden en get metode, der henter head elementet af listen for visning i gui'en. checkMsg skal desuden lave en staticcast til SysMsg, da systemlog giver mulighed for flere typer beskeder(structs nedarvet fra message). Men siden der på nuværende tidspunkt kun er en type message, kan der med sikkerhed casts til den, ellers skal castningen ske på baggrund af det med sendte id. Siden beskeder bliver dynamisk opret dvs allokeret på heapen stedet for stacken. Det betyder også den skal deallokeres på heapen, ellers sker der et memoryleak. 
+
+\lstinputlisting[linerange=MonitorSet0-MonitorSet0, label=lst:Monitor_compareset, caption=Eksempel på indsættelse i SystemLog]{../src/AutoGreenSem3/Devkit8000/autogreenbuild3/Monitor.hpp}
+
+For at indsætte en besked i SystemLog, skal der først oprettes en ny SysMsg via \textbf{new} c++ kommandoen. Derefter kan der indsættes en string i SysMsg'en med de relavante data. SysMsg lægges ind SystemLog's MsgQueue med send sammen med et id.
