@@ -1,0 +1,5 @@
+F:\Dropbox\PRJ3\LaTeX\src\PSoC_Master\PSoC_Master.cydsn\PSoC_Master.cyprj|7b86abec-4299-4212-a095-561e513f51b7
+C:\Program Files (x86)\Cypress\PSoC Creator\3.2\PSoC Creator\psoc\content\default\CyAnnotationLibrary\CyAnnotationLibrary.cylib\CyAnnotationLibrary.cyprj|0a8d4786-5a5b-4139-97b3-f2dc89ba55a0
+C:\Program Files (x86)\Cypress\PSoC Creator\3.2\PSoC Creator\psoc\content\cycomponentlibraryupdates\CyComponentLibraryUpdates.cylib\CyComponentLibraryUpdates.cyprj|7cce75de-7dbb-41ba-a7f2-0cb44ee60e9d
+C:\Program Files (x86)\Cypress\PSoC Creator\3.2\PSoC Creator\psoc\content\cycomponentlibrary\CyComponentLibrary.cylib\CyComponentLibrary.cyprj|56560aeb-3ae4-4dbf-9529-3a2ce016e4ee
+C:\Program Files (x86)\Cypress\PSoC Creator\3.2\PSoC Creator\psoc\content\cyprimitives\CyPrimitives.cylib\CyPrimitives.cyprj|fa34eed0-b4e8-4d7b-ad08-0f43c09b5961
